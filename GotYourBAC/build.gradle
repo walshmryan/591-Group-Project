@@ -44,6 +44,7 @@ android {
 dependencies {
     compile "com.android.support:appcompat-v7:${appcompat_library_version}"
     compile "com.android.support:support-v4:${support_library_version}"
+
     compile project(':libraries:BaseGameUtils')
 }
 
