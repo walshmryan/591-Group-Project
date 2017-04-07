@@ -1,6 +1,7 @@
 package com.google.example.tbmpskeleton;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ public class LoginActivity extends Fragment {
 
     public interface LoginListener{
         public void goToNewUserFragment();
-        public void goToLoginFragment();
+        public void goToLoginFragment(String username, String password);
 //        public void sendEmail(String email);
     }
 
@@ -48,14 +49,14 @@ public class LoginActivity extends Fragment {
 
         btnSignIn = (Button) v.findViewById(R.id.btnSignIn);
         btnRegister = (Button) v.findViewById(R.id.btnRegister);
-        txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
+//        txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//          // TODO: 3/31/17
-//         check email and password
-//                switch to logged on screen
+                // TODO: 3/31/17
+                //check email and password
+                //switch to logged on screen
 
             }
         });
@@ -71,7 +72,10 @@ public class LoginActivity extends Fragment {
             @Override
             public void onClick(View v) {
 
-                loginlistener.goToLoginFragment();
+                String username = "1";
+                String password = "1";
+
+                loginlistener.goToLoginFragment(username, password);
             }
         });
         return v;

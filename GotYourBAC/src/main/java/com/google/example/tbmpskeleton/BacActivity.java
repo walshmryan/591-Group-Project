@@ -14,9 +14,6 @@ import com.undergrads.ryan.R;
 
 import java.text.DecimalFormat;
 
-/**
- * Created by sarahmedeiros on 3/25/17.
- */
 
 public class BacActivity extends Fragment{
     private ImageButton btnBeerMinus;
@@ -140,6 +137,7 @@ public class BacActivity extends Fragment{
     public double poundsToGrams(double weightInLbs){
         return (weightInLbs*454);
     }
+
     public double genderToGenderConstant(int gender){
         double mConstant = 0.73;
         double fConstant = 0.66;

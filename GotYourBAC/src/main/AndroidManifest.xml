@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.undergrads.ryan">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -8,7 +14,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.App" >
+        android:theme="@style/Theme.AppCompat" >
+
+
+        <category android:name="android.intent.category.LAUNCHER" />
+
          <meta-data
             android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
@@ -24,11 +34,20 @@
         <activity
             android:name="com.google.example.tbmpskeleton.MainActivity"
             android:screenOrientation="portrait"
+
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.google.example.tbmpskeleton.MainActivity2"
+            android:screenOrientation="portrait"
+
+            android:label="@string/app_name" >
+
         </activity>
     </application>
 

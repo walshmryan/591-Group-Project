@@ -22,7 +22,7 @@ android {
           REPLACE THIS VALUE WITH YOUR APPLICATION ID
         */
         applicationId "com.undergrads.ryan"
-        minSdkVersion android_min_sdk_version
+        minSdkVersion 19
         targetSdkVersion android_compile_version
         versionCode 1
         versionName "1.0"
@@ -42,8 +42,17 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:${appcompat_library_version}"
-    compile "com.android.support:support-v4:${support_library_version}"
+//    compile 'com.android.support:appcompat-v7:22.2.0'
+//    compile 'com.android.support:design:22.2.0'
+
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.microsoft.azure:azure-mobile-android:3.2.0@aar'
+    compile 'com.microsoft.azure:azure-notifications-handler:1.0.1@jar'
+    compile 'com.android.support.constraint:constraint-layout:+'
 
     compile project(':libraries:BaseGameUtils')
 }
