@@ -59,7 +59,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
             e.printStackTrace();
         }
 
-        Intent i = new Intent(this, MainActivity2.class);
+        Intent i = new Intent(this, SkeletonActivity.class);
 
         new LoginCheck(this, i, mClient).execute(username,password);
 
