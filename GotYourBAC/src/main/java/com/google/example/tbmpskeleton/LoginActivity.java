@@ -49,7 +49,8 @@ public class LoginActivity extends Fragment {
 
         btnSignIn = (Button) v.findViewById(R.id.btnSignIn);
         btnRegister = (Button) v.findViewById(R.id.btnRegister);
-//        txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
+        txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
+        edtPassword = (EditText) v.findViewById(R.id.edtPassword);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

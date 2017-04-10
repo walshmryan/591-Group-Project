@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Main4Activity extends Activity {
+public class MainContent extends Activity {
 
     TextView temp;
     TextView weatherFor;
@@ -22,7 +22,7 @@ public class Main4Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.content_main);
 
         temp = (TextView) findViewById(R.id.textView) ;
         weatherFor = (TextView) findViewById(R.id.textView1);

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 
 import java.net.MalformedURLException;
 
@@ -27,13 +28,13 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_main);
 
 //        String loginTag = "login screen";
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();
-        fragmentTransaction.add(R.id.fragment_login_container, fragment, loginTag);
+        fragmentTransaction.add(R.id.main_frame, fragment, loginTag);
         fragmentTransaction.commit();
 
 //        loginFragment = (Login) findFragmentById(R.layout.fragment_login);
@@ -46,8 +47,8 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 //        String createNewUser = "create new user";
 //        transaction.replace(R.id.fragment_container, newFragment, createNewUser);
 //        transaction.addToBackStack(null);
-
-        // Commit the transaction
+//
+//         Commit the transaction
 //        transaction.commit();
     }
 
@@ -59,7 +60,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
             e.printStackTrace();
         }
 
-        Intent i = new Intent(this, Main4Activity.class);
+        Intent i = new Intent(this, MenuActivity.class);
 
         new LoginCheck(this, i, mClient).execute(username,password);
 
@@ -77,10 +78,4 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 //            transaction.remove(newUserFragment).commit();
 //        }
     }
-//
-//    @Override
-//    public void sendEmail(String e) {
-//        CreateNewUser receivingFragment = (CreateNewUser) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-//        receivingFragment.setEmailFromLogin(e);
-//    }
 }
