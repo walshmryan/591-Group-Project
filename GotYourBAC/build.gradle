@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         configDebug {
-            storeFile file('/Users/walsh/Documents/School/Senior/App/keys/key0.jks')
+            storeFile file('/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/keys/key0.jks')
             keyAlias 'key0'
             keyPassword 'drunkapp2017'
             storePassword 'drunkapp2017'
@@ -11,7 +11,7 @@ android {
         configRelease {
             keyAlias 'key1'
             keyPassword 'drunkapp2017'
-            storeFile file('/Users/walsh/Documents/School/Senior/App/keys/key1.jks')
+            storeFile file('/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/keys/key1.jks')
             storePassword 'drunkapp2017'
         }
     }
@@ -42,11 +42,9 @@ android {
 }
 
 dependencies {
-//    compile 'com.android.support:appcompat-v7:22.2.0'
-//    compile 'com.android.support:design:22.2.0'
-
-
-
+    //    compile 'com.android.support:appcompat-v7:22.2.0'
+    //    compile 'com.android.support:design:22.2.0'
+    compile project(':libraries:BaseGameUtils')
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.google.code.gson:gson:2.3'
@@ -54,9 +52,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.microsoft.azure:azure-mobile-android:3.2.0@aar'
     compile 'com.microsoft.azure:azure-notifications-handler:1.0.1@jar'
-    compile 'com.android.support.constraint:constraint-layout:+'
-
-    compile project(':libraries:BaseGameUtils')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 buildscript {
