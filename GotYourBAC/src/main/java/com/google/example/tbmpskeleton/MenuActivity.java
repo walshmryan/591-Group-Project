@@ -47,41 +47,51 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        String bac = "BAC";
         if (id == R.id.nav_bac) {
             BacActivity fragment = new BacActivity();
             //go to bac calc
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(bac)
                     .commit();
-        } else if (id == R.id.nav_games) {
+        }else if(id == R.id.nav_home){
+            FragmentManager fragmentManager = getFragmentManager();
+
+            for(int i=0;i < fragmentManager.getBackStackEntryCount();i++){
+                fragmentManager.popBackStack();
+            }
+
+//            http://stackoverflow.com/questions/30551939/correct-way-to-remove-all-child-fragments
+        }else if (id == R.id.nav_games) {
 //          go to games page
 //            SkeletonActivity fragment = new SkeletonActivity();
 //            FragmentManager fragmentManager = getFragmentManager();
@@ -91,7 +101,13 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_ice) {
 //          go to ice page
         } else if (id == R.id.nav_manage) {
-
+            EditUser fragment = new EditUser();
+            String editUser = "Edit User";
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(editUser)
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
