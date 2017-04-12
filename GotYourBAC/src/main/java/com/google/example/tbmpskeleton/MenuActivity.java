@@ -1,5 +1,6 @@
 package com.google.example.tbmpskeleton;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -73,13 +74,20 @@ public class MenuActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_bac) {
+            BacActivity fragment = new BacActivity();
             //go to bac calc
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .commit();
         } else if (id == R.id.nav_games) {
 //          go to games page
-//            Intent i = new Intent(this, GameActivity.class);
-//            startActivity(i);
+//            SkeletonActivity fragment = new SkeletonActivity();
+//            FragmentManager fragmentManager = getFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.frame_layout, fragment)
+//                    .commit();
         } else if (id == R.id.nav_ice) {
 //          go to ice page
         } else if (id == R.id.nav_manage) {

@@ -3,7 +3,7 @@ package com.google.example.tbmpskeleton;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,18 +88,18 @@ public class PlayGame extends Fragment {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                enableButtons();
-//                started = true;
-//                guesses = 0;
-//                totalRight = 0;
-//                stopwatch = new Stopwatch();
-//                comment.setVisibility(View.INVISIBLE);
-//                txtWord0.setVisibility(View.INVISIBLE);
-//                txtWord1.setVisibility(View.INVISIBLE);
-//                txtWord2.setVisibility(View.INVISIBLE);
-//                txtWord3.setVisibility(View.INVISIBLE);
-//                txtWord4.setVisibility(View.INVISIBLE);
-//                nextWord();
+                enableButtons();
+                started = true;
+                guesses = 0;
+                totalRight = 0;
+                stopwatch = new Stopwatch();
+                comment.setVisibility(View.INVISIBLE);
+                txtWord0.setVisibility(View.INVISIBLE);
+                txtWord1.setVisibility(View.INVISIBLE);
+                txtWord2.setVisibility(View.INVISIBLE);
+                txtWord3.setVisibility(View.INVISIBLE);
+                txtWord4.setVisibility(View.INVISIBLE);
+                nextWord();
                 gameListener.startGame();
             }
         });
@@ -107,15 +107,15 @@ public class PlayGame extends Fragment {
         btnYellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                guesses += 1;
-//                if (guesses <= 10) {
-//                    checkCorrect(0);
-//                } else {
-//                    disableButtons();
-//                    time = stopwatch.elapsedTime();
-//                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-//                    comment.setVisibility(VISIBLE);
-//                }
+                guesses += 1;
+                if (guesses <= 10) {
+                    checkCorrect(0);
+                } else {
+                    disableButtons();
+                    time = stopwatch.elapsedTime();
+                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+                    comment.setVisibility(VISIBLE);
+                }
                 gameListener.btnYellowClicked();
 
             }
@@ -124,15 +124,15 @@ public class PlayGame extends Fragment {
         btnGreen.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                guesses += 1;
-//                if (guesses <= 10) {
-//                    checkCorrect(1);
-//                } else {
-//                    disableButtons();
-//                    time = stopwatch.elapsedTime();
-//                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-//                    comment.setVisibility(VISIBLE);
-//                }
+                guesses += 1;
+                if (guesses <= 10) {
+                    checkCorrect(1);
+                } else {
+                    disableButtons();
+                    time = stopwatch.elapsedTime();
+                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+                    comment.setVisibility(VISIBLE);
+                }
                 gameListener.btnGreenClicked();
             }
         }));
@@ -140,15 +140,15 @@ public class PlayGame extends Fragment {
         btnRed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                guesses += 1;
-//                if (guesses <= 10) {
-//                    checkCorrect(2);
-//                } else {
-//                    disableButtons();
-//                    time = stopwatch.elapsedTime();
-//                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-//                    comment.setVisibility(VISIBLE);
-//                }
+                guesses += 1;
+                if (guesses <= 10) {
+                    checkCorrect(2);
+                } else {
+                    disableButtons();
+                    time = stopwatch.elapsedTime();
+                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+                    comment.setVisibility(VISIBLE);
+                }
                 gameListener.btnRedClicked();
 
             }
@@ -157,15 +157,15 @@ public class PlayGame extends Fragment {
         btnBlue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                guesses += 1;
-//                if (guesses <= 10) {
-//                    checkCorrect(3);
-//                } else {
-//                    disableButtons();
-//                    time = stopwatch.elapsedTime();
-//                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-//                    comment.setVisibility(VISIBLE);
-//                }
+                guesses += 1;
+                if (guesses <= 10) {
+                    checkCorrect(3);
+                } else {
+                    disableButtons();
+                    time = stopwatch.elapsedTime();
+                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+                    comment.setVisibility(VISIBLE);
+                }
                 gameListener.btnBlueClicked();
 
             }
@@ -174,15 +174,15 @@ public class PlayGame extends Fragment {
         btnBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                guesses += 1;
-//                if (guesses <= 10) {
-//                    checkCorrect(4);
-//                } else {
-//                    disableButtons();
-//                    time = stopwatch.elapsedTime();
-//                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-//                    comment.setVisibility(VISIBLE);
-//                }
+                guesses += 1;
+                if (guesses <= 10) {
+                    checkCorrect(4);
+                } else {
+                    disableButtons();
+                    time = stopwatch.elapsedTime();
+                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+                    comment.setVisibility(VISIBLE);
+                }
 
                 gameListener.btnBlackClicked();
             }
