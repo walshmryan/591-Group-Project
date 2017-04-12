@@ -64,7 +64,6 @@ public class LoginActivity extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loginlistener.sendEmail((txtEmail.getText().toString()));
 
                 loginlistener.goToNewUserFragment();
             }

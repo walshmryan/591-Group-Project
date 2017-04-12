@@ -47,6 +47,9 @@
         <activity
             android:name="com.google.example.tbmpskeleton.MenuActivity"
             android:label="@string/title_activity_menu" />
+        <activity
+            android:name="com.google.example.tbmpskeleton.GameActivity"
+            android:label="GameActivity" />
     </application>
 
 </manifest>

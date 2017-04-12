@@ -42,14 +42,14 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     @Override
     public void goToNewUserFragment() {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        CreateNewUser newFragment = new CreateNewUser();
-//        String createNewUser = "create new user";
-//        transaction.replace(R.id.fragment_container, newFragment, createNewUser);
-//        transaction.addToBackStack(null);
-//
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CreateNewUser newFragment = new CreateNewUser();
+        String createNewUser = "create new user";
+        transaction.replace(R.id.main_frame, newFragment, createNewUser);
+        transaction.addToBackStack(null);
+
 //         Commit the transaction
-//        transaction.commit();
+        transaction.commit();
     }
 
     public void goToLoginFragment(String username, String password) {

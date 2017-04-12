@@ -1,43 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/lib/com.app.chasebank"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:id="@+id/login_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:visibility="visible" >
-
-        <!-- sign-in button -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_large"
-            android:text="@string/welcome_to_our_skeleton_app_"
-            android:textAppearance="@style/GuessWordText" />
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" >
-        </com.google.android.gms.common.SignInButton>
-    </LinearLayout>
+    android:layout_height="wrap_content"
+    tools:context="com.google.example.tbmpskeleton.GameActivity"
+    tools:showIn="@layout/app_bar_game"
+    android:id="@+id/drawer_game">
 
     <LinearLayout
         android:id="@+id/gameplay_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -47,7 +20,9 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:visibility="gone"
-        tools:context=".SkeletonActivity" >
+        tools:context=".SkeletonActivity"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
 
         <TextView
@@ -297,12 +272,14 @@
     <RelativeLayout
         android:id="@+id/matchup_layout"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:context=".SkeletonActivity" >
+        tools:context=".SkeletonActivity"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:id="@+id/secret_layout"
@@ -355,10 +332,12 @@
 
     <RelativeLayout
         android:id="@+id/progressLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#AAAAAAAA"
-        android:visibility="gone" >
+        android:visibility="gone"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <ProgressBar
             android:id="@+id/progress_dialog"
@@ -367,5 +346,37 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_width="368dp"
+        android:layout_height="152dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="193dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="182dp">
+
+        <!-- sign-in button -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_large"
+            android:text="@string/welcome_to_our_skeleton_app_"
+            android:textAppearance="@style/GuessWordText" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"></com.google.android.gms.common.SignInButton>
+    </LinearLayout>
 
 </RelativeLayout>
