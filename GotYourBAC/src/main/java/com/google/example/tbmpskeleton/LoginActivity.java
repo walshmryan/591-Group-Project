@@ -72,8 +72,8 @@ public class LoginActivity extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String username = "rmwalshy@gmail.com";
-                String password = "password";
+                String username = txtEmail.getText().toString();
+                String password = edtPassword.getText().toString();
 
                 loginlistener.goToLoginFragment(username, password);
             }

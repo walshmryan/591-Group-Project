@@ -12,7 +12,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.undergrads.ryan.R;
 
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +25,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
-
 import java.net.MalformedURLException;
 
 public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener {
@@ -36,6 +36,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
     final String firebaseTag = "firebase";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -56,6 +57,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -87,14 +89,12 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         }
     }
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, final String password, final String firstName, final String lastName, final int weight, final String gender) {
         Log.d(firebaseTag, "createAccount:" + email);
 //        if (!validateForm()) {
 //            return;
 //        }
 
-
-        // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -107,6 +107,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                         if (!task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         } else {
+                            writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender);
                             switchActivity();
                         }
 
@@ -134,18 +135,23 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                             Toast.makeText(MainActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                         } else {
+//                            writeNewUser(task.getResult().getUser(), "Ryan", "Walsh", 150, "Male");
                             switchActivity();
                         }
-
                     }
                 });
     }
-
 
     private void signOut() {
         mAuth.signOut();
     }
 
+    private void writeNewUser(FirebaseUser fUser, String firstName, String lastName, int weight, String gender) {
+
+        Users user = new Users(fUser.getEmail(), firstName, lastName, weight, gender);
+
+        mDatabase.child("users").child(fUser.getUid()).setValue(user);
+    }
 
     @Override
     public void goToNewUserFragment() {
@@ -162,8 +168,6 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
     public void goToLoginFragment(String username, String password) {
 
         signIn(username, password);
-
-//        new LoginCheck(this, i, mClient).execute(username,password);
 
 //        check user login information
 //        then go to main activity page
@@ -182,9 +186,6 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     public void switchActivity() {
         Intent i = new Intent(this, MenuActivity.class);
-        System.out.println("=================");
-        System.out.println("switching activity");
-        System.out.println("switching activity");
         startActivity(i);
     }
 }
