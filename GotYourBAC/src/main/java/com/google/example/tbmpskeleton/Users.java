@@ -1,25 +1,17 @@
 package com.google.example.tbmpskeleton;
 
-/**
- * Created by walsh on 3/30/17.
- */
-
 public class Users {
-    public String Id;
     public String username;
-    public String password;
-    public String firstname;
-    public String lastname;
+    public String firstName;
+    public String lastName;
+    public int weight;
+    public String gender;
 
-    public Users(String username, String password, String first, String last) {
+    public Users(String username, String first, String last, int weight, String gender) {
         this.username = username;
-        this.password = password;
-        this.firstname = first;
-        this.lastname = last;
-
-    }
-
-    public String getUsername() {
-        return username;
+        this.firstName = first;
+        this.lastName = last;
+        this.weight = weight;
+        this.gender = gender;
     }
 }

@@ -39,6 +39,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-common-10.2.1_b6ddce804325748ae42c69133667c6fa9575bd58.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -84,12 +93,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2a7ffe939ffd830b5d4052f3c1c4c235923790ce">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-connection-10.2.1_728aef902066faab105078f408b972d6d288bcc6.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="d38084015027549951cbaea5d5f6fb795cc81151">
         <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-transition-25.1.0_f1fafede5673e7bf1024f0bf8e0b91f06999a941.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-10.2.1_364ddfedecc77ad78fc3710c91f15f47fa8930c4.jar" />
     </item>
     <item
         is-multidex="false"
@@ -120,12 +147,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-10.0.1_544b2d223a0811f5b75dadd61f106564efcb8909.jar" />
+        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-10.2.1_cf2f6c82ed0665ac5a1f3928bfeec420855ff8ee.jar" />
     </item>
     <item
         is-multidex="false"
@@ -147,15 +174,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-10.0.1_76989e3894ee4e4c5e55881ca7a3c84f801a76c4.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -165,12 +183,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.0.1_d369c1ffeb4819d0dd12b7ad71b032e086607d6b.jar" />
+        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-10.2.1_34a336319b599d5f0806623563ff5d83f57c9c8c.jar" />
     </item>
     <item
         is-multidex="false"
@@ -228,6 +246,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="888983f51cf34f57a93ff16832552f2f15937212">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-10.2.1_6d0670d117840a66ee0ca116c2809f47d3556741.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/SkeletonTbmp/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -255,6 +282,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="12032271e6be735e811ad529cb08ff066c381640">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-base-10.2.1_19d6e6b1cd14fad9a7ccd113eb86459b768b6ff6.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -279,6 +315,15 @@
         revision="25.0.1"
         sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
         <dex dex="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/SkeletonTbmp/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_a4f18b26732aadce90fdf636abb54f5797cfc13b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-10.2.1_bf1e4a1c46cd5ecac5d35af078e5cf2014d7ac64.jar" />
     </item>
     <item
         is-multidex="false"
@@ -354,6 +399,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-iid-10.2.1_56105386ca265715ef2e16610f43486eefdf1e9f.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/SkeletonTbmp/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -369,15 +423,6 @@
         revision="25.0.1"
         sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
         <dex dex="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.0.1_64a9e165d11ebffd90f869dc7df5c2eaebcbc0a7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.microsoft.azure/azure-mobile-android/3.2.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b5ed05574ca7f8eeba9980f82e7acdd610f1b44b">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.microsoft.azure-azure-mobile-android-3.2.0_88649b83b35db4f223c8bfb1da26c95121ad642f.jar" />
     </item>
     <item
         is-multidex="false"
@@ -426,6 +471,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.2.1_c27b2e324f55b013b08aaf4b8d390e8d1e7e8449.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -459,6 +513,15 @@
         revision="25.0.1"
         sha1="0379312a1d5eeabb5c090eae9209ce9390c90942">
         <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/BasicSamples.libraries-BaseGameUtils-unspecified_437583067112af0b849216798515dd4b8d2520de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="25f55515117e14a658120a7b01a9ea5170409db4">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-10.2.1_76b9aca6a4d707c6c1816231815cd7458da15fc5.jar" />
     </item>
     <item
         is-multidex="false"
@@ -507,15 +570,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/walsh/.gradle/caches/modules-2/files-2.1/com.microsoft.azure/azure-notifications-handler/1.0.1/c322af100020e6db539f2aa367698d4b88fc453f/azure-notifications-handler-1.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c322af100020e6db539f2aa367698d4b88fc453f">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/azure-notifications-handler-1.0.1_fc349d1464eb20cc286f635661b97a0d6553cc0f.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/SkeletonTbmp/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -525,12 +579,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jar="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_b7e727dd95d1b398d2bce94b1db8bd8efc344bb3.jar" />
+        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/group-app/android-basic-samples/BasicSamples/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-10.2.1_8e2c242c3eae7f63c5894435c4be520d4d851655.jar" />
     </item>
     <item
         is-multidex="false"
@@ -540,6 +594,15 @@
         revision="25.0.1"
         sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
         <dex dex="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/SkeletonTbmp/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-10.0.1_a013c56579cda309b1571dad49273415b0a21638.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/walsh/Documents/School/Senior/App/Research-Project/android-basic-samples/BasicSamples/TypeANumber/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_b7e727dd95d1b398d2bce94b1db8bd8efc344bb3.jar" />
     </item>
 
 </items>

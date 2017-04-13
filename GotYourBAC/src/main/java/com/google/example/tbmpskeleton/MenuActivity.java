@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import com.undergrads.ryan.R;
 public class MenuActivity extends AppCompatActivity
@@ -35,6 +36,8 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
     }
 
     @Override
