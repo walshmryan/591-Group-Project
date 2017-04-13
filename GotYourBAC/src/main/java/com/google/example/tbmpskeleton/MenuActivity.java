@@ -94,10 +94,12 @@ public class MenuActivity extends AppCompatActivity
         }else if (id == R.id.nav_games) {
 //          go to games page
 //            SkeletonActivity fragment = new SkeletonActivity();
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.frame_layout, fragment)
-//                    .commit();
+            PlayGame fragment = new PlayGame();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack("game")
+                    .commit();
         } else if (id == R.id.nav_ice) {
 //          go to ice page
         } else if (id == R.id.nav_manage) {
@@ -114,4 +116,23 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        for (PlayGame fragment : getFragmentManager().ge) {
+//            fragment.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // find your fragment as you need, here is by id
+//
+//        // Pass the activity result to the fragment
+//        PlayGame fragment = new PlayGame();
+//        FragmentManager fragmentManager = getFragmentManager().findFragmentById(R.id.frame_layout);
+//        if (fragment != null) {
+//            fragment.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
 }

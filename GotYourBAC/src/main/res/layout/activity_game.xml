@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.google.example.tbmpskeleton.GameActivity"
+    tools:context="com.google.example.tbmpskeleton.SkeletonActivity"
     tools:showIn="@layout/app_bar_game"
     android:id="@+id/drawer_game">
 
@@ -196,7 +196,7 @@
 
 
             <TextView
-                android:id="@+id/txtView2"
+                android:id="@+id/txtWord2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Word2"
@@ -209,7 +209,7 @@
                 app:layout_constraintVertical_bias="0.347" />
 
             <TextView
-                android:id="@+id/txtView4"
+                android:id="@+id/txtWord4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Word4"
@@ -223,7 +223,7 @@
                 app:layout_constraintVertical_bias="0.543" />
 
             <TextView
-                android:id="@+id/txtView3"
+                android:id="@+id/txtWord3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Word3"
@@ -237,7 +237,7 @@
                 app:layout_constraintVertical_bias="0.543" />
 
             <TextView
-                android:id="@+id/txtView0"
+                android:id="@+id/txtWord0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Word0"
@@ -251,7 +251,7 @@
                 app:layout_constraintVertical_bias="0.138" />
 
             <TextView
-                android:id="@+id/txtView1"
+                android:id="@+id/txtWord1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Word1"

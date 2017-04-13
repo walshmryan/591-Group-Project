@@ -62,7 +62,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
         Intent i = new Intent(this, MenuActivity.class);
 
-        new LoginCheck(this, i, mClient).execute(username,password);
+        new LoginCheck(this, i, mClient).execute(username, password);
 
 //        check user login information
 //        then go to main activity page
@@ -78,4 +78,5 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 //            transaction.remove(newUserFragment).commit();
 //        }
     }
+
 }

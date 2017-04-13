@@ -50,6 +50,7 @@
         android:layout_toStartOf="@+id/btnWinePlus"
         android:src="@drawable/hardalcohol" />
 
+
     <ImageButton
         android:id="@+id/btnBeerPlus"
         android:layout_width="wrap_content"
