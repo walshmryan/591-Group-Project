@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "479703936056",
+    "firebase_url": "https://group-app-ryan-1053553.firebaseio.com",
+    "project_id": "group-app-ryan-1053553",
+    "storage_bucket": "group-app-ryan-1053553.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479703936056:android:ee7bdb2ad4465da8",
+        "android_client_info": {
+          "package_name": "com.undergrads.ryan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479703936056-ev6vmikc6n4r89qs1vgeihpkv4t3rn8a.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "479703936056-8et8uffkdf9roegbab1v8q1l2mokph4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.undergrads.ryan",
+            "certificate_hash": "17c584892205bad4f489305b40f981cd2dff7379"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9rvYKkrCFRaozoamNQ8SOBF3SaNOLC2Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479703936056-ev6vmikc6n4r89qs1vgeihpkv4t3rn8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
