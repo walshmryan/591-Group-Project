@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.math.DoubleMath;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +28,8 @@ import android.view.View;
 import android.widget.Toast;
 import java.net.MalformedURLException;
 
-public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener {
+public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener,
+        CreateNewUser.newUserListener {
 
     //    Login loginFragment;
     String loginTag = "login screen";
@@ -169,23 +171,16 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
         signIn(username, password);
 
-//        check user login information
-//        then go to main activity page
-//        String loginTag = "login screen";
-//        String createNewUser = "create new user";
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        Fragment loginFragment = getSupportFragmentManager().findFragmentByTag(loginTag);
-//        if (loginFragment!= null){
-//            transaction.remove(loginFragment).commit();
-//        }
-//        Fragment newUserFragment = getSupportFragmentManager().findFragmentByTag(createNewUser);
-//        if (newUserFragment != null){
-//            transaction.remove(newUserFragment).commit();
-//        }
     }
 
     public void switchActivity() {
         Intent i = new Intent(this, MenuActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void goToCreateNew(String email, String password, String firstName, String lastName, String weight, String gender) {
+        int w = Integer.parseInt(weight);
+        createAccount(email,password,firstName,lastName,w,gender);
     }
 }

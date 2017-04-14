@@ -19,6 +19,7 @@ public class LoginActivity extends Fragment {
     Button btnRegister;
     EditText edtPassword;
     AutoCompleteTextView txtEmail;
+    EditText edtFirstName;
 
     public LoginActivity() {
         // Required empty public constructor
@@ -52,19 +53,10 @@ public class LoginActivity extends Fragment {
         txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
         edtPassword = (EditText) v.findViewById(R.id.edtPassword);
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 3/31/17
-                //check email and password
-                //switch to logged on screen
 
-            }
-        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 loginlistener.goToNewUserFragment();
             }
         });
