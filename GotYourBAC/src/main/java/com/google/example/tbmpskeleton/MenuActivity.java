@@ -68,6 +68,14 @@ public class MenuActivity extends AppCompatActivity
 
         }
 
+        EditUser fragment = new EditUser();
+        String editUser = "Edit User";
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(editUser)
+                .commit();
+
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
     }
 

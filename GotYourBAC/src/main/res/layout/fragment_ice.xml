@@ -9,14 +9,17 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="62dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/emergency_contact"
         android:textAppearance="@style/Heading"
         app:layout_constraintBottom_toTopOf="@+id/viewswitcherName"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView4"
@@ -24,8 +27,10 @@
         android:layout_height="wrap_content"
         android:text="@string/ice_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="215dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="215dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
@@ -33,69 +38,29 @@
         android:layout_height="wrap_content"
         android:text="@string/phone_number"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="313dp" />
-
-    <ViewSwitcher
-
-        android:id="@+id/viewswitcherName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="215dp">
-
-        <TextView
-            android:id="@+id/txtName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textAlignment="textStart" />
-
-        <EditText
-            android:id="@+id/edtName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="textPersonName" />
-
-    </ViewSwitcher>
-
-    <ViewSwitcher
-
-        android:id="@+id/viewswitcherPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintLeft_toRightOf="@+id/textView5"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.232"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="@string/update"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewswitcherName"
-        app:layout_constraintVertical_bias="0.188">
-
-        <TextView
-            android:id="@+id/txtPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone" />
-
-        <EditText
-            android:id="@+id/edtPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="phone" />
-
-    </ViewSwitcher>
+        app:layout_constraintHorizontal_bias="0.971" />
 
     <ViewSwitcher
         android:id="@+id/viewSwitcherSave"
@@ -106,9 +71,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewswitcherPhone">
+        app:layout_constraintTop_toBottomOf="@+id/viewswitcherPhone"
+        app:layout_constraintVertical_bias="0.87">
 
 
         <Button
@@ -137,12 +104,66 @@
 
 
     </ViewSwitcher>
-    <Button
-        android:id="@+id/btnUpdate"
+
+    <ViewSwitcher
+
+        android:id="@+id/viewswitcherName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="@string/update"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        tools:layout_editor_absoluteX="280dp" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="215dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/textView4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textAlignment="textStart" />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="First Name"
+            android:inputType="textPersonName" />
+
+    </ViewSwitcher>
+
+    <ViewSwitcher
+
+        android:id="@+id/viewswitcherPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/textView5"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewswitcherName"
+        app:layout_constraintVertical_bias="0.188">
+
+        <TextView
+            android:id="@+id/txtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone" />
+
+        <EditText
+            android:id="@+id/edtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="phone" />
+
+    </ViewSwitcher>
 </android.support.constraint.ConstraintLayout>

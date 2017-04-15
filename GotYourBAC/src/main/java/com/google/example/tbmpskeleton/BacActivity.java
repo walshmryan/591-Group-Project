@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.undergrads.ryan.R;
 
 import java.text.DecimalFormat;
@@ -29,6 +36,10 @@ public class BacActivity extends Fragment{
     private int totalBeer = 0;
     private int total = 0;
     private Stopwatch stopwatch;
+    private DatabaseReference mUserReference;
+    private DatabaseReference mUserKey;
+    private int gender;
+    private int weight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +60,28 @@ public class BacActivity extends Fragment{
         btnHardAlcoholMinus.setEnabled(false);
         btnWineMinus.setEnabled(false);
 
+        String uId = getUid();
+        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user information
+                        Users user = dataSnapshot.getValue(Users.class);
+//                        String currentUser = user.username;
+                        weight = user.weight;
+                        String g = user.gender;
+                        if (g=="Male"){
+                            gender = 0;
+                        }else{
+                            gender = 1;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("error","bad");
+                    }
+                });
 
 
         btnWineMinus.setOnClickListener(new OnClickListener() {
@@ -62,7 +95,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
 
         }});
         btnWinePlus.setOnClickListener(new OnClickListener() {
@@ -75,7 +108,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
 
             }});
 
@@ -90,7 +123,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
 
             }});
         btnHardAlcoholPlus.setOnClickListener(new OnClickListener() {
@@ -103,7 +136,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
             }});
 
         btnBeerMinus.setOnClickListener(new OnClickListener() {
@@ -117,7 +150,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
             }});
         btnBeerPlus.setOnClickListener(new OnClickListener() {
             @Override
@@ -129,7 +162,7 @@ public class BacActivity extends Fragment{
 //                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(120,1);
+                calculateBAC(weight,gender);
             }});
         return v;
     }
@@ -189,5 +222,9 @@ public class BacActivity extends Fragment{
         }
         total =  totalBeer + totalHard + totalWine;
     }
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
 }
 //Subtract approximately 0.01 every 40 minutes after drinking.
