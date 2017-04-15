@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.undergrads.ryan.R;
+
+import org.w3c.dom.Text;
 
 
 public class LoginActivity extends Fragment {
@@ -20,6 +23,7 @@ public class LoginActivity extends Fragment {
     EditText edtPassword;
     AutoCompleteTextView txtEmail;
     EditText edtFirstName;
+    TextView txtForgotPassword;
 
     public LoginActivity() {
         // Required empty public constructor
@@ -28,7 +32,7 @@ public class LoginActivity extends Fragment {
     public interface LoginListener{
         public void goToNewUserFragment();
         public void goToLoginFragment(String username, String password);
-//        public void sendEmail(String email);
+        public  void goToRetrievePassword(String email);
     }
 
     LoginListener loginlistener;
@@ -52,7 +56,7 @@ public class LoginActivity extends Fragment {
         btnRegister = (Button) v.findViewById(R.id.btnRegister);
         txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
         edtPassword = (EditText) v.findViewById(R.id.edtPassword);
-
+        txtForgotPassword = (TextView)v.findViewById(R.id.txtForgotPW);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +72,13 @@ public class LoginActivity extends Fragment {
                 String password = edtPassword.getText().toString();
 
                 loginlistener.goToLoginFragment(username, password);
+            }
+        });
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = txtEmail.getText().toString();
+                loginlistener.goToRetrievePassword(username);
             }
         });
         return v;

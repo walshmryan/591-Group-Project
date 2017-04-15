@@ -183,4 +183,15 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         int w = Integer.parseInt(weight);
         createAccount(email,password,firstName,lastName,w,gender);
     }
+    public void goToRetrievePassword(String email){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ForgotPassword newFragment = new ForgotPassword();
+        String forgotpw = "forgot password";
+        transaction.replace(R.id.main_frame, newFragment, forgotpw);
+        transaction.addToBackStack(null);
+
+//         Commit the transaction
+        transaction.commit();
+    }
+
 }
