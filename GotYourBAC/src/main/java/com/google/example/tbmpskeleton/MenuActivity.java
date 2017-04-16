@@ -68,12 +68,12 @@ public class MenuActivity extends AppCompatActivity
 
         }
 
-        EditUser fragment = new EditUser();
-        String editUser = "Edit User";
+        HomeFragment fragment = new HomeFragment();
+        String homeFrag = "Home Screen";
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, fragment)
-                .addToBackStack(editUser)
+                .addToBackStack(homeFrag)
                 .commit();
 
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
@@ -126,11 +126,17 @@ public class MenuActivity extends AppCompatActivity
                     .addToBackStack(bac)
                     .commit();
         }else if(id == R.id.nav_home){
+            HomeFragment fragment = new HomeFragment();
+            String homeFrag = "Home Screen";
             FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(homeFrag)
+                    .commit();
 
-            for(int i=0;i < fragmentManager.getBackStackEntryCount();i++){
-                fragmentManager.popBackStack();
-            }
+//            for(int i=0;i < fragmentManager.getBackStackEntryCount();i++){
+//                fragmentManager.popBackStack();
+//            }
 
 //            http://stackoverflow.com/questions/30551939/correct-way-to-remove-all-child-fragments
         }else if (id == R.id.nav_games) {

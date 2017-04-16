@@ -169,7 +169,8 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     public void goToLoginFragment(String username, String password) {
 
-        signIn(username, password);
+        switchActivity();
+//        signIn(username, password);
 
     }
 

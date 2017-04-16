@@ -18,12 +18,10 @@ import java.net.URL;
 
 public class Weather extends AsyncTask<String,Void,String> {
 
-    private Context context;
     private TextView tempView;
 
 
-    public Weather(Context context, TextView tempView) {
-        this.context = context;
+    public Weather(TextView tempView) {
         this.tempView = tempView;
 
     }
