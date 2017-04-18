@@ -6,7 +6,7 @@ public class Users {
     private String lastName;
     private int weight;
     private String gender;
-    private ContactInfo info;
+    private ContactInfo ice;
 
     public Users(){};
 
@@ -27,6 +27,8 @@ public class Users {
     public int getWeight() { return weight; }
 
     public String getGender() { return gender; }
+
+    public ContactInfo getICE() { return ice; }
 
 
 }

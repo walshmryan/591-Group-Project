@@ -50,17 +50,8 @@ public class FragmentICE extends Fragment {
                 viewswitcherName.showNext();
                 viewswitcherPhone.showNext();
 
-                mAuth = FirebaseAuth.getInstance();
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                String uId = mAuth.getCurrentUser().getUid();
-
-                ContactInfo contact = new ContactInfo(uId, "MyHero", "9785053165");
-
-                DatabaseReference usersRef = mDatabase.child("users").child(uId);
-                Map<String, Object> userUpdate = new HashMap<String, Object>();
-                userUpdate.put("info", contact);
-
-                usersRef.updateChildren(userUpdate);
+                FirebaseCall fb = new FirebaseCall();
+                fb.updateContactInfo("MyHero", "9785051388");
 
             }
         });

@@ -53,15 +53,8 @@ public class HomeFragment extends Fragment{
         final String uId = mAuth.getCurrentUser().getUid();
 
 
-        Scores score = new Scores(uId, 20.0, "Stroop");
-        Scores score1 = new Scores(uId, 60.0, "Stroop");
-
-        DatabaseReference postsRef = mDatabase.child("scores");
-        DatabaseReference newPostRef = postsRef.push();
-//        newPostRef.setValue(score);
-
-        newPostRef = postsRef.push();
-//        newPostRef.setValue(score1);
+//        FirebaseCall fb = new FirebaseCall();
+//        fb.postScore(80.0, "Stroop");
 
         FirebaseDatabase.getInstance().getReference().child("scores").orderByChild("timestamp")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,8 +90,6 @@ public class HomeFragment extends Fragment{
         else if(index == 2) {
             score3.setText(score);
         }
-
     }
-
 }
 
