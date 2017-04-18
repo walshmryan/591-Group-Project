@@ -15,7 +15,7 @@ public class Scores {
         this.userId = userId;
         this.score = score;
         this.gameType = gameType;
-        timestamp = DateFormat.getDateTimeInstance().format(new Date());
+        this.timestamp = DateFormat.getDateTimeInstance().format(new Date());
 
     };
 
@@ -26,5 +26,9 @@ public class Scores {
     public String getGameType() {
         return gameType;
     }
+
+    public String getUserId() { return userId; }
+
+    public String getTimestamp() { return timestamp; }
 
 }

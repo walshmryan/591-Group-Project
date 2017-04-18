@@ -68,8 +68,8 @@ public class BacActivity extends Fragment{
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
 //                        String currentUser = user.username;
-                        weight = user.weight;
-                        String g = user.gender;
+                        weight = user.getWeight();
+                        String g = user.getGender();
                         if (g=="Male"){
                             gender = 0;
                         }else{

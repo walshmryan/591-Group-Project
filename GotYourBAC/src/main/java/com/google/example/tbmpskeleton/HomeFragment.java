@@ -38,8 +38,8 @@ public class HomeFragment extends Fragment{
         temperature = (TextView) v.findViewById(R.id.temperature) ;
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
         score1 = (TextView) v.findViewById(R.id.score1);
-        score2 = (TextView) v.findViewById(R.id.score1);
-        score3 = (TextView) v.findViewById(R.id.score1);
+        score2 = (TextView) v.findViewById(R.id.score2);
+        score3 = (TextView) v.findViewById(R.id.score3);
 
         // get current location
         city = "Boston";
@@ -50,18 +50,18 @@ public class HomeFragment extends Fragment{
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        String uId = mAuth.getCurrentUser().getUid();
+        final String uId = mAuth.getCurrentUser().getUid();
 
 
-        Scores score = new Scores(uId, 90.0, "Stroop");
-        Scores score1 = new Scores(uId, 80.0, "Stroop");
+        Scores score = new Scores(uId, 20.0, "Stroop");
+        Scores score1 = new Scores(uId, 60.0, "Stroop");
 
         DatabaseReference postsRef = mDatabase.child("scores");
         DatabaseReference newPostRef = postsRef.push();
-        newPostRef.setValue(score);
+//        newPostRef.setValue(score);
 
         newPostRef = postsRef.push();
-        newPostRef.setValue(score1);
+//        newPostRef.setValue(score1);
 
         FirebaseDatabase.getInstance().getReference().child("scores").orderByChild("timestamp")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -70,8 +70,10 @@ public class HomeFragment extends Fragment{
                         int count = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
-                            postScore(score, count);
-                            count++;
+                            if(score.getUserId().equals(uId)) {
+                                postScore(score, count);
+                                count++;
+                            }
                         }
                     }
 
@@ -80,7 +82,6 @@ public class HomeFragment extends Fragment{
                         Log.i("error","bad");
                     }
                 });
-
 
         return v;
     }

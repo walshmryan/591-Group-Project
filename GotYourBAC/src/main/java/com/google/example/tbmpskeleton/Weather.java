@@ -46,7 +46,6 @@ public class Weather extends AsyncTask<String,Void,String> {
                 try {
                     JSONObject json = new JSONObject(s);
                     JSONObject j = (JSONObject) json.get("current_observation");
-                    System.out.println(j.get("temperature_string"));
                     return j.getString("temperature_string");
 
                 } catch (JSONException e) {

@@ -1,8 +1,5 @@
 package com.google.example.tbmpskeleton;
 
-/**
- * Created by sarahmedeiros on 4/14/17.
- */
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,20 +8,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ViewSwitcher;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.undergrads.ryan.R;
 
-//import com.undergrads.ryan.R;
+import java.util.HashMap;
+import java.util.Map;
 
 
-    /**
-     * A simple {@link Fragment} subclass.
-     */
 public class FragmentICE extends Fragment {
     Button btnUpdate;
     Button btnSendText;
     Button btnSave;
     ViewSwitcher viewswitcherName;
     ViewSwitcher viewswitcherPhone;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     public FragmentICE() {
         // Required empty public constructor
@@ -48,14 +49,29 @@ public class FragmentICE extends Fragment {
             public void onClick(View v) {
                 viewswitcherName.showNext();
                 viewswitcherPhone.showNext();
+
+                mAuth = FirebaseAuth.getInstance();
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                String uId = mAuth.getCurrentUser().getUid();
+
+                ContactInfo contact = new ContactInfo(uId, "MyHero", "9785053165");
+
+                DatabaseReference usersRef = mDatabase.child("users").child(uId);
+                Map<String, Object> userUpdate = new HashMap<String, Object>();
+                userUpdate.put("info", contact);
+
+                usersRef.updateChildren(userUpdate);
+
             }
         });
+
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewSwitcherSave.showNext();
             }
         });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
