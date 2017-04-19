@@ -1,6 +1,7 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class BacActivity extends Fragment{
     private ImageButton btnHardAlcoholPlus;
     private TextView txtNumDrinks;
     private TextView txtBAC;
+    private TextView txtBAClabel;
     private int totalHard = 0;
     private int totalWine = 0;
     private int totalBeer = 0;
@@ -55,6 +57,7 @@ public class BacActivity extends Fragment{
         btnWineMinus = (ImageButton) v.findViewById(R.id.btnWineMinus);
         txtNumDrinks = (TextView) v.findViewById(R.id.txtNumDrinks);
         txtBAC = (TextView) v.findViewById(R.id.txtBAC);
+        txtBAClabel = (TextView)v.findViewById(R.id.txtBAC_label);
 
         // disable minus buttons for start
         btnBeerMinus.setEnabled(false);
@@ -195,7 +198,7 @@ public class BacActivity extends Fragment{
 //          http://www.teamdui.com/bac-widmarks-formula/
         double liqWeight = 5.14;
         double avgAlcoholEliminationRate = .015;
-        DecimalFormat dcmFormatter = new DecimalFormat("0.###");
+        DecimalFormat dcmFormatter = new DecimalFormat("0.##");
         double num = (gOfWineConsumed() + gOfHardAlcoholConsumed() + gOfBeerConsumed())*liqWeight;
         double den = weight*genderToGenderConstant(gender);
         double bac = 0;
@@ -207,6 +210,7 @@ public class BacActivity extends Fragment{
         }
 
         txtBAC.setText(dcmFormatter.format(bac) + "%");
+        setBACtxtColor(bac);
 
     }
     public int getTotal(){
@@ -230,5 +234,16 @@ public class BacActivity extends Fragment{
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    public void setBACtxtColor(double bac)
+    {
+//        warn users based on their bac how drunk they are
+        if (bac > .02 && bac <= .07){
+            txtBAC.setTextColor(getResources().getColor(R.color.green));
+        }else if (bac > .07 && bac <= .19){
+            txtBAC.setTextColor(getResources().getColor(R.color.yellow));
+        }else{
+            txtBAC.setTextColor(getResources().getColor(R.color.red));
+        }
+    }
 }
 //Subtract approximately 0.01 every 40 minutes after drinking.
