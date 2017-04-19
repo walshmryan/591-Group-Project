@@ -22,7 +22,11 @@ import com.undergrads.ryan.R;
 
 import java.text.DecimalFormat;
 
-
+/**
+ * Calculate the blood alcohol content
+ *  level of a user based on their weight and
+ *  gender
+ */
 public class BacActivity extends Fragment{
     private ImageButton btnBeerMinus;
     private ImageButton btnHardAlcoholMinus;

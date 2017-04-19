@@ -22,7 +22,7 @@ import com.undergrads.ryan.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment to edit existing user
  */
 public class EditUser extends Fragment {
 
@@ -30,12 +30,15 @@ public class EditUser extends Fragment {
     TextView txtLastName;
     TextView txtWeight;
     TextView txtEmail;
+
     EditText edtFirstName;
     EditText edtLastName;
     EditText edtWeight;
     EditText edtEmail;
-    Button btnCreateUser;
+
+    Button btnUpdateUser;
     Button btnSave;
+
     ViewSwitcher viewSwitcherBtn;
     ViewSwitcher viewSwitcherFirst;
     ViewSwitcher viewSwitcherLast;
@@ -46,16 +49,17 @@ public class EditUser extends Fragment {
     String last;
     String email;
     String gender;
+
     public EditUser() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_edit_user, container, false);
+//    initialize variables
         txtFirstName = (TextView)v.findViewById(R.id.txtFirstName);
         txtLastName = (TextView)v.findViewById(R.id.txtLastName);
         txtWeight = (TextView)v.findViewById(R.id.txtWeight);
@@ -64,7 +68,7 @@ public class EditUser extends Fragment {
         edtLastName = (EditText)v.findViewById(R.id.edtLastName);
         edtWeight = (EditText)v.findViewById(R.id.edtWeight);
         edtEmail = (EditText)v.findViewById(R.id.edtUsername);
-        btnCreateUser = (Button)v.findViewById(R.id.btnCreateUser);
+        btnUpdateUser = (Button)v.findViewById(R.id.btnUpdateUser);
         btnSave = (Button)v.findViewById(R.id.btnSaveUser);
         viewSwitcherBtn = (ViewSwitcher)v.findViewById(R.id.viewSwitcherBtn);
         viewSwitcherEmail = (ViewSwitcher)v.findViewById(R.id.viewSwitcherEmail);
@@ -72,19 +76,22 @@ public class EditUser extends Fragment {
         viewSwitcherLast = (ViewSwitcher)v.findViewById(R.id.viewSwitcherLast);
         viewSwitcherWeight = (ViewSwitcher)v.findViewById(R.id.viewSwitcherWeight);
 
-        String uId = getUid();
+        String uId = getUid(); //get user id
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
+                        //get current user values from the database
                         gender = user.gender;
                         first = user.firstName;
                         last = user.lastName;
                         email = user.username;
                         int userWeight = user.weight;
 
+//                      set the text view and edit view values from the stored
+//                       database values
                         txtFirstName.setText(first);
                         txtLastName.setText(last);
                         txtEmail.setText(email);
@@ -101,10 +108,11 @@ public class EditUser extends Fragment {
                         Log.i("error","bad");
                     }
                 });
-//
-        btnCreateUser.setOnClickListener(new View.OnClickListener() {
+
+        btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                user wants to update the values so switch to edit text views
                 viewSwitcherFirst.showNext();
                 viewSwitcherLast.showNext();
                 viewSwitcherEmail.showNext();
@@ -115,7 +123,6 @@ public class EditUser extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 //                save values to database
 //                get the weight from the edit box -string
 //                udate the database - int
@@ -123,10 +130,12 @@ public class EditUser extends Fragment {
                 String w = edtWeight.getText().toString();
                 int intW = Integer.parseInt(w);
                 writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
+//                update text views
                 txtFirstName.setText(edtFirstName.getText().toString());
                 txtLastName.setText(edtLastName.getText().toString());
                 txtEmail.setText(edtEmail.getText().toString());
                 txtWeight.setText(w+"");
+//              now that you saved the values switch back to text views
                 viewSwitcherFirst.showNext();
                 viewSwitcherLast.showNext();
                 viewSwitcherEmail.showNext();
@@ -137,6 +146,7 @@ public class EditUser extends Fragment {
 //
         return v;
     }
+//    get user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
