@@ -46,17 +46,11 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FirebaseApp.initializeApp(MainActivity.this);
-
-//        String loginTag = "login screen";
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();
         fragmentTransaction.add(R.id.main_frame, fragment, loginTag);
         fragmentTransaction.commit();
-
-//        loginFragment = (Login) findFragmentById(R.layout.fragment_login);
-
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
