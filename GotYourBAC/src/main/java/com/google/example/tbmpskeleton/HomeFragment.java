@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        temperature = (TextView) v.findViewById(R.id.temperature) ;
+        temperature = (TextView) v.findViewById(R.id.temperature);
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
         score1 = (TextView) v.findViewById(R.id.score1);
         score2 = (TextView) v.findViewById(R.id.score2);

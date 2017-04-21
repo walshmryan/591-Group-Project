@@ -1,6 +1,7 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,10 +19,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.undergrads.ryan.R;
 
 import android.support.v4.app.FragmentActivity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentTransaction;
+//import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -29,7 +32,7 @@ import android.widget.Toast;
 import java.net.MalformedURLException;
 
 public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener,
-        CreateNewUser.newUserListener {
+        CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener {
 
     //    Login loginFragment;
     String loginTag = "login screen";
@@ -47,7 +50,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         setContentView(R.layout.activity_main);
 
 //        String loginTag = "login screen";
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();
         fragmentTransaction.add(R.id.main_frame, fragment, loginTag);
@@ -105,7 +108,14 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                             Toast.makeText(MainActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         } else {
                             writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender);
-                            switchActivity();
+                            //switchActivity();
+
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            CreateICEFragment newFragment = new CreateICEFragment();
+                            String createNewUser = "create new user";
+                            transaction.replace(R.id.main_frame, newFragment, createNewUser);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
 
                     }
@@ -132,7 +142,6 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                             Toast.makeText(MainActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                         } else {
-//                            writeNewUser(task.getResult().getUser(), "Ryan", "Walsh", 150, "Male");
                             switchActivity();
                         }
                     }
@@ -152,7 +161,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     @Override
     public void goToNewUserFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         CreateNewUser newFragment = new CreateNewUser();
         String createNewUser = "create new user";
         transaction.replace(R.id.main_frame, newFragment, createNewUser);
@@ -169,9 +178,19 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     }
 
+    @Override
     public void switchActivity() {
         Intent i = new Intent(this, MenuActivity.class);
         startActivity(i);
+    }
+
+    public void goToICE() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        BacActivity newFragment = new BacActivity();
+        String createNewUser = "create new user";
+        transaction.replace(R.id.main_frame, newFragment, createNewUser);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -180,7 +199,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         createAccount(email,password,firstName,lastName,w,gender);
     }
     public void goToRetrievePassword(String email){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         ForgotPassword newFragment = new ForgotPassword();
         String forgotpw = "forgot password";
         transaction.replace(R.id.main_frame, newFragment, forgotpw);

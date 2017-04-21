@@ -65,8 +65,17 @@ public class MenuActivity extends AppCompatActivity
             TextView nav_user_email = (TextView)hView.findViewById(R.id.txtEmail);
 //            nav_user.setText(name);
             nav_user_email.setText(email);
-
         }
+
+        HomeFragment fragment = new HomeFragment();
+        String homeFrag = "Home Screen";
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(homeFrag)
+                .commit();
+
+        Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
     }
 
     @Override

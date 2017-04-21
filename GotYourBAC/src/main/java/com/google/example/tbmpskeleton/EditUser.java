@@ -79,11 +79,11 @@ public class EditUser extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
-                        gender = user.gender;
-                        first = user.firstName;
-                        last = user.lastName;
-                        email = user.username;
-                        int userWeight = user.weight;
+                        gender = user.getGender();
+                        first = user.getFirstName();
+                        last = user.getLastName();
+                        email = user.getUsername();
+                        int userWeight = user.getWeight();
 
                         txtFirstName.setText(first);
                         txtLastName.setText(last);
