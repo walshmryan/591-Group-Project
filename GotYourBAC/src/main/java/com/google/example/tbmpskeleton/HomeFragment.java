@@ -14,10 +14,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.undergrads.ryan.R;
 
+import java.util.Arrays;
 
-public class HomeFragment extends Fragment{
+
+public class HomeFragment extends Fragment {
 
     private TextView temperature;
     private TextView weatherForCity;
@@ -44,17 +47,25 @@ public class HomeFragment extends Fragment{
         // get current location
         city = "Boston";
 
+
+        /*
+
+         Hits Wunderground API for temperature
+
+         */
         weatherForCity.setText("Here's your weather for " + city + " today:");
         new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
 
 
+
+        /*
+
+         Fetches top scores from DB and displays them
+
+         */
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final String uId = mAuth.getCurrentUser().getUid();
-
-
-//        FirebaseCall fb = new FirebaseCall();
-//        fb.postScore(80.0, "Stroop");
 
         FirebaseDatabase.getInstance().getReference().child("scores").orderByChild("timestamp")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -63,7 +74,7 @@ public class HomeFragment extends Fragment{
                         int count = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
-                            if(score.getUserId().equals(uId)) {
+                            if (score.getUserId().equals(uId)) {
                                 postScore(score, count);
                                 count++;
                             }
@@ -72,7 +83,7 @@ public class HomeFragment extends Fragment{
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.i("error","bad");
+                        Log.i("error", "bad");
                     }
                 });
 
@@ -81,15 +92,14 @@ public class HomeFragment extends Fragment{
 
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
-        if(index == 0) {
+        if (index == 0) {
             score1.setText(score);
-        }
-        else if(index == 1) {
+        } else if (index == 1) {
             score2.setText(score);
-        }
-        else if(index == 2) {
+        } else if (index == 2) {
             score3.setText(score);
         }
     }
+
 }
 
