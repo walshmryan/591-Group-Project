@@ -1,130 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/screen_gameplay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/screen_gameplay"
     android:gravity="center"
-    android:padding="20dp">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <ImageButton
-        android:id="@+id/btnBeerMinus"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnWineMinus"
-        android:layout_alignTop="@+id/imgBeer"
-        android:src="@drawable/remove" />
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imgWine"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/wine"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/blood_alcohol_content_calulator"
+            android:textAlignment="center"
+            android:textAppearance="@style/Heading" />
 
-    <ImageButton
-        android:id="@+id/btnHardAlcoholMinus"
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnBeerMinus"
-        android:layout_alignTop="@+id/btnHardAlcoholPlus"
-        android:src="@drawable/remove" />
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <ImageView
-        android:id="@+id/imgBeer"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_alignStart="@+id/imgHardAlcohol"
-        android:layout_below="@+id/imgWine"
-        android:layout_marginTop="77dp"
-        android:src="@drawable/beer" />
+        <ImageButton
+            android:id="@+id/btnWineMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/remove" />
 
-    <ImageView
-        android:id="@+id/imgHardAlcohol"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/imgBeer"
-        android:layout_marginTop="62dp"
-        android:layout_toStartOf="@+id/btnWinePlus"
-        android:src="@drawable/hardalcohol" />
+        <ImageView
+            android:id="@+id/imgWine"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_weight="1"
+            android:src="@drawable/wine" />
 
-    <ImageButton
-        android:id="@+id/btnBeerPlus"
+        <ImageButton
+            android:id="@+id/btnWinePlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/add" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnWinePlus"
-        android:layout_alignTop="@+id/btnBeerMinus"
-        android:src="@drawable/add" />
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <ImageButton
-        android:id="@+id/btnWinePlus"
+        <ImageButton
+            android:id="@+id/btnBeerMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/remove" />
+
+        <ImageView
+            android:id="@+id/imgBeer"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_weight="1"
+            android:src="@drawable/beer" />
+
+        <ImageButton
+            android:id="@+id/btnBeerPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/add" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imgWine"
-        android:layout_marginStart="31dp"
-        android:layout_toEndOf="@+id/imgWine"
-        android:src="@drawable/add" />
-        <!--app:srcCompat="@drawable/add" />-->
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <ImageButton
-        android:id="@+id/btnHardAlcoholPlus"
+        <ImageButton
+            android:id="@+id/btnHardAlcoholMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/remove" />
+
+        <ImageView
+            android:id="@+id/imgHardAlcohol"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_weight="1.08"
+            android:src="@drawable/hardalcohol" />
+
+        <ImageButton
+            android:id="@+id/btnHardAlcoholPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/add" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnBeerPlus"
-        android:layout_alignTop="@+id/imgHardAlcohol"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/add" />
+        android:layout_weight="0.00"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <ImageButton
-        android:id="@+id/btnWineMinus"
+        <TextView
+            android:id="@+id/txtBAC_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/bac"
+            android:textAppearance="@style/Heading"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/txtBAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="20dp"
+            android:text="0%"
+            android:textAppearance="@style/Heading"
+            android:visibility="visible" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imgWine"
-        android:layout_marginEnd="30dp"
-        android:layout_toStartOf="@+id/imgWine"
-        android:src="@drawable/remove" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtNumDrinks_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:text="@string/numDrinks"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:layout_below="@+id/imgHardAlcohol"
-        android:layout_alignStart="@+id/btnHardAlcoholMinus" />
+        <TextView
+            android:id="@+id/txtNumDrinks_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/numDrinks"
+            android:textAppearance="@style/Heading" />
 
-    <TextView
-        android:id="@+id/txtNumDrinks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtNumDrinks_label"
-        android:layout_alignBottom="@+id/txtNumDrinks_label"
-        android:layout_alignEnd="@+id/btnHardAlcoholPlus"
-        android:text="0"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+        <TextView
+            android:id="@+id/txtNumDrinks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="20dp"
+            android:text="0"
+            android:textAppearance="@style/Heading" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtBAC_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtNumDrinks_label"
-        android:layout_marginTop="38dp"
-        android:layout_toStartOf="@+id/imgHardAlcohol"
-        android:text="@string/bac"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+    <!--app:srcCompat="@drawable/add" />-->
 
-    <TextView
-        android:id="@+id/txtBAC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtBAC_label"
-        android:layout_alignBottom="@+id/txtBAC_label"
-        android:layout_alignEnd="@+id/txtNumDrinks"
-        android:text="0%"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
-
-</RelativeLayout>
+</LinearLayout>

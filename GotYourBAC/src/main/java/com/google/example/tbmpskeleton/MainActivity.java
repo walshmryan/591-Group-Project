@@ -49,7 +49,6 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        String loginTag = "login screen";
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();

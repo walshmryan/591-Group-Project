@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.undergrads.ryan.R;
 
 /**
- * Created by sarahmedeiros on 4/14/17.
+ * Fragment class to help people who forget passwords
  */
 
 public class ForgotPassword extends Fragment {
@@ -44,6 +44,7 @@ public class ForgotPassword extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_forgottenpassword, container, false);
+        //initialize values
         btnCancel = (Button) v.findViewById(R.id.btnCancel);
         btnSend = (Button) v.findViewById(R.id.btnSend);
         editEmail = (EditText) v.findViewById(R.id.edtEmail);
@@ -51,12 +52,14 @@ public class ForgotPassword extends Fragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //go back to other fragment
                 getFragmentManager().popBackStack();
             }
         });
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                firebase code to send a password reset email
                 auth.sendPasswordResetEmail(editEmail.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

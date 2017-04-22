@@ -1,6 +1,7 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,11 @@ import com.undergrads.ryan.R;
 
 import java.text.DecimalFormat;
 
-
+/**
+ * Calculate the blood alcohol content
+ *  level of a user based on their weight and
+ *  gender
+ */
 public class BacActivity extends Fragment{
     private ImageButton btnBeerMinus;
     private ImageButton btnHardAlcoholMinus;
@@ -31,6 +36,7 @@ public class BacActivity extends Fragment{
     private ImageButton btnHardAlcoholPlus;
     private TextView txtNumDrinks;
     private TextView txtBAC;
+    private TextView txtBAClabel;
     private int totalHard = 0;
     private int totalWine = 0;
     private int totalBeer = 0;
@@ -45,6 +51,7 @@ public class BacActivity extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_bac, container, false);
+//        initialize values
         btnBeerMinus = (ImageButton) v.findViewById(R.id.btnBeerMinus);
         btnBeerPlus = (ImageButton) v.findViewById(R.id.btnBeerPlus);
         btnHardAlcoholMinus = (ImageButton) v.findViewById(R.id.btnHardAlcoholMinus);
@@ -54,15 +61,20 @@ public class BacActivity extends Fragment{
         btnWineMinus = (ImageButton) v.findViewById(R.id.btnWineMinus);
         txtNumDrinks = (TextView) v.findViewById(R.id.txtNumDrinks);
         txtBAC = (TextView) v.findViewById(R.id.txtBAC);
+        txtBAClabel = (TextView)v.findViewById(R.id.txtBAC_label);
 
         // disable minus buttons for start
         btnBeerMinus.setEnabled(false);
         btnHardAlcoholMinus.setEnabled(false);
         btnWineMinus.setEnabled(false);
 
-        String uId = getUid();
+
+        String uId = getUid(); //get current user id
+
+//        access the database and get the users sex and weight
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    this value won't change so we are just going to listen for a single value event
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
@@ -70,7 +82,7 @@ public class BacActivity extends Fragment{
 //                        String currentUser = user.username;
                         weight = user.getWeight();
                         String g = user.getGender();
-                        if (g=="Male"){
+                        if (g.equals("Male")){
                             gender = 0;
                         }else{
                             gender = 1;
@@ -83,16 +95,19 @@ public class BacActivity extends Fragment{
                     }
                 });
 
-
+//      when a user adds a drink calculate the total
+//        number of drinks and new bac and enable
+//        the corresponding minus buttons
+//        when a user minuses a drink check to see if you need to
+//        disable the minus button and calculate the total and
+//        the BAC
         btnWineMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 totalWine -= 1;
                 if (totalWine == 0){
                     btnWineMinus.setEnabled(false);
-                    txtBAC.setText("0%");
                 }
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -105,7 +120,6 @@ public class BacActivity extends Fragment{
                     btnWineMinus.setEnabled(true);
                 }
                 totalWine += 1;
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -118,9 +132,7 @@ public class BacActivity extends Fragment{
                 totalHard-= 1;
                 if (totalHard == 0){
                     btnHardAlcoholMinus.setEnabled(false);
-                    txtBAC.setText("0%");
                 }
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -133,7 +145,6 @@ public class BacActivity extends Fragment{
                     btnHardAlcoholMinus.setEnabled(true);
                 }
                 totalHard += 1;
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -145,9 +156,7 @@ public class BacActivity extends Fragment{
                 totalBeer-=1;
                 if (totalBeer==0){
                     btnBeerMinus.setEnabled(false);
-                    txtBAC.setText("0%");
                 }
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -159,7 +168,6 @@ public class BacActivity extends Fragment{
                     btnBeerMinus.setEnabled(true);
                 }
                 totalBeer+=1;
-//                total = totalBeer + totalHard + totalWine;
                 setTotal();
                 txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
@@ -167,9 +175,6 @@ public class BacActivity extends Fragment{
         return v;
     }
 
-    public double poundsToGrams(double weightInLbs){
-        return (weightInLbs*454);
-    }
 
     public double genderToGenderConstant(int gender){
         double mConstant = 0.73;
@@ -185,46 +190,65 @@ public class BacActivity extends Fragment{
         }
         return 0.0;
     }
-    public double gOfWineConsumed(){
-        return (5*.125*totalWine);
-    }
-    public double gOfHardAlcoholConsumed(){
-        return (1.5*.4*totalHard);
-    }
+
+//        percentage of alcohol * num ounces * num of glasses
+    public double gOfWineConsumed(){return (5*.125*totalWine);}
+    public double gOfHardAlcoholConsumed() {return (1.5*.4*totalHard);}
     public double gOfBeerConsumed(){
         return (12*.06*totalBeer);
     }
+
     public void calculateBAC(double weight, int gender){
 //        % BAC = (A x 5.14 / W x r) – .015 x H
-
-        DecimalFormat dcmFormatter = new DecimalFormat("0.###");
-        double num = (gOfWineConsumed() + gOfHardAlcoholConsumed() + gOfBeerConsumed())*5.14;
+//          http://www.teamdui.com/bac-widmarks-formula/
+        double liqWeight = 5.14;
+        double avgAlcoholEliminationRate = .015;
+        DecimalFormat dcmFormatter = new DecimalFormat("0.##");
+        double num = (gOfWineConsumed() + gOfHardAlcoholConsumed() + gOfBeerConsumed())*liqWeight;
         double den = weight*genderToGenderConstant(gender);
         double bac = 0;
         double hrsElapsed = (int)getTotalTimeInHrs();
-        Log.i("stopwatch", "calculateBAC: " + stopwatch.elapsedTime());
+//        Log.i("stopwatch", "calculateBAC: " + stopwatch.elapsedTime());
+
         if (den != 0){
-            bac = (num/den) - (.015*hrsElapsed);
+            bac = (num/den) - (avgAlcoholEliminationRate*hrsElapsed);
         }
+
         txtBAC.setText(dcmFormatter.format(bac) + "%");
+        setBACtxtColor(bac);
 
     }
     public int getTotal(){
         return total;
     }
+
     public double getTotalTimeInHrs(){
         double time = stopwatch.elapsedTime();
         return (time/3600);
     }
     public void setTotal(){
-        if (total == 0){
+        if (total <= 1){
+//            if there is one drink consumed start the stopwatch
             stopwatch = new Stopwatch();
         }
+//        total number of drinks consumed
         total =  totalBeer + totalHard + totalWine;
     }
+//    gets current user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    public void setBACtxtColor(double bac)
+    {
+//        warn users based on their bac how drunk they are
+        if (bac > .02 && bac <= .07){
+            txtBAC.setTextColor(getResources().getColor(R.color.green));
+        }else if (bac > .07 && bac <= .19){
+            txtBAC.setTextColor(getResources().getColor(R.color.yellow));
+        }else{
+            txtBAC.setTextColor(getResources().getColor(R.color.red));
+        }
+    }
 }
 //Subtract approximately 0.01 every 40 minutes after drinking.

@@ -25,9 +25,7 @@ import com.google.firebase.auth.UserInfo;
 import com.undergrads.ryan.R;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-//
-//    String email;
-//    String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +33,14 @@ public class MenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        //set up drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
+        //set up nav view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
@@ -88,34 +86,14 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         String bac = "BAC";
+
+        //load the correct fragment based on which menu icon is clicked
         if (id == R.id.nav_bac) {
             BacActivity fragment = new BacActivity();
             //go to bac calc
@@ -133,11 +111,6 @@ public class MenuActivity extends AppCompatActivity
                     .addToBackStack(homeFrag)
                     .commit();
 
-//            for(int i=0;i < fragmentManager.getBackStackEntryCount();i++){
-//                fragmentManager.popBackStack();
-//            }
-
-//            http://stackoverflow.com/questions/30551939/correct-way-to-remove-all-child-fragments
         }else if (id == R.id.nav_games) {
 //          go to games page
 //            SkeletonActivity fragment = new SkeletonActivity();

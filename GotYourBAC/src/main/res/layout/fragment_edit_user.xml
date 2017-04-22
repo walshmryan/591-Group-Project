@@ -3,51 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
     android:orientation="vertical"
-    tools:context="com.google.example.tbmpskeleton.EditUser"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="com.google.example.tbmpskeleton.EditUser">
 
-
-    <ViewSwitcher
-        android:id="@+id/viewSwitcherBtn"
-        android:layout_width="320dp"
-        android:layout_height="51dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintTop_toBottomOf="@+id/viewSwitcherWeight"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/btnCreateUser"
-            android:layout_width="321dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Update User"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewSwitcherWeight"
-            app:layout_constraintVertical_bias="0.16" />
-
-        <Button
-            android:id="@+id/btnSaveUser"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:text="@string/save" />
-
-    </ViewSwitcher>
 
     <ViewSwitcher
         android:id="@+id/viewSwitcherLast"
@@ -67,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lastName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/GuessWordText" />
 
         <EditText
             android:id="@+id/edtLastName"
@@ -75,13 +35,15 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/lastName"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textAppearance="@style/GuessWordText" />
+
     </ViewSwitcher>
 
     <ViewSwitcher
         android:id="@+id/viewSwitcherWeight"
-        android:layout_width="320dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -96,16 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/weight"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/GuessWordText" />
 
         <EditText
             android:id="@+id/edtWeight"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/weight"
             android:inputType="number"
-            android:text="@string/weight" />
+            android:textAppearance="@style/GuessWordText" />
 
     </ViewSwitcher>
 
@@ -126,10 +88,9 @@
             android:id="@+id/txtFirstName"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/firstname"
             android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:text="@string/firstname"
+            android:textAppearance="@style/GuessWordText" />
 
         <EditText
             android:id="@+id/edtFirstName"
@@ -137,18 +98,20 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/firstname"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textAppearance="@style/GuessWordText" />
+
     </ViewSwitcher>
 
     <ViewSwitcher
         android:id="@+id/viewSwitcherEmail"
         android:layout_width="320dp"
-        android:layout_height="46dp"
+        android:layout_height="58dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="31dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -158,15 +121,62 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/email"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/GuessWordText" />
 
         <EditText
             android:id="@+id/edtUsername"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/email"
-            android:inputType="textWebEmailAddress" />
+            android:inputType="textWebEmailAddress"
+            android:textAppearance="@style/GuessWordText" />
+
+    </ViewSwitcher>
+
+    <ViewSwitcher
+        android:id="@+id/viewSwitcherBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewSwitcherWeight"
+        app:layout_constraintVertical_bias="0.007">
+
+        <Button
+            android:id="@+id/btnSaveUser"
+            style="@style/Button"
+            android:layout_width="159dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textAppearance="@style/Heading" />
+
+        <Button
+            android:id="@+id/btnUpdateUser"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Update User"
+            android:textAppearance="@style/Heading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewSwitcherWeight"
+            app:layout_constraintVertical_bias="0.16" />
 
     </ViewSwitcher>
 

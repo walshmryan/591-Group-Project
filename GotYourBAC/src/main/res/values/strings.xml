@@ -74,6 +74,7 @@
     <string name="forgotpassword">Forgot your password?</string>
     <string name="reset">Reset Password</string>
     <string name="sendpassword">Send</string>
+    <string name="blood_alcohol_content_calulator">B.A.C. Calulator</string>
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>
