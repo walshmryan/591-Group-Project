@@ -35,7 +35,7 @@ public class FirebaseCall {
 
         DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
         Map<String, Object> userUpdate = new HashMap<String, Object>();
-        userUpdate.put("baseline-" + gameType, s);
+        userUpdate.put("baseline-" + gameType.toLowerCase(), s);
 
         usersRef.updateChildren(userUpdate);
     }
