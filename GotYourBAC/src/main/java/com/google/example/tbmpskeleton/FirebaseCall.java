@@ -29,6 +29,17 @@ public class FirebaseCall {
         usersRef.updateChildren(userUpdate);
     }
 
+    public void updateGameBaseline(double score, String gameType) {
+
+        Scores s = new Scores(currentUser, score, gameType);
+
+        DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
+        Map<String, Object> userUpdate = new HashMap<String, Object>();
+        userUpdate.put("baseline-" + gameType, s);
+
+        usersRef.updateChildren(userUpdate);
+    }
+
     public void postScore(double scoreNum, String gameType) {
         Scores score = new Scores(currentUser, scoreNum, gameType);
 

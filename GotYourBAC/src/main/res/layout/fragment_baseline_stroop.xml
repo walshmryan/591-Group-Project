@@ -81,11 +81,12 @@
         android:layout_height="wrap_content"
         android:text="Start Game"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="28dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.704" />
 
     <Button
         android:id="@+id/btnGreen"
@@ -169,5 +170,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.665" />
+
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="491dp" />
 
 </android.support.constraint.ConstraintLayout>

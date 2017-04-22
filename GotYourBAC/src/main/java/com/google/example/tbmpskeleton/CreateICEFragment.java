@@ -61,6 +61,7 @@ public class CreateICEFragment extends Fragment{
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.goToStroopBaseline();
 
             }
         });

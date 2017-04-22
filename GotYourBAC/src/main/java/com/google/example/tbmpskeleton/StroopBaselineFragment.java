@@ -26,6 +26,7 @@ import static android.view.View.VISIBLE;
 public class StroopBaselineFragment extends Fragment {
 
     Button btnStart;
+    Button btnSkip;
     Button btnYellow;
     Button btnGreen;
     Button btnRed;
@@ -70,6 +71,7 @@ public class StroopBaselineFragment extends Fragment {
         btnRed = (Button) (v.findViewById(R.id.btnRed));
         btnBlue = (Button) (v.findViewById(R.id.btnBlue));
         btnStart = (Button) (v.findViewById(R.id.btnStart));
+        btnSkip = (Button) (v.findViewById(R.id.btnSkip));
         btnYellow = (Button) (v.findViewById(R.id.btnYellow));
         btnBlack = (Button) (v.findViewById(R.id.btnBlack));
         txtView0 = (TextView)(v.findViewById(R.id.txtView0));
@@ -94,6 +96,13 @@ public class StroopBaselineFragment extends Fragment {
                 txtView3.setVisibility(View.INVISIBLE);
                 txtView4.setVisibility(View.INVISIBLE);
                 nextWord();
+            }
+        });
+
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.switchActivity();
             }
         });
 
@@ -161,6 +170,13 @@ public class StroopBaselineFragment extends Fragment {
     }
 
     private void gameDone() {
+
+        // need to work out how we are calculating score
+        double finalScore = (totalRight / 10) * 100;
+
+        FirebaseCall fb = new FirebaseCall();
+        fb.updateGameBaseline(finalScore, "Stroop");
+
         disableButtons();
         time = stopwatch.elapsedTime();
         comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");

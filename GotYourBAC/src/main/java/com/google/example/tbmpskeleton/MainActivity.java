@@ -159,16 +159,11 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         String createNewUser = "create new user";
         transaction.replace(R.id.main_frame, newFragment, createNewUser);
         transaction.addToBackStack(null);
-
-//         Commit the transaction
         transaction.commit();
     }
 
     public void goToLoginFragment(String username, String password) {
-
-        switchActivity();
-//        signIn(username, password);
-
+        signIn(username, password);
     }
 
     @Override
@@ -207,8 +202,6 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         String forgotpw = "forgot password";
         transaction.replace(R.id.main_frame, newFragment, forgotpw);
         transaction.addToBackStack(null);
-
-//         Commit the transaction
         transaction.commit();
     }
 
