@@ -28,7 +28,7 @@ public class CreateICEFragment extends Fragment{
     private Button skip;
 
     public interface iceCreateListener{
-        public void switchActivity();
+        public void goToStroopBaseline();
 
     }
 
@@ -44,9 +44,6 @@ public class CreateICEFragment extends Fragment{
         save = (Button) v.findViewById(R.id.save);
         skip = (Button) v.findViewById(R.id.skip);
 
-
-
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +53,7 @@ public class CreateICEFragment extends Fragment{
                 FirebaseCall fRef = new FirebaseCall();
                 fRef.updateContactInfo(name, number);
 
-                listener.switchActivity();
+                listener.goToStroopBaseline();
 
             }
         });

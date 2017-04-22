@@ -79,6 +79,12 @@ public class HomeFragment extends Fragment {
                                 count++;
                             }
                         }
+                        if(count == 0) {
+                            score1.setText("No past games played");
+                            score2.setText("");
+                            score3.setText("");
+
+                        }
                     }
 
                     @Override

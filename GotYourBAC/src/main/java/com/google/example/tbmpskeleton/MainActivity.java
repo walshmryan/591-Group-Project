@@ -32,7 +32,7 @@ import android.widget.Toast;
 import java.net.MalformedURLException;
 
 public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener,
-        CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener {
+        CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopBaselineFragment.stroopBaselineListener {
 
     //    Login loginFragment;
     String loginTag = "login screen";
@@ -108,14 +108,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                             Toast.makeText(MainActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         } else {
                             writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender);
-                            //switchActivity();
-
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            CreateICEFragment newFragment = new CreateICEFragment();
-                            String createNewUser = "create new user";
-                            transaction.replace(R.id.main_frame, newFragment, createNewUser);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
+                            goToICE();
                         }
 
                     }
@@ -186,9 +179,19 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     public void goToICE() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        BacActivity newFragment = new BacActivity();
+        CreateICEFragment newFragment = new CreateICEFragment();
         String createNewUser = "create new user";
         transaction.replace(R.id.main_frame, newFragment, createNewUser);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void goToStroopBaseline() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        StroopBaselineFragment newFragment = new StroopBaselineFragment();
+        String createNewFrag = "stroop baseline";
+        transaction.replace(R.id.main_frame, newFragment, createNewFrag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
