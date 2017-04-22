@@ -63,9 +63,17 @@ public class MenuActivity extends AppCompatActivity
             TextView nav_user_email = (TextView)hView.findViewById(R.id.txtEmail);
 //            nav_user.setText(name);
             nav_user_email.setText(email);
-
         }
 
+        HomeFragment fragment = new HomeFragment();
+        String homeFrag = "Home Screen";
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(homeFrag)
+                .commit();
+
+        Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -95,11 +103,13 @@ public class MenuActivity extends AppCompatActivity
                     .addToBackStack(bac)
                     .commit();
         }else if(id == R.id.nav_home){
-            //http://stackoverflow.com/questions/30551939/correct-way-to-remove-all-child-fragments
+            HomeFragment fragment = new HomeFragment();
+            String homeFrag = "Home Screen";
             FragmentManager fragmentManager = getFragmentManager();
-            for(int i=0;i < fragmentManager.getBackStackEntryCount();i++){
-                fragmentManager.popBackStack();
-            }
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(homeFrag)
+                    .commit();
 
         }else if (id == R.id.nav_games) {
 //          go to games page

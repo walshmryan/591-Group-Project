@@ -1,8 +1,5 @@
 package com.google.example.tbmpskeleton;
 
-/**
- * Created by sarahmedeiros on 4/14/17.
- */
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,8 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.undergrads.ryan.R;
-
+import java.util.HashMap;
+import java.util.Map;
 /**
  * Fragment class for emergency contact info
  */
@@ -32,6 +33,9 @@ public class FragmentICE extends Fragment {
     EditText edtPhone;
     ViewSwitcher viewswitcherName;
     ViewSwitcher viewswitcherPhone;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     public FragmentICE() {
         // Required empty public constructor
@@ -60,17 +64,23 @@ public class FragmentICE extends Fragment {
                 //change views for update mode
                 viewswitcherName.showNext();
                 viewswitcherPhone.showNext();
+
+                FirebaseCall fb = new FirebaseCall();
+                fb.updateContactInfo("MyHero", "9785051388");
+
                 viewSwitcherSave.showNext();
 //                hide update button
                 btnUpdate.setVisibility(View.INVISIBLE);
             }
         });
+
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendSMStxt();
             }
         });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

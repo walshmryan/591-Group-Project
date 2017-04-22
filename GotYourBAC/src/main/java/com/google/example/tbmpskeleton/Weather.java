@@ -18,12 +18,10 @@ import java.net.URL;
 
 public class Weather extends AsyncTask<String,Void,String> {
 
-    private Context context;
     private TextView tempView;
 
 
-    public Weather(Context context, TextView tempView) {
-        this.context = context;
+    public Weather(TextView tempView) {
         this.tempView = tempView;
 
     }
@@ -48,7 +46,6 @@ public class Weather extends AsyncTask<String,Void,String> {
                 try {
                     JSONObject json = new JSONObject(s);
                     JSONObject j = (JSONObject) json.get("current_observation");
-                    System.out.println(j.get("temperature_string"));
                     return j.getString("temperature_string");
 
                 } catch (JSONException e) {

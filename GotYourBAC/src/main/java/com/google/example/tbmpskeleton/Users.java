@@ -1,13 +1,12 @@
 package com.google.example.tbmpskeleton;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class Users {
-    public String username;
-    public String firstName;
-    public String lastName;
-    public int weight;
-    public String gender;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private int weight;
+    private String gender;
+    private ContactInfo ice;
 
     public Users(){};
 
@@ -18,5 +17,18 @@ public class Users {
         this.weight = weight;
         this.gender = gender;
     }
+
+    public String getUsername() { return username; }
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public int getWeight() { return weight; }
+
+    public String getGender() { return gender; }
+
+    public ContactInfo getICE() { return ice; }
+
 
 }

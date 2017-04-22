@@ -83,12 +83,13 @@ public class EditUser extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
+                      
                         //get current user values from the database
-                        gender = user.gender;
-                        first = user.firstName;
-                        last = user.lastName;
-                        email = user.username;
-                        int userWeight = user.weight;
+                        gender = user.getGender();
+                        first = user.getFirstName();
+                        last = user.getLastName();
+                        email = user.getUsername();
+                        int userWeight = user.getWeight();
 
 //                      set the text view and edit view values from the stored
 //                       database values

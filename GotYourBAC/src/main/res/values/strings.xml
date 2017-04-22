@@ -41,6 +41,7 @@
     <string name="weight">Weight (in lbs)</string>
     <string name="sex">Sex</string>
     <string name="auth_failed">Authorization failed</string>
+    <string name="ice_create_description">Please enter your emergency contact information or press Skip</string>
 
     <string name="sex_prompt">Select Your Sex</string>
     <string name="email">Email</string>

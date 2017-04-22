@@ -79,9 +79,10 @@ public class BacActivity extends Fragment{
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
-                        weight = user.weight;
-                        String g = user.gender;
-                        if (g=="Male"){ //set the gender to 0 if its a man else 1
+//                        String currentUser = user.username;
+                        weight = user.getWeight();
+                        String g = user.getGender();
+                        if (g.equals("Male")){
                             gender = 0;
                         }else{
                             gender = 1;
