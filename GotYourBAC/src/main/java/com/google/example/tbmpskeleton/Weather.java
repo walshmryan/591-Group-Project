@@ -2,6 +2,7 @@ package com.google.example.tbmpskeleton;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
@@ -25,7 +26,6 @@ public class Weather extends AsyncTask<String,Void,String> {
         this.tempView = tempView;
 
     }
-
 
     @Override
     protected String doInBackground(String... arg) {

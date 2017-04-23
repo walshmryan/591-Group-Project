@@ -1,7 +1,13 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Fragment;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.undergrads.ryan.Manifest;
 import com.undergrads.ryan.R;
 
 import java.util.Arrays;
@@ -53,6 +60,44 @@ public class HomeFragment extends Fragment {
          Hits Wunderground API for temperature
 
          */
+
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{"ACCESS_FINE_LOCATION"}, 0);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+
+        }
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+
+        try {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
+        catch (SecurityException e) {
+            System.out.println(e);
+
+        }
+
         weatherForCity.setText("Here's your weather for " + city + " today:");
         new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
 
@@ -96,6 +141,13 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
+    private void makeUseOfNewLocation(Location location) {
+        System.out.println("=====================");
+        System.out.println(location);
+        System.out.println("=====================");
+
+    }
+
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
         if (index == 0) {
@@ -107,5 +159,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-}
 
+
+}
