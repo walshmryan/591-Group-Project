@@ -122,25 +122,29 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 //        if (!validateForm()) {
 //            return;
 //        }
+        try{
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(firebaseTag, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(firebaseTag, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(firebaseTag, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            switchActivity();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.w(firebaseTag, "signInWithEmail:failed", task.getException());
+                                Toast.makeText(MainActivity.this, R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                switchActivity();
+                            }
                         }
-                    }
-                });
+                    });
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, R.string.auth_failed,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void signOut() {
