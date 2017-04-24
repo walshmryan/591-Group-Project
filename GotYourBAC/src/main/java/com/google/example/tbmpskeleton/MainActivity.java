@@ -199,8 +199,13 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
 
     @Override
     public void goToCreateNew(String email, String password, String firstName, String lastName, String weight, String gender) {
-        int w = Integer.parseInt(weight);
-        createAccount(email,password,firstName,lastName,w,gender);
+        try {
+            int w = Integer.parseInt(weight);
+            createAccount(email,password,firstName,lastName,w,gender);
+        }catch (Exception e){
+            Toast toast = Toast.makeText(this.getApplicationContext(),"Create New User Failed",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
     public void goToRetrievePassword(String email){
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
