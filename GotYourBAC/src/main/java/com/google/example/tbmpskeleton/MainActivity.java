@@ -11,8 +11,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.math.DoubleMath;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -104,12 +106,30 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+//                            http://stackoverflow.com/questions/43396781/how-to-catch-android-firebase-signupwithemailandpassword-error-code
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                // show error toast ot user ,user already exist
+                                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            } catch (FirebaseNetworkException e) {
+                                //show error tost network exception
+                                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            } catch (Exception e) {
+                                Log.e("error", e.getMessage());
+                                if (e.getMessage().contains("WEAK")){
+                                    Toast.makeText(MainActivity.this, "Password is too weak", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+//                            Exception msg = task.getException();
+//                            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         } else {
                             ContactInfo ice = new ContactInfo();
                             writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender,ice);
-//                            // TODO: 4/24/17
-//                            add the user after the ice screen
                             goToICE();
                         }
 
