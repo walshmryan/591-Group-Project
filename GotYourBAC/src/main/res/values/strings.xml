@@ -51,7 +51,7 @@
         <item>Female</item>
     </string-array>
     <string name="title_activity_main4">Main4Activity</string>
-    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_menu"></string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
