@@ -73,15 +73,17 @@ public class FragmentICE extends Fragment {
 //                        Users user = dataSnapshot.getValue(Users.class);
                         ContactInfo ice = dataSnapshot.getValue(ContactInfo.class);
                         //get current values from the database
-                        name = ice.getName();
-                        number = ice.getNumber();
+                        if (ice != null) {
+                            name = ice.getName();
+                            number = ice.getNumber();
 //
 ////                      set the text view and edit view values from the stored
 ////                       database values
-                        txtName.setText(name);
-                        txtPhone.setText(number);
-                        edtName.setText(name);
-                        edtPhone.setText(number);
+                            txtName.setText(name);
+                            txtPhone.setText(number);
+                            edtName.setText(name);
+                            edtPhone.setText(number);
+                        }
                     }
 
                     @Override
