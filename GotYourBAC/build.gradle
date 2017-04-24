@@ -22,7 +22,7 @@ android {
           REPLACE THIS VALUE WITH YOUR APPLICATION ID
         */
         applicationId "com.undergrads.ryan"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion android_compile_version
         versionCode 1
         versionName "1.0"
