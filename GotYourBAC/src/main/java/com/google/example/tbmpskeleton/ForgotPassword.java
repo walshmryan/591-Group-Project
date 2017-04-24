@@ -60,22 +60,30 @@ public class ForgotPassword extends Fragment {
             @Override
             public void onClick(View v) {
 //                firebase code to send a password reset email
-                auth.sendPasswordResetEmail(editEmail.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                CharSequence text = editEmail.getText().toString();
-                                if (task.isSuccessful()) {
-                                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                try{
+                    auth.sendPasswordResetEmail(editEmail.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    CharSequence text = editEmail.getText().toString();
+                                    if (task.isSuccessful()) {
+                                        Toast toast = Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT);
+//                                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
                                     toast.show();
 //                            Log.d(TAG, "Email sent.");
-                                } else {
+                                    } else {
                                         text = "No account found for this email address.";
-                                        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
                                         toast.show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }catch (Exception e){
+                    String text = "No account found for this email address.";
+                    Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
 
 
 
