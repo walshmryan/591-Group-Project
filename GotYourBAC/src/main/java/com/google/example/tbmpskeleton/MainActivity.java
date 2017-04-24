@@ -106,7 +106,10 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                         if (!task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         } else {
-                            writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender);
+                            ContactInfo ice = new ContactInfo();
+                            writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender,ice);
+//                            // TODO: 4/24/17
+//                            add the user after the ice screen
                             goToICE();
                         }
 
@@ -144,9 +147,9 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         mAuth.signOut();
     }
 
-    private void writeNewUser(FirebaseUser fUser, String firstName, String lastName, int weight, String gender) {
+    private void writeNewUser(FirebaseUser fUser, String firstName, String lastName, int weight, String gender,ContactInfo ice) {
 
-        Users user = new Users(fUser.getEmail(), firstName, lastName, weight, gender);
+        Users user = new Users(fUser.getEmail(), firstName, lastName, weight, gender,ice);
 
         mDatabase.child("users").child(fUser.getUid()).setValue(user);
     }

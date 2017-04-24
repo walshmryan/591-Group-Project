@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         configDebug {
-            storeFile file('/Users/walsh/Documents/School/Senior/App/keys/key0.jks')
+            storeFile file('/Users/sarahmedeiros/Documents/spring_2017/key0.jks')
             keyAlias 'key0'
             keyPassword 'drunkapp2017'
             storePassword 'drunkapp2017'
@@ -11,7 +11,7 @@ android {
         configRelease {
             keyAlias 'key1'
             keyPassword 'drunkapp2017'
-            storeFile file('/Users/walsh/Documents/School/Senior/App/keys/key1.jks')
+            storeFile file('/Users/sarahmedeiros/Documents/spring_2017/key1.jks')
             storePassword 'drunkapp2017'
         }
     }

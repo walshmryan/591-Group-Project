@@ -1,5 +1,6 @@
 package com.google.example.tbmpskeleton;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,6 +84,20 @@ public class LoginActivity extends Fragment {
         });
         return v;
     }
+
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            loginlistener = (LoginActivity.LoginListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
 
 
 }

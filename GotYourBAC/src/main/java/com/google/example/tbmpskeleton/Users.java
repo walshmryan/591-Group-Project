@@ -10,6 +10,15 @@ public class Users {
 
     public Users(){};
 
+    public Users(String username, String first, String last, int weight, String gender, ContactInfo ice) {
+        this.username = username;
+        this.firstName = first;
+        this.lastName = last;
+        this.weight = weight;
+        this.gender = gender;
+        this.ice = ice;
+    }
+
     public Users(String username, String first, String last, int weight, String gender) {
         this.username = username;
         this.firstName = first;
@@ -17,7 +26,6 @@ public class Users {
         this.weight = weight;
         this.gender = gender;
     }
-
     public String getUsername() { return username; }
 
     public String getFirstName() { return firstName; }

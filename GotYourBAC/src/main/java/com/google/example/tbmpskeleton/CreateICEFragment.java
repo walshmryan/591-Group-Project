@@ -51,7 +51,7 @@ public class CreateICEFragment extends Fragment{
                 String number = numberTxt.getText().toString();
 
                 FirebaseCall fRef = new FirebaseCall();
-                fRef.updateContactInfo(name, number);
+                fRef.updateICEContactInfo(name, number);
 
                 listener.goToStroopBaseline();
 

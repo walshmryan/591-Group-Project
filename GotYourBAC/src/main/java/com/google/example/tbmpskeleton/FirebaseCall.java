@@ -18,13 +18,23 @@ public class FirebaseCall {
         currentUser = mAuth.getCurrentUser().getUid();
     }
 
-    public void updateContactInfo(String name, String number) {
+    public void updateICEContactInfo(String name, String number) {
 
         ContactInfo contact = new ContactInfo(name, number);
 
         DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
         Map<String, Object> userUpdate = new HashMap<String, Object>();
         userUpdate.put("contact-info", contact);
+
+        usersRef.updateChildren(userUpdate);
+    }
+    public void updateUserInfo(String username, String first, String last, int weight, String gender) {
+
+        Users user = new Users(username,first,last,weight,gender);
+
+        DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
+        Map<String, Object> userUpdate = new HashMap<String, Object>();
+        userUpdate.put("users", user);
 
         usersRef.updateChildren(userUpdate);
     }

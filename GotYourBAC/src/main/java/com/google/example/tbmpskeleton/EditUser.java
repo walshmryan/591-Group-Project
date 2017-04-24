@@ -130,8 +130,15 @@ public class EditUser extends Fragment {
 //                change txtweight
                 String w = edtWeight.getText().toString();
                 int intW = Integer.parseInt(w);
-                writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
+
+
+
+//                writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
+
+
+
 //                update text views
+
                 txtFirstName.setText(edtFirstName.getText().toString());
                 txtLastName.setText(edtLastName.getText().toString());
                 txtEmail.setText(edtEmail.getText().toString());
@@ -151,10 +158,10 @@ public class EditUser extends Fragment {
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-    public void writeNewData(String username, String first, String last, int weight, String gender) {
-        Users user = new Users(username,first,last,weight,gender);
-        String uId = getUid();
-        FirebaseDatabase.getInstance().getReference().child("users").child(uId).setValue(user);
-    }
+//    public void writeNewData(String username, String first, String last, int weight, String gender) {
+//        Users user = new Users(username,first,last,weight,gender);
+//        String uId = getUid();
+//        FirebaseDatabase.getInstance().getReference().child("users").child(uId).setValue(user);
+//    }
 
 }
