@@ -17,12 +17,8 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent=
-        "myAppTheme">
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="android:textColorSecondaryInverse">@color/black</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <style name="AppTheme" parent = "myAppTheme">
+        <item name="android:statusBarColor">#02635a</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
