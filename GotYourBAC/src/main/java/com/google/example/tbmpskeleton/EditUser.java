@@ -83,7 +83,8 @@ public class EditUser extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
-                      
+
+
                         //get current user values from the database
                         gender = user.getGender();
                         first = user.getFirstName();
