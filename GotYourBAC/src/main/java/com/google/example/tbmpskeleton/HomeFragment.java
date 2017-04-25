@@ -1,7 +1,10 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,8 @@ import com.undergrads.ryan.Manifest;
 import com.undergrads.ryan.R;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment {
@@ -38,6 +45,17 @@ public class HomeFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    private LocationManager lm;
+    private LocationListener ll;
+    final static String MYTAG = "LOCATION";
+
+    private static final String[] LOCATION_PERMS={
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
+    private static final int LOCATION_REQUEST=1340;
 
 
     @Override
@@ -54,6 +72,33 @@ public class HomeFragment extends Fragment {
         // get current location
         city = "Boston";
 
+        if (!canAccessLocation()) {
+            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+        }
+
+        // set listeners
+        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        ll = new MyLocationListener();
+
+        // try requesting location from Network and GPS
+        // if GPS fails try to use Network
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
+            Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            setCity(lastLocation);
+
+        } catch (Exception e) {
+            Log.i(MYTAG, "Could not connect to Network");
+
+            try {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
+                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                setCity(lastLocation);
+            } catch (Exception ex) {
+                Log.i(MYTAG, "Could not connect to GPS");
+            }
+        }
+
 
         /*
 
@@ -61,45 +106,8 @@ public class HomeFragment extends Fragment {
 
          */
 
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{"ACCESS_FINE_LOCATION"}, 0);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-
-        }
-
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                makeUseOfNewLocation(location);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-        };
-
-
-        try {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        }
-        catch (SecurityException e) {
-            System.out.println(e);
-
-        }
-
-        weatherForCity.setText("Here's your weather for " + city + " today:");
-        new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
+//        weatherForCity.setText("Here's your weather for " + city + " today:");
+//        new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
 
 
 
@@ -141,13 +149,6 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-    private void makeUseOfNewLocation(Location location) {
-        System.out.println("=====================");
-        System.out.println(location);
-        System.out.println("=====================");
-
-    }
-
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
         if (index == 0) {
@@ -156,6 +157,82 @@ public class HomeFragment extends Fragment {
             score2.setText(score);
         } else if (index == 2) {
             score3.setText(score);
+        }
+    }
+
+    protected void setCity(Location currLoc) {
+
+        if (currLoc != null) {
+            double lat = currLoc.getLatitude();
+            double lon = currLoc.getLongitude();
+            Log.i(MYTAG,  lat + ", " + lon);
+
+            try {
+                Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+
+                List<Address> addresses = gcd.getFromLocation(lat, lon, 1);
+                if (addresses.size() > 0)
+                {
+                    if(addresses.get(0).getLocality() != null) {
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
+
+                        if(state != null) {
+                            new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                        }
+
+                        weatherForCity.setText("Here's your weather for " + city + " today:");
+
+                    } else {
+                        Log.i(MYTAG, "Could not determine city from: " + addresses.get(0));
+                    }
+                }
+                else
+                {
+                    Log.i(MYTAG, "Address is empty");
+                }
+
+            } catch (Exception e) {
+                Log.e(MYTAG, "Error with Geocoder");
+            }
+
+
+
+
+        } else {
+            Log.i(MYTAG, "Location is null");
+        }
+
+    }
+
+    private boolean canAccessLocation() {
+        return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean hasPermission(String perm) {
+        return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(getActivity(), perm));
+    }
+
+
+    class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            setCity(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.i(MYTAG, "Location Provider Status Has Changed. " + provider);
+        }
+
+        public void onProviderEnabled(String provider) {
+            Log.i(MYTAG, "Location Provider Has been DISabled. " + provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.i(MYTAG, "Location Provider Has been ENabled. " + provider);
         }
     }
 
