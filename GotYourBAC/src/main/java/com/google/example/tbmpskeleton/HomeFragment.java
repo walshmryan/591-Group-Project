@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     private TextView temperature;
+    private ImageView weatherIcon;
     private TextView weatherForCity;
     private String city;
     private TextView score1;
@@ -64,13 +66,11 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         temperature = (TextView) v.findViewById(R.id.temperature);
+        weatherIcon = (ImageView) v.findViewById(R.id.weatherIcon);
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
         score1 = (TextView) v.findViewById(R.id.score1);
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
-
-        // get current location
-        city = "Boston";
 
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -99,18 +99,6 @@ public class HomeFragment extends Fragment {
             }
         }
 
-
-        /*
-
-         Hits Wunderground API for temperature
-
-         */
-
-//        weatherForCity.setText("Here's your weather for " + city + " today:");
-//        new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
-
-
-
         /*
 
          Fetches top scores from DB and displays them
@@ -136,7 +124,6 @@ public class HomeFragment extends Fragment {
                             score1.setText("No past games played");
                             score2.setText("");
                             score3.setText("");
-
                         }
                     }
 
@@ -175,14 +162,14 @@ public class HomeFragment extends Fragment {
                 {
                     if(addresses.get(0).getLocality() != null) {
                         String city = addresses.get(0).getLocality();
-                        String state = addresses.get(0).getAdminArea();
+                        String state = addresses.get(0).getAdminArea().replaceAll("\\s+","");
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
-                            new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
                         }
 
-                        weatherForCity.setText("Here's your weather for " + city + " today:");
+                        weatherForCity.setText("Here's the current weather for " + city + ":");
 
                     } else {
                         Log.i(MYTAG, "Could not determine city from: " + addresses.get(0));
@@ -235,7 +222,5 @@ public class HomeFragment extends Fragment {
             Log.i(MYTAG, "Location Provider Has been ENabled. " + provider);
         }
     }
-
-
 
 }
