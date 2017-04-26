@@ -1,12 +1,24 @@
 package com.google.example.tbmpskeleton;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,14 +27,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.undergrads.ryan.Manifest;
 import com.undergrads.ryan.R;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment {
 
     private TextView temperature;
+    private ImageView weatherIcon;
     private TextView weatherForCity;
     private String city;
     private TextView score1;
@@ -32,6 +48,17 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private LocationManager lm;
+    private LocationListener ll;
+    final static String MYTAG = "LOCATION";
+
+    private static final String[] LOCATION_PERMS={
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
+    private static final int LOCATION_REQUEST=1340;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,24 +66,38 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         temperature = (TextView) v.findViewById(R.id.temperature);
+        weatherIcon = (ImageView) v.findViewById(R.id.weatherIcon);
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
         score1 = (TextView) v.findViewById(R.id.score1);
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
 
-        // get current location
-        city = "Boston";
+        if (!canAccessLocation()) {
+            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+        }
 
+        // set listeners
+        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        ll = new MyLocationListener();
 
-        /*
+        // try requesting location from Network and GPS
+        // if GPS fails try to use Network
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
+            Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            setCity(lastLocation);
 
-         Hits Wunderground API for temperature
+        } catch (Exception e) {
+            Log.i(MYTAG, "Could not connect to Network");
 
-         */
-        weatherForCity.setText("Here's your weather for " + city + " today:");
-        new Weather(temperature).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/MA/Boston.json");
-
-
+            try {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
+                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                setCity(lastLocation);
+            } catch (Exception ex) {
+                Log.i(MYTAG, "Could not connect to GPS");
+            }
+        }
 
         /*
 
@@ -83,7 +124,6 @@ public class HomeFragment extends Fragment {
                             score1.setText("No past games played");
                             score2.setText("");
                             score3.setText("");
-
                         }
                     }
 
@@ -107,5 +147,80 @@ public class HomeFragment extends Fragment {
         }
     }
 
-}
+    protected void setCity(Location currLoc) {
 
+        if (currLoc != null) {
+            double lat = currLoc.getLatitude();
+            double lon = currLoc.getLongitude();
+            Log.i(MYTAG,  lat + ", " + lon);
+
+            try {
+                Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+
+                List<Address> addresses = gcd.getFromLocation(lat, lon, 1);
+                if (addresses.size() > 0)
+                {
+                    if(addresses.get(0).getLocality() != null) {
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea().replaceAll("\\s+","");
+                        Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
+
+                        if(state != null) {
+                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                        }
+
+                        weatherForCity.setText("Here's the current weather for " + city + ":");
+
+                    } else {
+                        Log.i(MYTAG, "Could not determine city from: " + addresses.get(0));
+                    }
+                }
+                else
+                {
+                    Log.i(MYTAG, "Address is empty");
+                }
+
+            } catch (Exception e) {
+                Log.e(MYTAG, "Error with Geocoder");
+            }
+
+
+
+
+        } else {
+            Log.i(MYTAG, "Location is null");
+        }
+
+    }
+
+    private boolean canAccessLocation() {
+        return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean hasPermission(String perm) {
+        return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(getActivity(), perm));
+    }
+
+
+    class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            setCity(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.i(MYTAG, "Location Provider Status Has Changed. " + provider);
+        }
+
+        public void onProviderEnabled(String provider) {
+            Log.i(MYTAG, "Location Provider Has been DISabled. " + provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.i(MYTAG, "Location Provider Has been ENabled. " + provider);
+        }
+    }
+
+}
