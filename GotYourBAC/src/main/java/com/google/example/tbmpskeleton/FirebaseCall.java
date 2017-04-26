@@ -28,6 +28,7 @@ public class FirebaseCall {
 
         usersRef.updateChildren(userUpdate);
     }
+
     public void updateUserInfo(String username, String first, String last, int weight, String gender) {
 
         Users user = new Users(username,first,last,weight,gender);
@@ -46,6 +47,17 @@ public class FirebaseCall {
         DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
         Map<String, Object> userUpdate = new HashMap<String, Object>();
         userUpdate.put("baseline-" + gameType.toLowerCase(), s);
+
+        usersRef.updateChildren(userUpdate);
+    }
+
+    public void updateDrinkTotals(int totalHard, int totalWine, int totalBeer) {
+
+        Drinks d = new Drinks(totalHard, totalWine, totalBeer);
+
+        DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
+        Map<String, Object> userUpdate = new HashMap<String, Object>();
+        userUpdate.put("drink-totals", d);
 
         usersRef.updateChildren(userUpdate);
     }

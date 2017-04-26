@@ -6,9 +6,18 @@ public class Users {
     private String lastName;
     private int weight;
     private String gender;
+    private ContactInfo ice;
 
     public Users(){};
 
+    public Users(String username, String first, String last, int weight, String gender, ContactInfo ice) {
+        this.username = username;
+        this.firstName = first;
+        this.lastName = last;
+        this.weight = weight;
+        this.gender = gender;
+        this.ice = ice;
+    }
 
     public Users(String username, String first, String last, int weight, String gender) {
         this.username = username;
@@ -26,5 +35,7 @@ public class Users {
     public int getWeight() { return weight; }
 
     public String getGender() { return gender; }
-    
+
+    public ContactInfo getICE() { return ice; }
+
 }
