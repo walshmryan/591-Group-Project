@@ -1,7 +1,8 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,14 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Random;
 
 import static android.view.View.VISIBLE;
@@ -51,9 +54,11 @@ public class StroopBaselineFragment extends Fragment {
     Integer wordNumber = rand.nextInt(6);
     Integer textNumber = rand.nextInt(6);
     Integer colourNumber = rand.nextInt(6);
-
+    public String data = "";
+    public int turnCounter;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    public static final String TAG = "EBTurn";
 
     public interface stroopBaselineListener{
         public void switchActivity();
@@ -184,20 +189,28 @@ public class StroopBaselineFragment extends Fragment {
         listener.switchActivity();
     }
 
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//
+//        // This makes sure that the container activity has implemented
+//        // the callback interface. If not, it throws an exception
+//        try {
+//            listener = (StroopBaselineFragment.stroopBaselineListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnHeadlineSelectedListener");
+//        }
+//    }
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            listener = (StroopBaselineFragment.stroopBaselineListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+            listener = (StroopBaselineFragment.stroopBaselineListener) context;
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString());
         }
     }
-
 
     private void textSet(TextView txtView, int wordNum, int colourNum){
         txtView.setText(colours[wordNumber]);
@@ -275,7 +288,61 @@ public class StroopBaselineFragment extends Fragment {
 
         return false;
     }
+    public byte[] persist() {
+        JSONObject retVal = new JSONObject();
 
+        try {
+            retVal.put("data", data);
+            retVal.put("turnCounter", turnCounter);
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        String st = retVal.toString();
+
+        Log.d(TAG, "==== PERSISTING\n" + st);
+
+        return st.getBytes(Charset.forName("UTF-8"));
+    }
+    // Creates a new instance of SkeletonTurn.
+    static public StroopBaselineFragment unpersist(byte[] byteArray) {
+
+        if (byteArray == null) {
+            Log.d(TAG, "Empty array---possible bug.");
+            return new StroopBaselineFragment();
+        }
+
+        String st = null;
+        try {
+            st = new String(byteArray, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+            return null;
+        }
+
+        Log.d(TAG, "====UNPERSIST \n" + st);
+
+        StroopBaselineFragment retVal = new StroopBaselineFragment();
+
+        try {
+            JSONObject obj = new JSONObject(st);
+
+            if (obj.has("data")) {
+                retVal.data = obj.getString("data");
+            }
+            if (obj.has("turnCounter")) {
+                retVal.turnCounter = obj.getInt("turnCounter");
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return retVal;
+    }
 
 }
 

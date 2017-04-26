@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/matchup_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context="com.undergrads.ryan.SkeletonActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="8dp">
+
+    <LinearLayout
+        android:id="@+id/secret_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/name_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:text=""
+            android:textAppearance="@style/HelpText.Caption" />
+
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="200dp"
+            android:text="@string/sign_out" />
+
+        <Button
+            android:id="@+id/startMatchButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/start_match" />
+
+        <Button
+            android:id="@+id/checkGamesButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/check_games" />
+
+        <Button
+            android:id="@+id/quickMatchButon"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/quick_match" />
+    </LinearLayout>
+</RelativeLayout>

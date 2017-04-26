@@ -6,7 +6,7 @@
     android:layout_marginTop="20dp"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.google.example.tbmpskeleton.EditUser">
+    tools:context="com.google.example.tbmpskeleton.com.undergrads.ryan.EditUser">
 
 
     <ViewSwitcher

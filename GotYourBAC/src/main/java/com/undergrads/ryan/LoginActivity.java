@@ -1,8 +1,7 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
-import org.w3c.dom.Text;
+//import com.google.example.tbmpskeleton.R;
 
 
 public class LoginActivity extends Fragment {

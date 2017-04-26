@@ -1,17 +1,25 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
+/**
+ * Created by sarahmedeiros on 4/24/17.
+ */
+
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +27,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.multiplayer.Multiplayer;
+import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
+import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.undergrads.ryan.R;
+
+import java.util.ArrayList;
+
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,
+        google_mainmenu.gMainListener, GoogleApiClient.OnConnectionFailedListener,game_picker_fragment.gamePickerListener{
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 9001;
+    private static final int RC_SELECT_PLAYERS = 8001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +95,15 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment)
                 .addToBackStack(homeFrag)
                 .commit();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestServerAuthCode("479703936056-ev6vmikc6n4r89qs1vgeihpkv4t3rn8a.apps.googleusercontent.com")
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,/* FragmentActivity */ this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
     }
@@ -114,10 +146,11 @@ public class MenuActivity extends AppCompatActivity
         }else if (id == R.id.nav_games) {
 //          go to games page
 //            SkeletonActivity fragment = new SkeletonActivity();
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.frame_layout, fragment)
-//                    .commit();
+            google_mainmenu fragment = new google_mainmenu();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .commit();
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();
             String editUser = "ice";
@@ -134,18 +167,104 @@ public class MenuActivity extends AppCompatActivity
                     .replace(R.id.frame_layout, fragment)
                     .addToBackStack(editUser)
                     .commit();
-        }else if (id == R.id.nav_logout) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("finish", true); // if you are checking for this in your other Activities
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void goToGamePickerFrag() {
+
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        game_picker_fragment fragment = new game_picker_fragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("menu", "onConnectionFailed:" + connectionResult);
+    }
+    public GoogleApiClient getGoogleApiClient() {
+
+        return mGoogleApiClient;
+    }
+
+    @Override
+    public void goToStroop(View view) {
+//        onStartMatchClicked(view);
+//        onStartMatchClicked();
+        pick_game_mode fragment = new pick_game_mode();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .commit();
+    }
+
+    @Override
+    public void goToTilt() {
+//        StroopBaselineFragment fragment = new StroopBaselineFragment();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.frame_layout, fragment)
+//                .commit();
+    }
+//    @Override
+//    public void signOnClick() {
+//        findViewById(R.id.sign_in_button).setOnClickListener(this);
+//    }
+    public void onStartMatchClicked(View view) {
+        Intent intent =
+                Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 1, 7, true);
+        startActivityForResult(intent, RC_SELECT_PLAYERS);
+    }
+    @Override
+    public void onActivityResult(int request, int response, Intent data) {
+        super.onActivityResult(request, response, data);
+
+        if (request == RC_SELECT_PLAYERS) {
+            if (response != Activity.RESULT_OK) {
+                // user canceled
+                return;
+            }
+
+            // Get the invitee list.
+            final ArrayList<String> invitees =
+                    data.getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
+
+            // Get auto-match criteria.
+            Bundle autoMatchCriteria = null;
+            int minAutoMatchPlayers = data.getIntExtra(
+                    Multiplayer.EXTRA_MIN_AUTOMATCH_PLAYERS, 0);
+            int maxAutoMatchPlayers = data.getIntExtra(
+                    Multiplayer.EXTRA_MAX_AUTOMATCH_PLAYERS, 0);
+            if (minAutoMatchPlayers > 0) {
+                autoMatchCriteria = RoomConfig.createAutoMatchCriteria(
+                        minAutoMatchPlayers, maxAutoMatchPlayers, 0);
+            } else {
+                autoMatchCriteria = null;
+            }
+
+            TurnBasedMatchConfig tbmc = TurnBasedMatchConfig.builder()
+                    .addInvitedPlayers(invitees)
+                    .setAutoMatchCriteria(autoMatchCriteria)
+                    .build();
+
+            // Create and start the match.
+            Games.TurnBasedMultiplayer
+                    .createMatch(mGoogleApiClient, tbmc)
+                    .setResultCallback(new MatchInitiatedCallback());
+        }
     }
 }

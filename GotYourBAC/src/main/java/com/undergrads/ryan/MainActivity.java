@@ -1,16 +1,13 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.math.DoubleMath;
-import com.google.firebase.FirebaseApp;
+//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,22 +15,19 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
-import android.support.v4.app.FragmentActivity;
-import android.app.Fragment;
+//import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 //import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentTransaction;
 //import android.support.v4.app.Fragment;
+//import android.app.F
 import android.util.Log;
-import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
-import java.net.MalformedURLException;
 
-public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener,
+public class MainActivity extends Activity implements LoginActivity.LoginListener,
         CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopBaselineFragment.stroopBaselineListener {
 
     //    Login loginFragment;

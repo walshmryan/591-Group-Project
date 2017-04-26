@@ -12,6 +12,24 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b6818f5804ca0b5eb089d902458faea4179eca1d">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-10.2.1_d9da87426dec63ea758c0c88a87f69b0e456d4d5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="12032271e6be735e811ad529cb08ff066c381640">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-base-10.2.1_59bf21d0eb10aabbfc1a84cd62b412956b1f1232.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/sarahmedeiros/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
         jumboMode="false"
         optimize="true"
@@ -27,132 +45,6 @@
         revision="25.0.1"
         sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
         <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-10.2.1_b8e35be4b4b78041c52c9bff0e090fa8a233c124.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_0ecc2cac32a36e55a2bff217b34c0d5d53a048c7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_c70f38461387a244e8da6df62c8ee30d544dcb44.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-10.2.1_3c8342e64a06a40cc1ffa80622e9a75efe852b0b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.2.1_e02d8cc1454e437e44b40ce2af63d71166eb9558.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.1.0_3b93d29bf65659f08f35a15a78a76c076ce7192a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="cce0823396aa693798f8882e64213b1772032b09">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/guava-18.0_e11ced1631feb7c9800790c98fd765d3bed1b86c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-10.2.1_d233e75cc8191b092899589701b52c4c0ca806c0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support.constraint/constraint-layout/1.0.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support.constraint-constraint-layout-1.0.2_6e2453b6383b9bb3c43d9104efdbc76c3efa9786.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="aee64634871d88a419d59eb743c1258a60f19700">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.1.0_f7b3141eb074f984f570160a2cc59b0c74058f76.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d38084015027549951cbaea5d5f6fb795cc81151">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-transition-25.1.0_6a7aeef2e4911c5529170b519984bde1b0b731f9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/okio-1.6.0_faecd3ad98e18258f51ebfc62f6ad0c6ec140a5d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_eeae809a98ed7e7183b3dc00091dbe45942b3e69.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="1e11c68fec92a17c84dd8d1dd80e74c4e67b12e2">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-10.0.1_353c8a8556eee7069999c8dd7014d45130c3cb8a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="12032271e6be735e811ad529cb08ff066c381640">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-base-10.2.1_59bf21d0eb10aabbfc1a84cd62b412956b1f1232.jar" />
     </item>
     <item
         is-multidex="false"
@@ -174,21 +66,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/sarahmedeiros/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/support-annotations-25.1.0_593b369a942a06c1a9d76127ee67a30c7d1e4c72.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_f30c82a036612b3896ebba9d0a974164bf7675ad.jar" />
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.3.1_7916517b2b2e954f3c38b1cd7ea1f7a0db2a2c03.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.3.1_4950a498ca7f3fe6a57b6e0ecf558ee5b4a632fc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.3.1_49ba6d8c571da6f5513124b5826a1e3e1d86a4cd.jar" />
     </item>
     <item
         is-multidex="false"
@@ -201,6 +102,24 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-10.2.1_3c8342e64a06a40cc1ffa80622e9a75efe852b0b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.2.1_e02d8cc1454e437e44b40ce2af63d71166eb9558.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -210,12 +129,48 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.0.1/jars/classes.jar"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="028f8255cb977b29cdffbfcf05caa0459686120c">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-10.0.1_3407e2a7a88215381952af3871043f644b343878.jar" />
+        sha1="8dfe54fbaf4f2a27d395ddf806d0c011170999e0">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-10.2.1_2441d82e216fe4d766fd0759e5dffdd2303bcb64.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4b32372f6821e003ae24cd3389bdd7925247f100">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-10.2.1_1da94798942ed903ef4f5e42a4341a2b49f564ca.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_5eed2f046dd9ae4d9bedccb47be2fc6e1a9f8014.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/guava-18.0_e11ced1631feb7c9800790c98fd765d3bed1b86c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-10.2.1_d233e75cc8191b092899589701b52c4c0ca806c0.jar" />
     </item>
     <item
         is-multidex="false"
@@ -228,12 +183,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support.constraint/constraint-layout/1.0.2/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support.constraint-constraint-layout-1.0.2_6e2453b6383b9bb3c43d9104efdbc76c3efa9786.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
         <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_2e7f0ed0ab2ba09466147efab095f040d2835c6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.3.1_97cc7f13db462beee194f524482786c1e32f62cf.jar" />
     </item>
     <item
         is-multidex="false"
@@ -255,15 +228,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c14f0c89f28cf782e42581ab0aba5f63af39b3d2">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-10.0.1_ed0a87891db45813f44444a6cca71addb53c8e8e.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -273,12 +237,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
-        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.1.0_1148c6fb0d7c2608650c5b92b01f56dde1e40e7f.jar" />
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.3.1_7f0d92aa4b9b0f3350e12c207ee9dc3d8373cc3c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d38084015027549951cbaea5d5f6fb795cc81151">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-transition-25.1.0_6a7aeef2e4911c5529170b519984bde1b0b731f9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/okio-1.6.0_faecd3ad98e18258f51ebfc62f6ad0c6ec140a5d.jar" />
     </item>
     <item
         is-multidex="false"
@@ -288,6 +270,24 @@
         revision="25.0.1"
         sha1="b266c8faa5af72e579b9da36ef35053ffed6ac64">
         <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.1.0_3fc096a4f2cd9c91e48eaaeb9c69299d94b2bf2c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.3.1_168e51615b5e59f2d29981e10301b581560dfe0e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/sarahmedeiros/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Users/sarahmedeiros/Documents/spring_2017/Android_App_Dev/GotYourBAC/GotYourBAC/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_eeae809a98ed7e7183b3dc00091dbe45942b3e69.jar" />
     </item>
     <item
         is-multidex="false"

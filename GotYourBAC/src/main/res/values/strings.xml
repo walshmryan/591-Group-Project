@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Game strings -->
     <string name="app_name">GotYourBAC</string>
     <string name="hello_world">Hello world!</string>
@@ -75,6 +74,15 @@
     <string name="reset">Reset Password</string>
     <string name="sendpassword">Send</string>
     <string name="blood_alcohol_content_calulator">B.A.C. Calulator</string>
+    <string name="welcome_to_strooptest">Welcome to the Stroop Game</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="signed_out">Signed out</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="loading">Loading…</string>
+    <string name="stroop">Stroop</string>
+    <string name="tilt">Tilt</string>
+    <string name="pick">Pick a Game to Play</string>
+
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>

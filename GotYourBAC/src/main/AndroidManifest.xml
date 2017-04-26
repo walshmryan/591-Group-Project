@@ -29,7 +29,7 @@
             android:value="AIzaSyAUIMMNWHg3Scvn3t_ItkDQfzwk3mOVqeI" />
 
         <activity
-            android:name="com.google.example.tbmpskeleton.MainActivity"
+            android:name="com.undergrads.ryan.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -39,15 +39,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.google.example.tbmpskeleton.SkeletonActivity"
+            android:name="com.undergrads.ryan.SkeletonActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.google.example.tbmpskeleton.MenuActivity"
+            android:name="com.undergrads.ryan.MenuActivity"
             android:label="@string/title_activity_menu" />
-        <activity
-            android:name="com.google.example.tbmpskeleton.GameActivity"
-            android:label="GameActivity" />
+        <!--<activity-->
+            <!--android:name="com.google.example.tbmpskeleton.GameActivity"-->
+            <!--android:label="GameActivity" />-->
     </application>
 
 </manifest>

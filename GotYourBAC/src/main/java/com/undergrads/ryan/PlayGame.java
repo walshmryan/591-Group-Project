@@ -1,26 +1,28 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
+
+
+import android.content.Context;
+import android.os.Bundle;
+import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+//import com.undergrads.ryan.R;
+
+//import com.google.example.tbmpskeleton.R;
+
+import java.util.Random;
+
+import static android.view.View.VISIBLE;
+
 
 /**
- * Created by sarahmedeiros on 4/11/17.
+ * A simple {@link Fragment} subclass.
  */
-
-
-//import android.graphics.Color;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
-
-        import com.undergrads.ryan.R;
-
-        import java.util.Random;
-
-        import java.util.List;
-
-        import static android.view.View.VISIBLE;
-
-public class GameActivity extends AppCompatActivity {
+public class PlayGame extends Fragment {
 
     Button btnStart;
     Button btnYellow;
@@ -28,11 +30,11 @@ public class GameActivity extends AppCompatActivity {
     Button btnRed;
     Button btnBlue;
     Button btnBlack;
-    TextView txtView0;
-    TextView txtView1;
-    TextView txtView2;
-    TextView txtView3;
-    TextView txtView4;
+    TextView txtWord0;
+    TextView txtWord1;
+    TextView txtWord2;
+    TextView txtWord3;
+    TextView txtWord4;
     TextView comment;
     int totalRight = 0;
     int guesses = 0;
@@ -45,23 +47,45 @@ public class GameActivity extends AppCompatActivity {
     double time;
 
     boolean started = false;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public PlayGame() {
+        // Required empty public constructor
+    }
+    public interface PlayGameListener{
+        public void startGame();
+        public int btnYellowClicked();
+        public int btnBlackClicked();
+        public int btnBlueClicked();
+        public int btnRedClicked();
+        public int btnGreenClicked();
+    }
 
-        btnGreen = (Button) (findViewById(R.id.btnGreen));
-        btnRed = (Button) (findViewById(R.id.btnRed));
-        btnBlue = (Button) (findViewById(R.id.btnBlue));
-        btnStart = (Button) (findViewById(R.id.btnStart));
-        btnYellow = (Button) (findViewById(R.id.btnYellow));
-        btnBlack = (Button) (findViewById(R.id.btnBlack));
-        txtView0 = (TextView)(findViewById(R.id.txtView0));
-        txtView1 = (TextView)(findViewById(R.id.txtView1));
-        txtView2 = (TextView)(findViewById(R.id.txtView2));
-        txtView3 = (TextView)(findViewById(R.id.txtView3));
-        txtView4 = (TextView)(findViewById(R.id.txtView4));
-        comment = (TextView)(findViewById(R.id.comment));
+    PlayGameListener gameListener;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        gameListener = (PlayGameListener) context;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_play_game, container, false);
+
+
+        btnGreen = (Button) (v.findViewById(R.id.btnGreen));
+        btnRed = (Button) (v.findViewById(R.id.btnRed));
+        btnBlue = (Button) (v.findViewById(R.id.btnBlue));
+        btnStart = (Button) (v.findViewById(R.id.btnStart));
+        btnYellow = (Button) (v.findViewById(R.id.btnYellow));
+        btnBlack = (Button) (v.findViewById(R.id.btnBlack));
+        txtWord0 = (TextView)(v.findViewById(R.id.txtWord0));
+        txtWord1 = (TextView)(v.findViewById(R.id.txtWord1));
+        txtWord2 = (TextView)(v.findViewById(R.id.txtWord2));
+        txtWord3 = (TextView)(v.findViewById(R.id.txtWord3));
+        txtWord4 = (TextView)(v.findViewById(R.id.txtWord4));
+        comment = (TextView)(v.findViewById(R.id.comment));
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +96,13 @@ public class GameActivity extends AppCompatActivity {
                 totalRight = 0;
                 stopwatch = new Stopwatch();
                 comment.setVisibility(View.INVISIBLE);
-                txtView0.setVisibility(View.INVISIBLE);
-                txtView1.setVisibility(View.INVISIBLE);
-                txtView2.setVisibility(View.INVISIBLE);
-                txtView3.setVisibility(View.INVISIBLE);
-                txtView4.setVisibility(View.INVISIBLE);
+                txtWord0.setVisibility(View.INVISIBLE);
+                txtWord1.setVisibility(View.INVISIBLE);
+                txtWord2.setVisibility(View.INVISIBLE);
+                txtWord3.setVisibility(View.INVISIBLE);
+                txtWord4.setVisibility(View.INVISIBLE);
                 nextWord();
+                gameListener.startGame();
             }
         });
 
@@ -93,6 +118,8 @@ public class GameActivity extends AppCompatActivity {
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
+                gameListener.btnYellowClicked();
+
             }
         });
 
@@ -108,6 +135,7 @@ public class GameActivity extends AppCompatActivity {
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
+                gameListener.btnGreenClicked();
             }
         }));
 
@@ -123,6 +151,8 @@ public class GameActivity extends AppCompatActivity {
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
+                gameListener.btnRedClicked();
+
             }
         });
 
@@ -138,6 +168,8 @@ public class GameActivity extends AppCompatActivity {
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
+                gameListener.btnBlueClicked();
+
             }
         });
 
@@ -153,12 +185,17 @@ public class GameActivity extends AppCompatActivity {
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
+
+                gameListener.btnBlackClicked();
             }
         });
+
+
+        return v;
     }
 
 
-    private void textSet(TextView txtView, int wordNum, int colourNum){
+    public void textSet(TextView txtView, int wordNum, int colourNum){
         txtView.setText(colours[wordNumber]);
         if (colourNum == 0) {
             txtView.setTextColor(getResources().getColor(R.color.yellow));
@@ -182,7 +219,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void disableButtons(){
+    public void disableButtons(){
         btnYellow.setEnabled(false);
         btnGreen.setEnabled(false);
         btnBlack.setEnabled(false);
@@ -190,7 +227,7 @@ public class GameActivity extends AppCompatActivity {
         btnRed.setEnabled(false);
     }
 
-    private void enableButtons(){
+    public void enableButtons(){
         btnYellow.setEnabled(true);
         btnGreen.setEnabled(true);
         btnBlack.setEnabled(true);
@@ -198,7 +235,7 @@ public class GameActivity extends AppCompatActivity {
         btnRed.setEnabled(true);
     }
 
-    private void nextWord() {
+    public void nextWord() {
         wordNumber = rand.nextInt(5);
         textNumber = rand.nextInt(5);
         colourNumber = rand.nextInt(5);
@@ -210,39 +247,38 @@ public class GameActivity extends AppCompatActivity {
         //TESTING
 
         if (textNumber == 0) {
-            textSet(txtView0, wordNumber, colourNumber);
+            textSet(txtWord0, wordNumber, colourNumber);
         }
         else if (textNumber == 1) {
-            textSet(txtView1, wordNumber, colourNumber);
+            textSet(txtWord1, wordNumber, colourNumber);
         }
         else if (textNumber == 2) {
-            textSet(txtView2, wordNumber, colourNumber);
+            textSet(txtWord2, wordNumber, colourNumber);
         }
         else if (textNumber == 3) {
-            textSet(txtView3, wordNumber, colourNumber);
+            textSet(txtWord3, wordNumber, colourNumber);
         }
         else if (textNumber == 4) {
-            textSet(txtView4, wordNumber, colourNumber);
+            textSet(txtWord4, wordNumber, colourNumber);
         }
     }
 
-    private boolean checkCorrect(int c) {
+    public boolean checkCorrect(int c) {
         if (colourNumber == c) {
             //txtView0.setText("TEST");
             //txtView0.setVisibility(VISIBLE);
             totalRight += 1;
-            txtView0.setVisibility(View.INVISIBLE);
-            txtView1.setVisibility(View.INVISIBLE);
-            txtView2.setVisibility(View.INVISIBLE);
-            txtView3.setVisibility(View.INVISIBLE);
-            txtView4.setVisibility(View.INVISIBLE);
+            txtWord0.setVisibility(View.INVISIBLE);
+            txtWord1.setVisibility(View.INVISIBLE);
+            txtWord2.setVisibility(View.INVISIBLE);
+            txtWord3.setVisibility(View.INVISIBLE);
+            txtWord4.setVisibility(View.INVISIBLE);
             nextWord();
             return true;
         }
 
         return false;
+
     }
+
 }
-
-
-

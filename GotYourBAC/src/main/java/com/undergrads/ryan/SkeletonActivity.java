@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,7 +41,8 @@ import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.example.games.basegameutils.BaseGameUtils;
-import com.undergrads.ryan.R;
+//import com.google.example.tbmpskeleton.R;
+//import com.undergrads.ryan.R;
 
 import java.util.ArrayList;
 import java.util.Random;
