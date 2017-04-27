@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
 
+    // list of permissions we want
     private static final String[] LOCATION_PERMS={
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -139,6 +140,7 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
+    // sets a text view with a given score based on index
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
         if (index == 0) {
@@ -150,6 +152,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // given a location, fetch correct weather temp and icon
     protected void setCity(Location currLoc) {
 
         if (currLoc != null) {
