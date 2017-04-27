@@ -51,12 +51,8 @@ public class PlayGame extends Fragment {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void startGame();
-        public int btnYellowClicked();
-        public int btnBlackClicked();
-        public int btnBlueClicked();
-        public int btnRedClicked();
-        public int btnGreenClicked();
+        public void gameDone(int num);
+
     }
 
     PlayGameListener gameListener;
@@ -102,7 +98,7 @@ public class PlayGame extends Fragment {
                 txtWord3.setVisibility(View.INVISIBLE);
                 txtWord4.setVisibility(View.INVISIBLE);
                 nextWord();
-                gameListener.startGame();
+//                gameListener.startGame();
             }
         });
 
@@ -115,10 +111,11 @@ public class PlayGame extends Fragment {
                 } else {
                     disableButtons();
                     time = stopwatch.elapsedTime();
+                    gameListener.gameDone(totalRight);
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
-                gameListener.btnYellowClicked();
+//                gameListener.btnYellowClicked();
 
             }
         });
@@ -132,10 +129,11 @@ public class PlayGame extends Fragment {
                 } else {
                     disableButtons();
                     time = stopwatch.elapsedTime();
+                    gameListener.gameDone(totalRight);
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
-                gameListener.btnGreenClicked();
+//                gameListener.btnGreenClicked();
             }
         }));
 
@@ -148,10 +146,11 @@ public class PlayGame extends Fragment {
                 } else {
                     disableButtons();
                     time = stopwatch.elapsedTime();
+                    gameListener.gameDone(totalRight);
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
-                gameListener.btnRedClicked();
+//                gameListener.btnRedClicked();
 
             }
         });
@@ -165,10 +164,11 @@ public class PlayGame extends Fragment {
                 } else {
                     disableButtons();
                     time = stopwatch.elapsedTime();
+                    gameListener.gameDone(totalRight);
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
-                gameListener.btnBlueClicked();
+//                gameListener.btnBlueClicked();
 
             }
         });
@@ -182,11 +182,12 @@ public class PlayGame extends Fragment {
                 } else {
                     disableButtons();
                     time = stopwatch.elapsedTime();
+                    gameListener.gameDone(totalRight);
                     comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
                     comment.setVisibility(VISIBLE);
                 }
 
-                gameListener.btnBlackClicked();
+//                gameListener.btnBlackClicked();
             }
         });
 

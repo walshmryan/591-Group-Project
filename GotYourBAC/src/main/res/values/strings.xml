@@ -82,7 +82,8 @@
     <string name="stroop">Stroop</string>
     <string name="tilt">Tilt</string>
     <string name="pick">Pick a Game to Play</string>
-
+    <string name="geoAPIkey">AIzaSyAUIMMNWHg3Scvn3t_ItkDQfzwk3mOVqeI</string>
+    <string name="ok">OK</string>
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>
