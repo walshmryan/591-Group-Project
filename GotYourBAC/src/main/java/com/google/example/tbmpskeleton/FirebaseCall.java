@@ -53,6 +53,7 @@ public class FirebaseCall {
 
     public void updateDrinkTotals(int totalHard, int totalWine, int totalBeer) {
 
+        // FYI resets time stamp for drinks
         Drinks d = new Drinks(totalHard, totalWine, totalBeer);
 
         DatabaseReference usersRef = mDatabase.child("users").child(currentUser);
