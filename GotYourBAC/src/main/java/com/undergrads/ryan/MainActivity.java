@@ -1,12 +1,11 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.math.DoubleMath;
@@ -18,22 +17,19 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
-import android.support.v4.app.FragmentActivity;
-import android.app.Fragment;
+//import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 //import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentTransaction;
 //import android.support.v4.app.Fragment;
+//import android.app.F
 import android.util.Log;
-import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
-import java.net.MalformedURLException;
 
-public class MainActivity extends FragmentActivity implements LoginActivity.LoginListener,
+public class MainActivity extends Activity implements LoginActivity.LoginListener,
         CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopBaselineFragment.stroopBaselineListener {
 
     //    Login loginFragment;
@@ -157,7 +153,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
                                 Toast.makeText(MainActivity.this, R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                switchActivity();
+                                goToMain();
                             }
                         }
                     });
@@ -192,11 +188,16 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         signIn(username, password);
     }
 
-    @Override
-    public void switchActivity() {
-        Intent i = new Intent(this, MenuActivity.class);
-        startActivity(i);
-    }
+
+//    @Override
+//    public void switchActivity() {
+//        String base = "stroop baseline";
+//        String tag  =getFragmentTag();
+//        if (tag ==base){
+//            Intent i = new Intent(this, MenuActivity.class);
+//            startActivity(i);
+//        }
+//    }
 
     public void goToICE() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -211,6 +212,7 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
     public void goToStroopBaseline() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         StroopBaselineFragment newFragment = new StroopBaselineFragment();
+//        StroopGame newFragment = new StroopGame();
         String createNewFrag = "stroop baseline";
         transaction.replace(R.id.main_frame, newFragment, createNewFrag);
         transaction.addToBackStack(null);
@@ -236,4 +238,16 @@ public class MainActivity extends FragmentActivity implements LoginActivity.Logi
         transaction.commit();
     }
 
+    public String getFragmentTag(){
+        FragmentManager fragment = getFragmentManager();
+        Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+        return (curFrag.getTag().toString());
+
+    }
+
+    @Override
+    public void goToMain() {
+        Intent i = new Intent(this, MenuActivity.class);
+        startActivity(i);
+    }
 }

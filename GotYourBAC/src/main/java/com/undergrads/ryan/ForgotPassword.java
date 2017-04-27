@@ -1,23 +1,24 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.support.annotation.NonNull;
 import android.app.Fragment;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentTransaction;
+//import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
 /**
  * Fragment class to help people who forget passwords

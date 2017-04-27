@@ -1,4 +1,4 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 
 import android.app.Activity;
@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.undergrads.ryan.R;
+//import com.google.example.tbmpskeleton.R;
+
+//import com.undergrads.ryan.R;
 
 /**
  * Fragment class to create a new user

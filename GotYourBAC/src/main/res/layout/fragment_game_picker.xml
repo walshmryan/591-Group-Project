@@ -1,0 +1,44 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.undergrads.ryan.game_picker_fragment"
+    android:screenOrientation="portrait">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtPick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/pick"
+            android:textAppearance="@style/Heading" />
+
+        <Button
+            android:id="@+id/btnStroop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stroop" />
+
+        <Button
+            android:id="@+id/btnTilt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tilt" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

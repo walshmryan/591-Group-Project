@@ -1,8 +1,7 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.undergrads.ryan.R;
+//import com.undergrads.ryan.R;
 
-import org.w3c.dom.Text;
+//import com.google.example.tbmpskeleton.R;
 
 
 public class LoginActivity extends Fragment {
@@ -68,9 +67,13 @@ public class LoginActivity extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//
 
-                String username = txtEmail.getText().toString();
-                String password = edtPassword.getText().toString();
+                String username = "sarahpmedeiros@gmail.com";
+                String password = "password123";
+//// TODO: 4/27/17 put back when testing is done
+//                String username = txtEmail.getText().toString();
+//                String password = edtPassword.getText().toString();
 
                 loginlistener.goToLoginFragment(username, password);
             }

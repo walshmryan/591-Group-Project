@@ -1,4 +1,4 @@
-package com.google.example.tbmpskeleton;
+package com.undergrads.ryan;
 
 import android.content.Context;
 import android.content.Intent;
