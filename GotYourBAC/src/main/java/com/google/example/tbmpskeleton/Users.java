@@ -38,5 +38,4 @@ public class Users {
 
     public ContactInfo getICE() { return ice; }
 
-
 }

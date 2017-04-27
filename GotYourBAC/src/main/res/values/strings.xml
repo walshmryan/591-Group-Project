@@ -18,7 +18,7 @@
     <string name="signin_other_error">There was an issue with sign in.  Please try again later.</string>
 
     <!-- BAC strings -->
-    <string name="numDrinks">Number of Drinks:</string>
+    <string name="numDrinks">Total Drinks:</string>
     <string name="bac">BAC:</string>
 
     <!-- Login strings -->

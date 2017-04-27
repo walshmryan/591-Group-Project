@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/blood_alcohol_content_calulator"
-            android:textAlignment="center"
-            android:textAppearance="@style/Heading" />
+            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
     </LinearLayout>
 
@@ -31,6 +30,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="20dp">
+
+        <TextView
+            android:id="@+id/wineCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <ImageButton
             android:id="@+id/btnWineMinus"
@@ -62,6 +70,15 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
+        <TextView
+            android:id="@+id/beerCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
         <ImageButton
             android:id="@+id/btnBeerMinus"
             android:layout_width="wrap_content"
@@ -88,10 +105,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/shotCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="20dp">
+
+        <TextView
+            android:id="@+id/hardCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <ImageButton
             android:id="@+id/btnHardAlcoholMinus"
@@ -131,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/bac"
-            android:textAppearance="@style/Heading"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:visibility="visible" />
 
         <TextView
@@ -141,9 +168,10 @@
             android:layout_weight="1"
             android:paddingLeft="20dp"
             android:text="0%"
-            android:textAppearance="@style/Heading"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:visibility="visible" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/numDrinks"
-            android:textAppearance="@style/Heading" />
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <TextView
             android:id="@+id/txtNumDrinks"
@@ -164,7 +192,7 @@
             android:layout_weight="1"
             android:paddingLeft="20dp"
             android:text="0"
-            android:textAppearance="@style/Heading" />
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
     </LinearLayout>
 
     <!--app:srcCompat="@drawable/add" />-->
