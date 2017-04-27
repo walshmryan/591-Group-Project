@@ -8,12 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-<<<<<<< HEAD:GotYourBAC/src/main/java/com/undergrads/ryan/MainActivity.java
-//import com.google.example.tbmpskeleton.R;
-=======
 import com.google.common.math.DoubleMath;
 import com.google.firebase.FirebaseApp;
->>>>>>> master:GotYourBAC/src/main/java/com/google/example/tbmpskeleton/MainActivity.java
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
