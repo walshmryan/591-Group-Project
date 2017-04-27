@@ -17,8 +17,7 @@
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:textColor="@android:color/white" />
+        android:textColor="#FFF"
+        android:text="android.studio@android.com"/>
 
 </LinearLayout>

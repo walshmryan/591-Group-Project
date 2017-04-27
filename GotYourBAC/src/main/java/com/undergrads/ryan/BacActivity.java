@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 //import com.undergrads.ryan.R;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
 /**
  * Calculate the blood alcohol content
@@ -36,21 +37,27 @@ public class BacActivity extends Fragment{
     private TextView txtNumDrinks;
     private TextView txtBAC;
     private TextView txtBAClabel;
-    private int totalHard = 0;
-    private int totalWine = 0;
-    private int totalBeer = 0;
-    private int total = 0;
+
+    private TextView wineCounter;
+    private TextView beerCounter;
+    private TextView hardCounter;
+
+    private int totalHard;
+    private int totalWine;
+    private int totalBeer;
+    private int total;
     private Stopwatch stopwatch;
-    private DatabaseReference mUserReference;
-    private DatabaseReference mUserKey;
+
     private int gender;
     private int weight;
+    private final int FEMALE = 1;
+    private final int MALE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_bac, container, false);
-//        initialize values
+        // initialize values
         btnBeerMinus = (ImageButton) v.findViewById(R.id.btnBeerMinus);
         btnBeerPlus = (ImageButton) v.findViewById(R.id.btnBeerPlus);
         btnHardAlcoholMinus = (ImageButton) v.findViewById(R.id.btnHardAlcoholMinus);
@@ -58,27 +65,33 @@ public class BacActivity extends Fragment{
         btnWineMinus = (ImageButton) v.findViewById(R.id.btnWineMinus);
         btnWinePlus = (ImageButton) v.findViewById(R.id.btnWinePlus);
         btnWineMinus = (ImageButton) v.findViewById(R.id.btnWineMinus);
+
         txtNumDrinks = (TextView) v.findViewById(R.id.txtNumDrinks);
         txtBAC = (TextView) v.findViewById(R.id.txtBAC);
         txtBAClabel = (TextView)v.findViewById(R.id.txtBAC_label);
 
-        // disable minus buttons for start
-        btnBeerMinus.setEnabled(false);
-        btnHardAlcoholMinus.setEnabled(false);
-        btnWineMinus.setEnabled(false);
+        wineCounter = (TextView) v.findViewById(R.id.wineCounter);
+        beerCounter = (TextView) v.findViewById(R.id.beerCounter);
+        hardCounter = (TextView) v.findViewById(R.id.hardCounter);
+
+        // initialize to zero on creation, check DB after if entries in there
+        totalHard = 0;
+        totalWine = 0;
+        totalBeer = 0;
+        total = 0;
 
 
-        String uId = getUid(); //get current user id
+        final String uId = getUid(); //get current user id
 
-//        access the database and get the users sex and weight
+        // access the database and get the users sex and weight
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    this value won't change so we are just going to listen for a single value event
+                    // this value won't change so we are just going to listen for a single value event
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
-//                        String currentUser = user.username;
+                        // String currentUser = user.username;
                         weight = user.getWeight();
                         String g = user.getGender();
                         if (g.equals("Male")){
@@ -86,91 +99,101 @@ public class BacActivity extends Fragment{
                         }else{
                             gender = 1;
                         }
+
+
+                        // once we got weight and gender, make another DB call
+                        // get current values from the database in case user already entered info
+                        FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("drink-totals")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
+                                        //check to see if there are any entries, if not go with defaults
+                                        if(drinkInfo != null && !dateExpired(drinkInfo.getTimestamp(), 12)) {
+                                            totalHard = drinkInfo.getTotalHard();
+                                            totalWine = drinkInfo.getTotalWine();
+                                            totalBeer = drinkInfo.getTotalBeer();
+                                            setTotal();
+
+                                            // set number of drinks here in case we loaded some from DB and set BAC
+                                            txtNumDrinks.setText(String.valueOf(getTotal()));
+                                            Log.i("BAC", weight + "");
+                                            Log.i("BAC", gender + "");
+                                            calculateBAC(weight, gender);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("error","could not load drink info");
+                                    }
+                                });
+
+
+
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.i("error","bad");
+                        Log.e("error","could not load user info");
                     }
                 });
 
-//      when a user adds a drink calculate the total
-//        number of drinks and new bac and enable
-//        the corresponding minus buttons
-//        when a user minuses a drink check to see if you need to
-//        disable the minus button and calculate the total and
-//        the BAC
+
+        // clicking + or - causes BAC and drink totals to be reset
+        // if a categeory has 0 drinks pressing - will not do anything
         btnWineMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalWine -= 1;
-                if (totalWine == 0){
-                    btnWineMinus.setEnabled(false);
+                if (totalWine - 1  >= 0){
+                    totalWine--;
+                    setTotal();
+                    calculateBAC(weight,gender);
                 }
-                setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(weight,gender);
-
         }});
         btnWinePlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalWine == 0){
-                    btnWineMinus.setEnabled(true);
-                }
                 totalWine += 1;
                 setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
-
             }});
 
         btnHardAlcoholMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalHard-= 1;
-                if (totalHard == 0){
-                    btnHardAlcoholMinus.setEnabled(false);
+                if (totalHard - 1  >= 0){
+                    totalHard--;
+                    setTotal();
+                    calculateBAC(weight,gender);
                 }
-                setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(weight,gender);
-
             }});
         btnHardAlcoholPlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalHard==0){
-                    btnHardAlcoholMinus.setEnabled(true);
-                }
                 totalHard += 1;
                 setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
             }});
 
         btnBeerMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalBeer-=1;
-                if (totalBeer==0){
-                    btnBeerMinus.setEnabled(false);
+                if (totalBeer - 1  >= 0){
+                    totalBeer--;
+                    setTotal();
+                    calculateBAC(weight,gender);
                 }
-                setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
-                calculateBAC(weight,gender);
             }});
         btnBeerPlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalBeer==0){
-                    btnBeerMinus.setEnabled(true);
-                }
                 totalBeer+=1;
                 setTotal();
-                txtNumDrinks.setText(String.valueOf(getTotal()));
                 calculateBAC(weight,gender);
             }});
+
         return v;
     }
 
@@ -178,19 +201,16 @@ public class BacActivity extends Fragment{
     public double genderToGenderConstant(int gender){
         double mConstant = 0.73;
         double fConstant = 0.66;
-        int female = 1;
-        int male = 0;
 
-        if (gender == female){
+        if (gender == FEMALE) {
             return fConstant;
-        }
-        if (gender == male){
+        } else if (gender == MALE) {
             return mConstant;
         }
         return 0.0;
     }
 
-//        percentage of alcohol * num ounces * num of glasses
+    // percentage of alcohol * num ounces * num of glasses
     public double gOfWineConsumed(){return (5*.125*totalWine);}
     public double gOfHardAlcoholConsumed() {return (1.5*.4*totalHard);}
     public double gOfBeerConsumed(){
@@ -198,8 +218,13 @@ public class BacActivity extends Fragment{
     }
 
     public void calculateBAC(double weight, int gender){
-//        % BAC = (A x 5.14 / W x r) – .015 x H
-//          http://www.teamdui.com/bac-widmarks-formula/
+
+        // updates drink totals to DB
+        FirebaseCall fb = new FirebaseCall();
+        fb.updateDrinkTotals(totalHard, totalWine, totalBeer);
+
+        // % BAC = (A x 5.14 / W x r) – .015 x H
+        // http://www.teamdui.com/bac-widmarks-formula/
         double liqWeight = 5.14;
         double avgAlcoholEliminationRate = .015;
         DecimalFormat dcmFormatter = new DecimalFormat("0.##");
@@ -207,7 +232,7 @@ public class BacActivity extends Fragment{
         double den = weight*genderToGenderConstant(gender);
         double bac = 0;
         double hrsElapsed = (int)getTotalTimeInHrs();
-//        Log.i("stopwatch", "calculateBAC: " + stopwatch.elapsedTime());
+        // Log.i("stopwatch", "calculateBAC: " + stopwatch.elapsedTime());
 
         if (den != 0){
             bac = (num/den) - (avgAlcoholEliminationRate*hrsElapsed);
@@ -227,26 +252,48 @@ public class BacActivity extends Fragment{
     }
     public void setTotal(){
         if (total <= 1){
-//            if there is one drink consumed start the stopwatch
+            // if there is one drink consumed start the stopwatch
             stopwatch = new Stopwatch();
         }
-//        total number of drinks consumed
+
+        // total number of drinks consumed
         total =  totalBeer + totalHard + totalWine;
+
+        txtNumDrinks.setText(Integer.toString(total));
+
+        wineCounter.setText(Integer.toString(totalWine));
+        beerCounter.setText(Integer.toString(totalBeer));
+        hardCounter.setText(Integer.toString(totalHard));
+
+
     }
-//    gets current user id
+    // gets current user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public void setBACtxtColor(double bac)
     {
-//        warn users based on their bac how drunk they are
+        // warn users based on their bac how drunk they are
         if (bac > .02 && bac <= .07){
             txtBAC.setTextColor(getResources().getColor(R.color.green));
         }else if (bac > .07 && bac <= .19){
             txtBAC.setTextColor(getResources().getColor(R.color.yellow));
         }else{
             txtBAC.setTextColor(getResources().getColor(R.color.red));
+        }
+    }
+
+    public boolean dateExpired(Date timestamp, int hourThreshold) {
+
+        long additionMilli = 1000 * 60 * 60 * hourThreshold;
+        Date expiredDate = new Date(timestamp.getTime() + additionMilli);
+
+        // if current time is before the expired time
+        if (new Date().after(expiredDate)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

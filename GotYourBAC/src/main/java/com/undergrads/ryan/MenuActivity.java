@@ -42,6 +42,7 @@ import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import android.view.Menu;
 import com.google.example.games.basegameutils.BaseGameUtils;
 import java.util.ArrayList;
 
@@ -202,8 +203,15 @@ public class MenuActivity extends AppCompatActivity
                     .commit();
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, MainActivity.class);
             Intent i = new Intent(this, MenuActivity.class);
+            intent.putExtra("finish", true); // if you are checking for this in your other Activities
             startActivity(i);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+         Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
