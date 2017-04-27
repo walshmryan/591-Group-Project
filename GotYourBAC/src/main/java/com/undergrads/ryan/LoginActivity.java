@@ -67,9 +67,13 @@ public class LoginActivity extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//
 
-                String username = txtEmail.getText().toString();
-                String password = edtPassword.getText().toString();
+                String username = "sarahpmedeiros@gmail.com";
+                String password = "password123";
+//// TODO: 4/27/17 put back when testing is done
+//                String username = txtEmail.getText().toString();
+//                String password = edtPassword.getText().toString();
 
                 loginlistener.goToLoginFragment(username, password);
             }

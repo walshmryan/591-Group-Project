@@ -6,7 +6,8 @@
     android:layout_marginTop="20dp"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.google.example.tbmpskeleton.com.undergrads.ryan.EditUser">
+    tools:context="com.undergrads.ryan.EditUser"
+    android:screenOrientation="portrait">
 
 
     <ViewSwitcher

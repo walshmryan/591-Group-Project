@@ -84,6 +84,8 @@
     <string name="pick">Pick a Game to Play</string>
     <string name="geoAPIkey">AIzaSyAUIMMNWHg3Scvn3t_ItkDQfzwk3mOVqeI</string>
     <string name="ok">OK</string>
+    <string name="welcome_">Welcome!</string>
+    <string name="end">End Game</string>
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>

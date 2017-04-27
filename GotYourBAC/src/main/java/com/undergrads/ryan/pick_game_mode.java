@@ -27,6 +27,8 @@ public class pick_game_mode extends Fragment {
     public interface gameModeListener{
         public void startMatchButton();
         public void onCheckGamesClicked();
+        public void signOutOfGoogle();
+        public void loadSinglePlayerGame();
     }
     gameModeListener listener;
     @Override
@@ -53,6 +55,20 @@ public class pick_game_mode extends Fragment {
             }
         });
 
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.signOutOfGoogle();
+            }
+        });
+        quickGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                listener.loadSinglePlayerGame();
+            }
+        });
         return v;
     }
     public void onAttach(Activity activity) {

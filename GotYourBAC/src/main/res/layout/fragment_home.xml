@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     android:id="@+id/home_screen"
     android:gravity="center"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:screenOrientation="portrait">
 
     <TableLayout
         android:layout_width="match_parent"

@@ -1,9 +1,11 @@
 package com.undergrads.ryan;
 
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import static android.view.View.VISIBLE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlayGame extends Fragment {
+public class StroopGame extends Fragment {
 
     Button btnStart;
     Button btnYellow;
@@ -30,6 +32,8 @@ public class PlayGame extends Fragment {
     Button btnRed;
     Button btnBlue;
     Button btnBlack;
+    Button btnSkip;
+    Button btnEnd;
     TextView txtWord0;
     TextView txtWord1;
     TextView txtWord2;
@@ -45,15 +49,17 @@ public class PlayGame extends Fragment {
     Integer textNumber = rand.nextInt(6);
     Integer colourNumber = rand.nextInt(6);
     double time;
+    String base = "stroop baseline",quick = "stroop quick", mp = "stroop mp";
 
     boolean started = false;
-    public PlayGame() {
+    public StroopGame() {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void gameDone(int num);
-
+        public void gameDone(double num);
+        public void gameAborted(double num);
     }
+
 
     PlayGameListener gameListener;
 
@@ -67,7 +73,7 @@ public class PlayGame extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_play_game, container, false);
+        View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
 
 
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
@@ -76,29 +82,22 @@ public class PlayGame extends Fragment {
         btnStart = (Button) (v.findViewById(R.id.btnStart));
         btnYellow = (Button) (v.findViewById(R.id.btnYellow));
         btnBlack = (Button) (v.findViewById(R.id.btnBlack));
-        txtWord0 = (TextView)(v.findViewById(R.id.txtWord0));
-        txtWord1 = (TextView)(v.findViewById(R.id.txtWord1));
-        txtWord2 = (TextView)(v.findViewById(R.id.txtWord2));
-        txtWord3 = (TextView)(v.findViewById(R.id.txtWord3));
-        txtWord4 = (TextView)(v.findViewById(R.id.txtWord4));
+        btnSkip = (Button)v.findViewById(R.id.btnSkip);
+        btnEnd = (Button)v.findViewById(R.id.btnEnd);
+        txtWord0 = (TextView)(v.findViewById(R.id.txtView0));
+        txtWord1 = (TextView)(v.findViewById(R.id.txtView1));
+        txtWord2 = (TextView)(v.findViewById(R.id.txtView2));
+        txtWord3 = (TextView)(v.findViewById(R.id.txtView3));
+        txtWord4 = (TextView)(v.findViewById(R.id.txtView4));
         comment = (TextView)(v.findViewById(R.id.comment));
+
+        btnSkip.setVisibility(View.GONE);
+        btnEnd.setVisibility(View.VISIBLE);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enableButtons();
-                started = true;
-                guesses = 0;
-                totalRight = 0;
-                stopwatch = new Stopwatch();
-                comment.setVisibility(View.INVISIBLE);
-                txtWord0.setVisibility(View.INVISIBLE);
-                txtWord1.setVisibility(View.INVISIBLE);
-                txtWord2.setVisibility(View.INVISIBLE);
-                txtWord3.setVisibility(View.INVISIBLE);
-                txtWord4.setVisibility(View.INVISIBLE);
-                nextWord();
-//                gameListener.startGame();
+                start();
             }
         });
 
@@ -109,14 +108,8 @@ public class PlayGame extends Fragment {
                 if (guesses <= 10) {
                     checkCorrect(0);
                 } else {
-                    disableButtons();
-                    time = stopwatch.elapsedTime();
-                    gameListener.gameDone(totalRight);
-                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-                    comment.setVisibility(VISIBLE);
+                    done();
                 }
-//                gameListener.btnYellowClicked();
-
             }
         });
 
@@ -127,13 +120,8 @@ public class PlayGame extends Fragment {
                 if (guesses <= 10) {
                     checkCorrect(1);
                 } else {
-                    disableButtons();
-                    time = stopwatch.elapsedTime();
-                    gameListener.gameDone(totalRight);
-                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-                    comment.setVisibility(VISIBLE);
+                    done();
                 }
-//                gameListener.btnGreenClicked();
             }
         }));
 
@@ -144,14 +132,8 @@ public class PlayGame extends Fragment {
                 if (guesses <= 10) {
                     checkCorrect(2);
                 } else {
-                    disableButtons();
-                    time = stopwatch.elapsedTime();
-                    gameListener.gameDone(totalRight);
-                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-                    comment.setVisibility(VISIBLE);
+                    done();
                 }
-//                gameListener.btnRedClicked();
-
             }
         });
 
@@ -162,14 +144,8 @@ public class PlayGame extends Fragment {
                 if (guesses <= 10) {
                     checkCorrect(3);
                 } else {
-                    disableButtons();
-                    time = stopwatch.elapsedTime();
-                    gameListener.gameDone(totalRight);
-                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-                    comment.setVisibility(VISIBLE);
+                    done();
                 }
-//                gameListener.btnBlueClicked();
-
             }
         });
 
@@ -180,21 +156,42 @@ public class PlayGame extends Fragment {
                 if (guesses <= 10) {
                     checkCorrect(4);
                 } else {
-                    disableButtons();
-                    time = stopwatch.elapsedTime();
-                    gameListener.gameDone(totalRight);
-                    comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
-                    comment.setVisibility(VISIBLE);
+                    done();
                 }
+            }
+        });
+        btnEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double finalScore = (totalRight / 10) * 100;
 
-//                gameListener.btnBlackClicked();
+                gameListener.gameAborted(finalScore);
             }
         });
 
-
+        Log.i ("t",getFragmentTag());
         return v;
     }
 
+    private void done() {
+
+        // need to work out how we are calculating score
+        double finalScore = (totalRight / 10) * 100;
+//        String tag = getFragmentTag();
+        String tag = getFragmentTag();
+        if (tag == quick){
+            gameListener.gameAborted(finalScore);
+        }else {
+
+            gameListener.gameDone(finalScore);
+        }
+
+//        what happens if its a quick match
+//        show the score then
+//        go to main game game picker screen
+
+
+    }
 
     public void textSet(TextView txtView, int wordNum, int colourNum){
         txtView.setText(colours[wordNumber]);
@@ -279,6 +276,26 @@ public class PlayGame extends Fragment {
         }
 
         return false;
+
+    }
+    public void start(){
+        enableButtons();
+        started = true;
+        guesses = 0;
+        totalRight = 0;
+        stopwatch = new Stopwatch();
+        comment.setVisibility(View.INVISIBLE);
+        txtWord0.setVisibility(View.INVISIBLE);
+        txtWord1.setVisibility(View.INVISIBLE);
+        txtWord2.setVisibility(View.INVISIBLE);
+        txtWord3.setVisibility(View.INVISIBLE);
+        txtWord4.setVisibility(View.INVISIBLE);
+        nextWord();
+    }
+    public String getFragmentTag(){
+        FragmentManager fragment = getFragmentManager();
+        Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+        return (curFrag.getTag().toString());
 
     }
 

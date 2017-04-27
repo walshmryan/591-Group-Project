@@ -1,6 +1,5 @@
 package com.undergrads.ryan;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -61,7 +60,7 @@ public class StroopBaselineFragment extends Fragment {
     public static final String TAG = "EBTurn";
 
     public interface stroopBaselineListener{
-        public void switchActivity();
+        public void goToMain();
 
     }
 
@@ -70,7 +69,7 @@ public class StroopBaselineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_baseline_stroop, container, false);
+        View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
 
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
         btnRed = (Button) (v.findViewById(R.id.btnRed));
@@ -86,6 +85,7 @@ public class StroopBaselineFragment extends Fragment {
         txtView4 = (TextView)(v.findViewById(R.id.txtView4));
         comment = (TextView)(v.findViewById(R.id.comment));
 
+        btnSkip.setVisibility(View.VISIBLE);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +100,7 @@ public class StroopBaselineFragment extends Fragment {
                 txtView2.setVisibility(View.INVISIBLE);
                 txtView3.setVisibility(View.INVISIBLE);
                 txtView4.setVisibility(View.INVISIBLE);
+
                 nextWord();
             }
         });
@@ -107,7 +108,7 @@ public class StroopBaselineFragment extends Fragment {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.switchActivity();
+                listener.goToMain();
             }
         });
 
@@ -186,7 +187,7 @@ public class StroopBaselineFragment extends Fragment {
         time = stopwatch.elapsedTime();
         comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
         comment.setVisibility(VISIBLE);
-        listener.switchActivity();
+        listener.goToMain();
     }
 
 //    @Override
@@ -288,61 +289,61 @@ public class StroopBaselineFragment extends Fragment {
 
         return false;
     }
-    public byte[] persist() {
-        JSONObject retVal = new JSONObject();
-
-        try {
-            retVal.put("data", data);
-            retVal.put("turnCounter", turnCounter);
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        String st = retVal.toString();
-
-        Log.d(TAG, "==== PERSISTING\n" + st);
-
-        return st.getBytes(Charset.forName("UTF-8"));
-    }
-    // Creates a new instance of SkeletonTurn.
-    static public StroopBaselineFragment unpersist(byte[] byteArray) {
-
-        if (byteArray == null) {
-            Log.d(TAG, "Empty array---possible bug.");
-            return new StroopBaselineFragment();
-        }
-
-        String st = null;
-        try {
-            st = new String(byteArray, "UTF-8");
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-            return null;
-        }
-
-        Log.d(TAG, "====UNPERSIST \n" + st);
-
-        StroopBaselineFragment retVal = new StroopBaselineFragment();
-
-        try {
-            JSONObject obj = new JSONObject(st);
-
-            if (obj.has("data")) {
-                retVal.data = obj.getString("data");
-            }
-            if (obj.has("turnCounter")) {
-                retVal.turnCounter = obj.getInt("turnCounter");
-            }
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return retVal;
-    }
+//    public byte[] persist() {
+//        JSONObject retVal = new JSONObject();
+//
+//        try {
+//            retVal.put("data", data);
+//            retVal.put("turnCounter", turnCounter);
+//
+//        } catch (JSONException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//        String st = retVal.toString();
+//
+//        Log.d(TAG, "==== PERSISTING\n" + st);
+//
+//        return st.getBytes(Charset.forName("UTF-8"));
+//    }
+//    // Creates a new instance of StroopTurn.
+//    static public StroopBaselineFragment unpersist(byte[] byteArray) {
+//
+//        if (byteArray == null) {
+//            Log.d(TAG, "Empty array---possible bug.");
+//            return new StroopBaselineFragment();
+//        }
+//
+//        String st = null;
+//        try {
+//            st = new String(byteArray, "UTF-8");
+//        } catch (UnsupportedEncodingException e1) {
+//            e1.printStackTrace();
+//            return null;
+//        }
+//
+//        Log.d(TAG, "====UNPERSIST \n" + st);
+//
+//        StroopBaselineFragment retVal = new StroopBaselineFragment();
+//
+//        try {
+//            JSONObject obj = new JSONObject(st);
+//
+//            if (obj.has("data")) {
+//                retVal.data = obj.getString("data");
+//            }
+//            if (obj.has("turnCounter")) {
+//                retVal.turnCounter = obj.getInt("turnCounter");
+//            }
+//
+//        } catch (JSONException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//        return retVal;
+//    }
 
 }
 

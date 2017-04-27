@@ -12,18 +12,12 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
@@ -43,6 +37,7 @@ import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
+import com.google.android.gms.games.multiplayer.turnbased.OnTurnBasedMatchUpdateReceivedListener;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,13 +50,15 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,
         google_mainmenu.gMainListener, GoogleApiClient.OnConnectionFailedListener,
         game_picker_fragment.gamePickerListener, pick_game_mode.gameModeListener, GoogleApiClient.ConnectionCallbacks,
-        PlayGame.PlayGameListener, stroop_win.stroopGameListener,OnInvitationReceivedListener {
+        StroopGame.PlayGameListener, stroop_game_done.stroopGameListener,OnInvitationReceivedListener,
+        OnTurnBasedMatchUpdateReceivedListener{
+
     private GoogleApiClient mGoogleApiClient;
     private boolean mResolvingError = false;
     private static final int REQUEST_RESOLVE_ERROR = 1001;
     private static final String DIALOG_ERROR = "dialog_error";
     public TurnBasedMatch mMatch;
-    public SkeletonTurn mTurnData;
+    public StroopTurn mTurnData;
     // Local convenience pointers
     public TextView mDataView;
     public TextView mTurnTextView;
@@ -74,7 +71,7 @@ public class MenuActivity extends AppCompatActivity
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
 
-    private int stroopScore;
+    private double stroopScore;
     // Has the user clicked the sign-in button?
     private boolean mSignInClicked = false;
 
@@ -126,9 +123,10 @@ public class MenuActivity extends AppCompatActivity
         String homeFrag = "Home Screen";
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
+                .replace(R.id.frame_layout, fragment,homeFrag)
                 .addToBackStack(homeFrag)
                 .commit();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestServerAuthCode("479703936056-ev6vmikc6n4r89qs1vgeihpkv4t3rn8a.apps.googleusercontent.com")
@@ -202,7 +200,11 @@ public class MenuActivity extends AppCompatActivity
                     .replace(R.id.frame_layout, fragment)
                     .addToBackStack(editUser)
                     .commit();
-        }
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent(this, MenuActivity.class);
+            startActivity(i);
+    }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -216,6 +218,7 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void goToGamePickerFrag() {
+        String gamePicker = "pick game";
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -223,7 +226,7 @@ public class MenuActivity extends AppCompatActivity
         game_picker_fragment fragment = new game_picker_fragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
+                .replace(R.id.frame_layout, fragment, gamePicker)
                 .commit();
     }
 
@@ -264,10 +267,11 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void goToStroop(View view) {
+        String gameMode = "game mode";
         pick_game_mode fragment = new pick_game_mode();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
+                .replace(R.id.frame_layout, fragment,gameMode)
                 .commit();
     }
 
@@ -354,9 +358,6 @@ public class MenuActivity extends AppCompatActivity
 //            showSpinner();
         }
     }
-//    public void showSpinner() {
-//        findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
-//    }
 
 
     private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
@@ -419,7 +420,7 @@ public class MenuActivity extends AppCompatActivity
             return;
         }
 
-        setViewVisibility();
+//        setViewVisibility();
     }
 
     // startMatch() happens in response to the createTurnBasedMatch()
@@ -429,7 +430,7 @@ public class MenuActivity extends AppCompatActivity
     // callback to OnTurnBasedMatchUpdated(), which will show the game
     // UI.
     public void startMatch(TurnBasedMatch match) {
-        mTurnData = new SkeletonTurn();
+        mTurnData = new StroopTurn();
         // Some basic turn data
         mTurnData.data = "First turn";
 
@@ -451,14 +452,10 @@ public class MenuActivity extends AppCompatActivity
     // Upload your new gamestate, then take a turn, and pass it on to the next
     // player.
     public void onDoneClicked() {
-//        showSpinner();
 
         String nextParticipantId = getNextParticipantId();
         // Create the next turn
         mTurnData.turnCounter += 1;
-//        mTurnData.data = mDataView.getText().toString();
-
-//        showSpinner();
 
         Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId).setResultCallback(
@@ -517,13 +514,6 @@ public class MenuActivity extends AppCompatActivity
                 Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 1, 7, true);
         startActivityForResult(intent, RC_SELECT_PLAYERS);
     }
-////    public void onStartMatchClicked(View view) {
-////        Intent intent =
-////                Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 1, 7, true);
-////        startActivityForResult(intent, RC_SELECT_PLAYERS);
-////    }
-////
-//
 
 
     // This is the main function that gets called when players choose a match
@@ -562,7 +552,7 @@ public class MenuActivity extends AppCompatActivity
         // OK, it's active. Check on turn status.
         switch (turnStatus) {
             case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
-                mTurnData = SkeletonTurn.unpersist(mMatch.getData());
+                mTurnData = StroopTurn.unpersist(mMatch.getData());
                 setGameplayUI();
                 return;
             case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
@@ -618,34 +608,8 @@ public class MenuActivity extends AppCompatActivity
 
 
     // Update the visibility based on what state we're in.
-    public void setViewVisibility() {
-        boolean isSignedIn = (mGoogleApiClient != null) && (mGoogleApiClient.isConnected());
 
-//        if (!isSignedIn) {
-//            findViewById(R.id.login_layout).setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//            findViewById(R.id.matchup_layout).setVisibility(View.GONE);
-////            findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
-//
-//            if (mAlertDialog != null) {
-//                mAlertDialog.dismiss();
-//            }
-//            return;
-//        }
-//
-//
-//        ((TextView) findViewById(R.id.name_field)).setText(Games.Players.getCurrentPlayer(
-//                mGoogleApiClient).getDisplayName());
-//        findViewById(R.id.login_layout).setVisibility(View.GONE);
-//
-//        if (isDoingTurn) {
-//            findViewById(R.id.matchup_layout).setVisibility(View.GONE);
-////            findViewById(R.id.gameplay_layout).setVisibility(View.VISIBLE);
-//        } else {
-//            findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
-////            findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
-//        }
-    }
+//        boolean isSignedIn = (mGoogleApiClient != null) && (mGoogleApiClient.isConnected());
 
     // Switch to gameplay view.
     public void setGameplayUI() {
@@ -654,10 +618,11 @@ public class MenuActivity extends AppCompatActivity
 //        mDataView.setText(mTurnData.data);
 //        mTurnTextView.setText("Turn " + mTurnData.turnCounter);
 
-        PlayGame fragment = new PlayGame();
+        String stroopGame = "stroop mp";
+        StroopGame fragment = new StroopGame();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
+                .replace(R.id.frame_layout, fragment, stroopGame)
                 .commit();
 
     }
@@ -710,7 +675,7 @@ public class MenuActivity extends AppCompatActivity
             }
         }
 
-        setViewVisibility();
+//        setViewVisibility();
 //
 //        // As a demonstration, we are registering this activity as a handler for
 //        // invitation and match events.
@@ -730,7 +695,8 @@ public class MenuActivity extends AppCompatActivity
     public void onConnectionSuspended(int i) {
         Log.d(TAG, "onConnectionSuspended():  Trying to reconnect.");
         mGoogleApiClient.connect();
-        setViewVisibility();
+//        setViewVisibility();
+
 
     }
     // Returns false if something went wrong, probably. This should handle
@@ -793,17 +759,27 @@ public class MenuActivity extends AppCompatActivity
 
 
     @Override
-    public void gameDone(int total) {
+    public void gameDone(double total) {
         stroopScore = total;
         onDoneClicked();
 
-//        onFinishClicked();
-        stroop_win fragment = new stroop_win();
+        String gameDone = "game finished";
+        stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
+                .replace(R.id.frame_layout, fragment, gameDone)
                 .commit();
     }
+    public void gameAborted(double score){
+        stroopScore = score;
+        String gameDone = "game finished";
+        stroop_game_done fragment = new stroop_game_done();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, gameDone)
+                .commit();
+    }
+
 
     public void onFinishClicked() {
 //        showSpinner();
@@ -816,12 +792,24 @@ public class MenuActivity extends AppCompatActivity
                 });
 
         isDoingTurn = false;
-        setViewVisibility();
+//        setViewVisibility();
     }
     @Override
-    public int getScore() {
+    public double getScore() {
         return stroopScore;
     }
+
+    @Override
+    public void goToMainGameScreen() {
+        String gamePicker = "pick game";
+
+        game_picker_fragment fragment = new game_picker_fragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, gamePicker)
+                .commit();
+    }
+
     // Handle notification events.
     @Override
     public void onInvitationReceived(Invitation invitation) {
@@ -837,62 +825,40 @@ public class MenuActivity extends AppCompatActivity
         Toast.makeText(this, "An invitation was removed.", Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public void onTurnBasedMatchReceived(TurnBasedMatch match) {
-//        Toast.makeText(this, "A match was updated.", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    public void onTurnBasedMatchRemoved(String matchId) {
-//        Toast.makeText(this, "A match was removed.", Toast.LENGTH_SHORT).show();
-//
-//    }
+    @Override
+    public void onTurnBasedMatchReceived(TurnBasedMatch match) {
+        Toast.makeText(this, "A match was updated.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTurnBasedMatchRemoved(String matchId) {
+        Toast.makeText(this, "A match was removed.", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    public void signOutOfGoogle(){
+        mSignInClicked = false;
+        Games.signOut(mGoogleApiClient);
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+        String googleMain = "google main menu";
+        google_mainmenu fragment = new google_mainmenu();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, googleMain)
+                .commit();
+    }
+
+    @Override
+    public void loadSinglePlayerGame() {
+        String stroopGame = "stroop quick";
+        StroopGame fragment = new StroopGame();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, stroopGame)
+                .commit();
+    }
 
 }
-
-//    public void dismissSpinner() {
-//        findViewById(R.id.progressLayout).setVisibility(View.GONE);
-//    }
-//        if (request == RC_SELECT_PLAYERS) {
-//            if (response != Activity.RESULT_OK) {
-//                // user canceled
-//                return;
-//            }
-//
-//            if (request == REQUEST_RESOLVE_ERROR) {
-//                mResolvingError = false;
-//                if (request == RESULT_OK) {
-//                    // Make sure the app is not already connected or attempting to connect
-//                    if (!mGoogleApiClient.isConnecting() &&
-//                            !mGoogleApiClient.isConnected()) {
-//                        mGoogleApiClient.connect();
-//                    }
-//                }
-//            }
-//            // Get the invitee list.
-//            final ArrayList<String> invitees =
-//                    data.getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
-//
-//            // Get auto-match criteria.
-//            Bundle autoMatchCriteria = null;
-//            int minAutoMatchPlayers = data.getIntExtra(
-//                    Multiplayer.EXTRA_MIN_AUTOMATCH_PLAYERS, 0);
-//            int maxAutoMatchPlayers = data.getIntExtra(
-//                    Multiplayer.EXTRA_MAX_AUTOMATCH_PLAYERS, 0);
-//            if (minAutoMatchPlayers > 0) {
-//                autoMatchCriteria = RoomConfig.createAutoMatchCriteria(
-//                        minAutoMatchPlayers, maxAutoMatchPlayers, 0);
-//            } else {
-//                autoMatchCriteria = null;
-//            }
-//
-//            TurnBasedMatchConfig tbmc = TurnBasedMatchConfig.builder()
-//                    .addInvitedPlayers(invitees)
-//                    .setAutoMatchCriteria(autoMatchCriteria)
-//                    .build();
-//
-//            // Create and start the match.
-//            Games.TurnBasedMultiplayer
-//                    .createMatch(mGoogleApiClient, tbmc)
-//                    .setResultCallback(new MatchInitiatedCallback());
-//        }

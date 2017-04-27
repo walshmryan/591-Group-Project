@@ -1,6 +1,7 @@
 package com.undergrads.ryan;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -151,7 +152,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
                                 Toast.makeText(MainActivity.this, R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                switchActivity();
+                                goToMain();
                             }
                         }
                     });
@@ -186,11 +187,16 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         signIn(username, password);
     }
 
-    @Override
-    public void switchActivity() {
-        Intent i = new Intent(this, MenuActivity.class);
-        startActivity(i);
-    }
+
+//    @Override
+//    public void switchActivity() {
+//        String base = "stroop baseline";
+//        String tag  =getFragmentTag();
+//        if (tag ==base){
+//            Intent i = new Intent(this, MenuActivity.class);
+//            startActivity(i);
+//        }
+//    }
 
     public void goToICE() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -205,6 +211,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
     public void goToStroopBaseline() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         StroopBaselineFragment newFragment = new StroopBaselineFragment();
+//        StroopGame newFragment = new StroopGame();
         String createNewFrag = "stroop baseline";
         transaction.replace(R.id.main_frame, newFragment, createNewFrag);
         transaction.addToBackStack(null);
@@ -230,4 +237,16 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         transaction.commit();
     }
 
+    public String getFragmentTag(){
+        FragmentManager fragment = getFragmentManager();
+        Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+        return (curFrag.getTag().toString());
+
+    }
+
+    @Override
+    public void goToMain() {
+        Intent i = new Intent(this, MenuActivity.class);
+        startActivity(i);
+    }
 }

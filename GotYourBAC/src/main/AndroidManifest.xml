@@ -41,6 +41,7 @@
 
         <activity
             android:name="com.undergrads.ryan.MenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_menu" />
         <!--<activity-->
             <!--android:name="com.google.example.tbmpskeleton.GameActivity"-->
