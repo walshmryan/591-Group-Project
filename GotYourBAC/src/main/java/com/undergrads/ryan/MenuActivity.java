@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -461,19 +462,33 @@ public class MenuActivity extends AppCompatActivity
     // player.
     public void onDoneClicked() {
 
-        String nextParticipantId = getNextParticipantId();
-        // Create the next turn
-        mTurnData.turnCounter += 1;
+        if (mTurnData.turnCounter < 1) {
+            mTurnData.data = getScore() + "";
+            String nextParticipantId = getNextParticipantId();
+            // Create the next turn
+            mTurnData.turnCounter += 1;
+            Log.d("", mTurnData.turnCounter + "");
+            Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
+                    mTurnData.persist(), nextParticipantId).setResultCallback(
+                    new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                        @Override
+                        public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                            processResult(result);
+                        }
+                    });
+        }else {
+            Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
+                    .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                        @Override
+                        public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                            processResult(result);
+                        }
+                    });
+        }
 
-        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
-                mTurnData.persist(), nextParticipantId).setResultCallback(
-                new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
-                    @Override
-                    public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
-                        processResult(result);
-                    }
-                });
 
+
+        
         mTurnData = null;
     }
     // If you choose to rematch, then call it and wait for a response.
@@ -568,7 +583,7 @@ public class MenuActivity extends AppCompatActivity
                 showWarning("Alas...", "It's not your turn.");
                 break;
             case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
-                showWarning("fGood inititative!",
+                showWarning("Good inititative!",
                         "Still waiting for invitations.\n\nBe patient!");
         }
 
@@ -683,20 +698,18 @@ public class MenuActivity extends AppCompatActivity
             }
         }
 
-//        setViewVisibility();
-//
-//        // As a demonstration, we are registering this activity as a handler for
+////        // As a demonstration, we are registering this activity as a handler for
 //        // invitation and match events.
 //
 //        // This is *NOT* required; if you do not register a handler for
 //        // invitation events, you will get standard notifications instead.
 //        // Standard notifications may be preferable behavior in many cases.
-//        Games.Invitations.registerInvitationListener(mGoogleApiClient, this);
+        Games.Invitations.registerInvitationListener(mGoogleApiClient, this);
 //
 //        // Likewise, we are registering the optional MatchUpdateListener, which
 //        // will replace notifications you would get otherwise. You do *NOT* have
 //        // to register a MatchUpdateListener.
-//        Games.TurnBasedMultiplayer.registerMatchUpdateListener(mGoogleApiClient, this);
+        Games.TurnBasedMultiplayer.registerMatchUpdateListener(mGoogleApiClient, this);
     }
 
     @Override
@@ -771,6 +784,7 @@ public class MenuActivity extends AppCompatActivity
         stroopScore = total;
         onDoneClicked();
 
+        String result = mTurnData.data;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();

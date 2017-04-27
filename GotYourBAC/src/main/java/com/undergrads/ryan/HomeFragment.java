@@ -8,7 +8,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -18,12 +20,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import com.undergrads.ryan.Manifest;
+import com.undergrads.ryan.R;
+import com.undergrads.ryan.Scores;
+import com.undergrads.ryan.Weather;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,14 +56,15 @@ public class HomeFragment extends Fragment {
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
 
-    private static final String[] LOCATION_PERMS={
+    private static final String[] LOCATION_PERMS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
-    private static final int LOCATION_REQUEST=1340;
+    private static final int LOCATION_REQUEST = 1340;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -77,27 +87,34 @@ public class HomeFragment extends Fragment {
 
         // try requesting location from Network and GPS
         // if GPS fails try to use Network
-        try {
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
-            Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            setCity(lastLocation);
-
-        } catch (Exception e) {
-            Log.i(MYTAG, "Could not connect to Network");
-
-            try {
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
-                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                setCity(lastLocation);
-            } catch (Exception ex) {
-                Log.i(MYTAG, "Could not connect to GPS");
-            }
-        }
+//        try {
+//            if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                // TODO: Consider calling
+//                //    ActivityCompat#requestPermissions
+//                // here to request the missing permissions, and then overriding
+//                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                //                                          int[] grantResults)
+//                // to handle the case where the user grants the permission. See the documentation
+//                // for ActivityCompat#requestPermissions for more details.
+//                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
+//                Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                setCity(lastLocation);
+//            }
+//
+//        } catch (Exception e) {
+//            Log.i(MYTAG, "Could not connect to Network");
+//
+//            try {
+//                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
+//                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                setCity(lastLocation);
+//            } catch (Exception ex) {
+//                Log.i(MYTAG, "Could not connect to GPS");
+//            }
+//        }
 
         /*
-
          Fetches top scores from DB and displays them
-
          */
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();

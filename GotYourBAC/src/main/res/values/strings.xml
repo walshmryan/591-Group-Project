@@ -86,6 +86,8 @@
     <string name="ok">OK</string>
     <string name="welcome_">Welcome!</string>
     <string name="end">End Game</string>
+    <string name="here_are_your_last_3_scores">Here are your last 3 scores:</string>
+
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>
