@@ -163,7 +163,8 @@ public class StroopGame extends Fragment {
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double finalScore = (totalRight / 10) * 100;
+                //double finalScore = (totalRight / 10) * 100;
+                double finalScore = totalRight;
 
                 gameListener.gameAborted(finalScore);
             }
@@ -176,7 +177,8 @@ public class StroopGame extends Fragment {
     private void done() {
 
         // need to work out how we are calculating score
-        double finalScore = (totalRight / 10) * 100;
+        //double finalScore = (totalRight / 10) * 100;
+        double finalScore = totalRight;
 //        String tag = getFragmentTag();
         String tag = getFragmentTag();
         if (tag == quick){
