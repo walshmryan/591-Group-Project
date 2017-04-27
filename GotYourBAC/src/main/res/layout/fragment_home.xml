@@ -34,11 +34,12 @@
         android:id="@+id/weatherIcon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="29dp"
-        app:srcCompat="@drawable/add"
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/weatherForCity"
-        android:layout_toEndOf="@+id/temperature" />
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/temperature"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/add" />
 
     <TextView
         android:id="@+id/scoresDesc"
@@ -80,4 +81,12 @@
         android:layout_marginTop="21dp"
         android:text="TextView"
         android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/iconProgress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/weatherIcon"
+        android:layout_alignTop="@+id/weatherIcon" />
 </RelativeLayout>

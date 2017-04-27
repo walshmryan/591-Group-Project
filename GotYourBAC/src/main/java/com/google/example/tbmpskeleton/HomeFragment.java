@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
     private TextView score1;
     private TextView score2;
     private TextView score3;
+    private ProgressBar iconProgress;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment {
         score1 = (TextView) v.findViewById(R.id.score1);
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
+        iconProgress = (ProgressBar) v.findViewById(R.id.iconProgress);
 
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -166,7 +169,7 @@ public class HomeFragment extends Fragment {
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
-                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                            new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
