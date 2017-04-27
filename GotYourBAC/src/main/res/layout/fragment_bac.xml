@@ -31,6 +31,15 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
+        <TextView
+            android:id="@+id/wineCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
         <ImageButton
             android:id="@+id/btnWineMinus"
             android:layout_width="wrap_content"
@@ -61,6 +70,15 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
+        <TextView
+            android:id="@+id/beerCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
         <ImageButton
             android:id="@+id/btnBeerMinus"
             android:layout_width="wrap_content"
@@ -87,10 +105,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/shotCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="20dp">
+
+        <TextView
+            android:id="@+id/hardCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <ImageButton
             android:id="@+id/btnHardAlcoholMinus"
@@ -143,6 +171,7 @@
             android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:visibility="visible" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
