@@ -87,31 +87,22 @@ public class HomeFragment extends Fragment {
 
         // try requesting location from Network and GPS
         // if GPS fails try to use Network
-//        try {
-//            if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                // TODO: Consider calling
-//                //    ActivityCompat#requestPermissions
-//                // here to request the missing permissions, and then overriding
-//                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                //                                          int[] grantResults)
-//                // to handle the case where the user grants the permission. See the documentation
-//                // for ActivityCompat#requestPermissions for more details.
-//                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
-//                Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                setCity(lastLocation);
-//            }
-//
-//        } catch (Exception e) {
-//            Log.i(MYTAG, "Could not connect to Network");
-//
-//            try {
-//                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
-//                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                setCity(lastLocation);
-//            } catch (Exception ex) {
-//                Log.i(MYTAG, "Could not connect to GPS");
-//            }
-//        }
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 0.0f, ll);
+            Location lastLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            setCity(lastLocation);
+
+        } catch (Exception e) {
+            Log.i(MYTAG, "Could not connect to Network");
+
+            try {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 0.0f, ll);
+                Location lastLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                setCity(lastLocation);
+            } catch (Exception ex) {
+                Log.i(MYTAG, "Could not connect to GPS");
+            }
+        }
 
         /*
          Fetches top scores from DB and displays them
