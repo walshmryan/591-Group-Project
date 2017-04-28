@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.google.example.tbmpskeleton.MenuActivity">
+    tools:context="com.undergrads.ryan.MenuActivity"
+    android:screenOrientation="portrait">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -15,7 +16,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"/>
+            android:background="#065e56"
+            android:theme="@style/AppTheme" />
 
     </android.support.design.widget.AppBarLayout>
     <include

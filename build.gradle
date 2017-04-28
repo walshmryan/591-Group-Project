@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.google.gms:google-services:3.0.0'
+
     }
 }
 
@@ -26,7 +27,7 @@ allprojects {
 
         appcompat_library_version = '25.1.0'
         support_library_version = '25.1.0'
-        gms_library_version = '10.0.1'
+        gms_library_version = '10.2.1'
     }
 }
 
