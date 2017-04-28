@@ -40,7 +40,9 @@
     <string name="weight">Weight (in lbs)</string>
     <string name="sex">Sex</string>
     <string name="auth_failed">Authorization failed</string>
-    <string name="ice_create_description">Please enter your emergency contact information or press Skip</string>
+    <string name="ice_create_option">Please enter your emergency contact information or press skip to configure later.</string>
+    <string name="ice_create_description">Your emergency contact information can later be used to quickly send texts in case of an emergency.</string>
+    <string name="stroop_create_description">Please record a baseline for the Stroop test. This is designed to get an accurate baseline score to compare to future scores. Or press skip.</string>
 
     <string name="sex_prompt">Select Your Sex</string>
     <string name="email">Email</string>

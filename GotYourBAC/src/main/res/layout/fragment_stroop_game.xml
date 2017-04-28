@@ -208,4 +208,15 @@
         app:layout_constraintRight_toLeftOf="@+id/btnStart"
         app:layout_constraintTop_toBottomOf="@+id/btnGreen" />
 
+    <TextView
+        android:id="@+id/stroopDescription"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/stroop_create_description"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/SubHeading"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="16dp" />
+
 </android.support.constraint.ConstraintLayout>

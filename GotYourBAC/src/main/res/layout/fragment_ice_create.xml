@@ -18,7 +18,7 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        android:layout_below="@+id/iceCreateDescription"
+        android:layout_below="@+id/iceCreateOption"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -33,15 +33,15 @@
         android:inputType="phone" />
 
     <TextView
-        android:id="@+id/iceCreateDescription"
+        android:id="@+id/iceCreateOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/ice_create_option"
+        android:textAlignment="center"
+        android:textAppearance="@style/SubHeading"
+        android:layout_marginTop="49dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp"
-        android:text="@string/ice_create_description"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/SubHeading" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/save"
@@ -62,5 +62,16 @@
         android:layout_marginTop="49dp"
         android:layout_below="@+id/number"
         android:layout_alignStart="@+id/number" />
+
+    <TextView
+        android:id="@+id/iceCreateDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/save"
+        android:layout_marginTop="22dp"
+        android:text="@string/ice_create_description"
+        android:textAlignment="center"
+        android:textAppearance="@style/SubHeading" />
 
 </RelativeLayout>
