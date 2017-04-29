@@ -127,7 +127,7 @@ public class EmergencyText extends BroadcastReceiver{
     }
 
     private boolean hasPermission(String perm) {
-        return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(c, perm));
+        return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(activity, perm));
     }
 
 }
