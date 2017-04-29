@@ -78,23 +78,6 @@ public class FragmentICE extends Fragment {
         final ViewSwitcher viewSwitcherSave = (ViewSwitcher) v.findViewById(R.id.viewSwitcherSave);
 
         String uId = getUid(); //get user id
-        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user information
-//                        Users user = dataSnapshot.getValue(Users.class);
-                        Users user = dataSnapshot.getValue(Users.class);
-                        //get current values from the database
-                        contactName = user.getFirstName();
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.i("error","bad");
-                    }
-                });
         FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("contact-info")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -121,7 +104,7 @@ public class FragmentICE extends Fragment {
                         Log.i("error","bad");
                     }
                 });
-//        name =
+
         txtName.setText(iceName);
         txtPhone.setText(number);
 
@@ -141,7 +124,7 @@ public class FragmentICE extends Fragment {
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendSMStxt();
+                EmergencyText.sendSMStxt(iceName,number);
             }
         });
 
@@ -171,53 +154,12 @@ public class FragmentICE extends Fragment {
 
         return v;
     }
-    public void sendSMStxt()
-    {
-//        http://stackoverflow.com/questions/4967448/send-sms-in-android
-//        String phoneNumber="7749295480";
-        String message;
-        if (canAccessLocation()) {
-//      // TODO: 4/29/17  set location
-
-            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
-                    " battery is low. Their last location is ";
-        }
-        else{
-            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
-                    " battery is low.";
-        }
-//      this code opens a message in the message app
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
-//        intent.putExtra(name, message);
-//        startActivity(intent);
-
-//      this code sends the message without asking
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number, null, message, null, null);
-            Toast.makeText(getActivity().getApplicationContext(), "SMS Sent!",
-                    Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "SMS faild, please enable SMS in App Permissions.",
-                    Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
-    }
 
     //    get user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    private boolean canAccessLocation() {
-        return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
-    }
-
-    private boolean hasPermission(String perm) {
-        return(PackageManager.PERMISSION_GRANTED== ContextCompat.checkSelfPermission(getActivity(), perm));
-    }
 
 }
 
