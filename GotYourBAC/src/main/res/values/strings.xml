@@ -12,6 +12,13 @@
     <string name="finish">Finish</string>
     <string name="welcome">Welcome to GotYourBAC!</string>
     <string name="check_games">Check games</string>
+    <string name="help_games">Help</string>
+    <string name="stroop_help_title">How to play Stroop:</string>
+    <string name="stroop_help_body">
+        To play the stroop game, you must begin by pressing Start Game. From there, a timer will begin that tracks the time it takes you
+        to complete the game. Words will appear randomly on the screen with a designated color. It is your job to click the correct buttons that
+        correspond to the words color. Get as many right in as little time as possible. Good luck!
+    </string>
     <string name="start_match">Start Match</string>
     <string name="turn_counter">Turn counter</string>
     <string name="signin_other_error">There was an issue with sign in.  Please try again later.</string>
@@ -40,7 +47,9 @@
     <string name="weight">Weight (in lbs)</string>
     <string name="sex">Sex</string>
     <string name="auth_failed">Authorization failed</string>
-    <string name="ice_create_description">Please enter your emergency contact information or press Skip</string>
+    <string name="ice_create_option">Please enter your emergency contact information or press skip to configure later.</string>
+    <string name="ice_create_description">Your emergency contact information can later be used to quickly send texts in case of an emergency.</string>
+    <string name="stroop_create_description">Please record a baseline for the Stroop test. This is designed to get an accurate baseline score to compare to future scores. Or press skip.</string>
 
     <string name="sex_prompt">Select Your Sex</string>
     <string name="email">Email</string>

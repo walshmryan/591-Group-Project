@@ -641,6 +641,17 @@ public class MenuActivity extends AppCompatActivity
         startActivityForResult(intent, RC_SELECT_PLAYERS);
     }
 
+    @Override
+    public void startHelpButton() {
+        String help = "help";
+        HelpFragment fragment = new HelpFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, help)
+                .addToBackStack(help)
+                .commit();
+    }
+
 
     // This is the main function that gets called when players choose a match
     // from the inbox, or else create a match and want to start it.

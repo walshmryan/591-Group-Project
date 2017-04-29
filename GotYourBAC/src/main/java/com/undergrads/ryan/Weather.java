@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -25,11 +27,13 @@ public class Weather extends AsyncTask<String,Void,String> {
 
     private TextView tempView;
     private ImageView weatherIcon;
+    private ProgressBar iconProgress;
     private static String weatherIconUrl;
 
-    public Weather(TextView tempView, ImageView weatherIcon) {
+    public Weather(TextView tempView, ImageView weatherIcon, ProgressBar iconProgress) {
         this.tempView = tempView;
         this.weatherIcon = weatherIcon;
+        this.iconProgress = iconProgress;
     }
 
     @Override
@@ -73,7 +77,7 @@ public class Weather extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String temp) {
         tempView.setText(temp);
-        new ImageLoadTask(weatherIconUrl, weatherIcon).execute();
+        new ImageLoadTask(weatherIconUrl, weatherIcon, iconProgress).execute();
     }
 }
 
@@ -81,10 +85,12 @@ class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
     private String url;
     private ImageView imageView;
+    private ProgressBar iconProgress;
 
-    public ImageLoadTask(String url, ImageView imageView) {
+    public ImageLoadTask(String url, ImageView imageView, ProgressBar iconProgress) {
         this.url = url;
         this.imageView = imageView;
+        this.iconProgress = iconProgress;
     }
 
     @Override
@@ -108,6 +114,8 @@ class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
         imageView.setImageBitmap(result);
+        imageView.setVisibility(View.VISIBLE);
+        iconProgress.setVisibility(View.INVISIBLE);
     }
 
 }

@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
     private TextView score1;
     private TextView score2;
     private TextView score3;
+    private ProgressBar iconProgress;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment {
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
 
+    // list of permissions we want
     private static final String[] LOCATION_PERMS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -76,6 +79,13 @@ public class HomeFragment extends Fragment {
         score1 = (TextView) v.findViewById(R.id.score1);
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
+        iconProgress = (ProgressBar) v.findViewById(R.id.iconProgress);
+
+        // make everything empty till DB returns
+        temperature.setText("");
+        score1.setText("");
+        score2.setText("");
+        score3.setText("");
 
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -118,6 +128,7 @@ public class HomeFragment extends Fragment {
                         int count = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
+                            // only post this score if the userId matches
                             if (score.getUserId().equals(uId)) {
                                 postScore(score, count);
                                 count++;
@@ -144,6 +155,7 @@ public class HomeFragment extends Fragment {
 //        lm.
 //    }
 
+    // sets a text view with a given score based on index
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
         if (index == 0) {
@@ -155,6 +167,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // given a location, fetch correct weather temp and icon
     protected void setCity(Location currLoc) {
 
         if (currLoc != null) {
@@ -174,7 +187,9 @@ public class HomeFragment extends Fragment {
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
-//                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                            // TODO: uncomment out weather
+                            // new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
@@ -190,6 +205,8 @@ public class HomeFragment extends Fragment {
 
             } catch (Exception e) {
                 Log.e(MYTAG, "Error with Geocoder");
+                weatherForCity.setText("Can't determine location");
+                temperature.setText("Try enabling location services and try again.");
             }
 
 
