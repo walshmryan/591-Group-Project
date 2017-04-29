@@ -68,8 +68,8 @@ public class StroopGame extends Fragment {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void gameDone(int num);
-        public void gameAborted(int num);
+        public void gameDone(double num, String gameType);
+        public void gameAborted();
     }
 
 
@@ -120,7 +120,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses += 1;
-                if (guesses <= 10) {
+                if (totalRight < 10) {
                     checkCorrect(0);
                 } else {
                     done();
@@ -132,7 +132,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses += 1;
-                if (guesses <= 10) {
+                if (totalRight < 10) {
                     checkCorrect(1);
                 } else {
                     done();
@@ -144,7 +144,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses += 1;
-                if (guesses <= 10) {
+                if (totalRight < 10) {
                     checkCorrect(2);
                 } else {
                     done();
@@ -156,7 +156,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses += 1;
-                if (guesses <= 10) {
+                if (totalRight < 10) {
                     checkCorrect(3);
                 } else {
                     done();
@@ -168,7 +168,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses += 1;
-                if (guesses <= 10) {
+                if (totalRight < 10) {
                     checkCorrect(4);
                 } else {
                     done();
@@ -178,10 +178,7 @@ public class StroopGame extends Fragment {
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //double finalScore = (totalRight / 10) * 100;
-                int finalScore = totalRight;
-
-                gameListener.gameAborted(finalScore);
+                gameListener.gameAborted();
             }
         });
 
@@ -191,24 +188,14 @@ public class StroopGame extends Fragment {
 
     private void done() {
 
-        // need to work out how we are calculating score
-        //double finalScore = (totalRight / 10) * 100;
-        int finalScore = totalRight;
-//        String tag = getFragmentTag();
+        double finalScore = stopwatch.elapsedTime();
         String tag = getFragmentTag();
 
-        if (tag == quick){
-            gameListener.gameAborted(finalScore);
-        }else {
-
-            gameListener.gameDone(finalScore);
+        if (tag.equals(quick)){
+            gameListener.gameAborted();
+        } else {
+            gameListener.gameDone(finalScore, "Stroop");
         }
-
-//        what happens if its a quick match
-//        show the score then
-//        go to main game game picker screen
-
-
     }
 
     public void textSet(TextView txtView, int wordNum, int colourNum){
