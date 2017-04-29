@@ -34,12 +34,15 @@ public class StroopGame extends Fragment {
     Button btnBlack;
     Button btnSkip;
     Button btnEnd;
+
+    TextView stroopDescription;
     TextView txtWord0;
     TextView txtWord1;
     TextView txtWord2;
     TextView txtWord3;
     TextView txtWord4;
     TextView comment;
+
     int totalRight = 0;
     int guesses = 0;
     Random rand = new Random();
@@ -89,9 +92,11 @@ public class StroopGame extends Fragment {
         txtWord2 = (TextView)(v.findViewById(R.id.txtView2));
         txtWord3 = (TextView)(v.findViewById(R.id.txtView3));
         txtWord4 = (TextView)(v.findViewById(R.id.txtView4));
+        stroopDescription = (TextView)(v.findViewById(R.id.stroopDescription));
         comment = (TextView)(v.findViewById(R.id.comment));
 
         btnSkip.setVisibility(View.GONE);
+        stroopDescription.setVisibility(View.INVISIBLE);
         btnEnd.setVisibility(View.VISIBLE);
 
         btnStart.setOnClickListener(new View.OnClickListener() {

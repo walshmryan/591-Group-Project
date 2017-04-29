@@ -57,9 +57,8 @@ public class HomeFragment extends Fragment {
     private LocationManager lm;
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
-    
-    // list of permissions we want
 
+    // list of permissions we want
     private static final String[] LOCATION_PERMS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -81,6 +80,12 @@ public class HomeFragment extends Fragment {
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
         iconProgress = (ProgressBar) v.findViewById(R.id.iconProgress);
+
+        // make everything empty till DB returns
+        temperature.setText("");
+        score1.setText("");
+        score2.setText("");
+        score3.setText("");
 
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -192,6 +197,8 @@ public class HomeFragment extends Fragment {
 
             } catch (Exception e) {
                 Log.e(MYTAG, "Error with Geocoder");
+                weatherForCity.setText("Can't determine location");
+                temperature.setText("Try enabling location services and try again.");
             }
 
 
