@@ -48,15 +48,33 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();
         fragmentTransaction.add(R.id.main_frame, fragment, loginTag);
         fragmentTransaction.commit();
 
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
+//
+//        /* Create the Firebase ref that is used for all authentication with Firebase */
+//        mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
+//
+//
+//        mAuthStateListener = new Firebase.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(AuthData authData) {
+//                mAuthProgressDialog.hide();
+//                setAuthenticatedUser(authData);
+//            }
+//        };
+//        /* Check if the user is authenticated with Firebase already. If this is the case we can set the authenticated
+//         * user and hide hide any login buttons */
+//        mFirebaseRef.addAuthStateListener(mAuthStateListener);
+//
+////
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -64,6 +82,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
                 if (user != null) {
                     // User is signed in
                     Log.d(firebaseTag, "onAuthStateChanged:signed_in:" + user.getUid());
+                    
                 } else {
                     // User is signed out
                     Log.d(firebaseTag, "onAuthStateChanged:signed_out");

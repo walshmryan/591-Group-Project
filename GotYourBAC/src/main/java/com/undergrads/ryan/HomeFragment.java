@@ -205,12 +205,13 @@ public class HomeFragment extends Fragment {
 
             } catch (Exception e) {
                 Log.e(MYTAG, "Error with Geocoder");
-                weatherForCity.setText("Can't determine location");
-                temperature.setText("Error.");
+
             }
 
         } else {
             Log.i(MYTAG, "Location is null");
+            weatherForCity.setText("Can't determine location");
+            temperature.setText("Error");
         }
 
     }

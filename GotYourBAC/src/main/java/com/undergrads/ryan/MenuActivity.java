@@ -78,7 +78,7 @@ public class MenuActivity extends AppCompatActivity
     private static final int RC_SIGN_IN = 9001;
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
-
+    private static final int RC_UNUSED = 5001;
     public EmergencyText lowBattery;
     private double stroopScore;
     // Has the user clicked the sign-in button?
@@ -155,7 +155,6 @@ public class MenuActivity extends AppCompatActivity
 //        Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
 //        FragmentICE.sendTextOnLow();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -598,6 +597,12 @@ public class MenuActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    public void showLeaderboard() {
+        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                getString(R.string.leaderboard_stroop)), RC_UNUSED);
+    }
+
 
     // This is the main function that gets called when players choose a match
     // from the inbox, or else create a match and want to start it.
@@ -851,7 +856,7 @@ public class MenuActivity extends AppCompatActivity
         FirebaseCall fb = new FirebaseCall();
         fb.postScore(time, gameType);
         stroopScore = time;
-
+        submitScoreToGoogle(stroopScore);
         onDoneClicked();
 
         // String result = mTurnData.data;
@@ -871,6 +876,11 @@ public class MenuActivity extends AppCompatActivity
                 .commit();
     }
 
+    public void submitScoreToGoogle(double s){
+        long score = (long)s;
+        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_stroop), score);
+
+    }
 
     public void onFinishClicked() {
         // showSpinner();

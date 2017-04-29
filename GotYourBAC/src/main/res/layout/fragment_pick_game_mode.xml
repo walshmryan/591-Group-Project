@@ -37,6 +37,18 @@
             android:text="@string/start_match" />
 
         <Button
+            android:id="@+id/checkGamesButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/check_games" />
+
+        <Button
+            android:id="@+id/btnLeaderBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leaderboard" />
+
+        <Button
             android:id="@+id/helpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,12 +59,6 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_out" />
-
-        <Button
-            android:id="@+id/checkGamesButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/check_games" />
 
         <Button
             android:id="@+id/quickMatchButon"
