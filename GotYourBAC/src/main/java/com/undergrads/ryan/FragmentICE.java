@@ -124,7 +124,8 @@ public class FragmentICE extends Fragment {
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EmergencyText.sendSMStxt(iceName,number);
+                EmergencyText et = new EmergencyText(getActivity());
+                et.sendSMStxt(iceName,number);
             }
         });
 

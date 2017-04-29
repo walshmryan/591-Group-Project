@@ -183,12 +183,12 @@ public class HomeFragment extends Fragment {
                 {
                     if(addresses.get(0).getLocality() != null) {
                         String city = addresses.get(0).getLocality();
-                        String state = addresses.get(0).getAdminArea().replaceAll("\\s+","");
+                        String state = addresses.get(0).getAdminArea().replaceAll("\\s+","_");
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
                             // TODO: uncomment out weather
-                            // new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                             new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
 
                         }
 
@@ -206,11 +206,8 @@ public class HomeFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(MYTAG, "Error with Geocoder");
                 weatherForCity.setText("Can't determine location");
-                temperature.setText("Try enabling location services and try again.");
+                temperature.setText("Error.");
             }
-
-
-
 
         } else {
             Log.i(MYTAG, "Location is null");
