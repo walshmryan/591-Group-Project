@@ -96,6 +96,8 @@
     <string name="welcome_">Welcome!</string>
     <string name="end">End Game</string>
     <string name="here_are_your_last_3_scores">Here are your last 3 scores:</string>
+    <string name="sendText">Send location</string>
+    <string name="iceDescription">Your emergency contact will be sent your location if your battery falls below 10%</string>
 
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 

@@ -16,6 +16,14 @@ import android.widget.TextView;
 
 //import com.google.example.tbmpskeleton.R;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.event.Event;
+import com.google.android.gms.games.event.EventBuffer;
+import com.google.android.gms.games.event.Events;
+
 import java.util.Random;
 
 import static android.view.View.VISIBLE;
@@ -53,14 +61,15 @@ public class StroopGame extends Fragment {
     Integer colourNumber = rand.nextInt(6);
     double time;
     String base = "stroop baseline",quick = "stroop quick", mp = "stroop mp";
+    private GoogleApiClient googleApiClient;
 
     boolean started = false;
     public StroopGame() {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void gameDone(double num);
-        public void gameAborted(double num);
+        public void gameDone(int num);
+        public void gameAborted(int num);
     }
 
 
@@ -70,6 +79,7 @@ public class StroopGame extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         gameListener = (PlayGameListener) context;
+
     }
 
     @Override
@@ -169,7 +179,7 @@ public class StroopGame extends Fragment {
             @Override
             public void onClick(View v) {
                 //double finalScore = (totalRight / 10) * 100;
-                double finalScore = totalRight;
+                int finalScore = totalRight;
 
                 gameListener.gameAborted(finalScore);
             }
@@ -183,9 +193,10 @@ public class StroopGame extends Fragment {
 
         // need to work out how we are calculating score
         //double finalScore = (totalRight / 10) * 100;
-        double finalScore = totalRight;
+        int finalScore = totalRight;
 //        String tag = getFragmentTag();
         String tag = getFragmentTag();
+
         if (tag == quick){
             gameListener.gameAborted(finalScore);
         }else {

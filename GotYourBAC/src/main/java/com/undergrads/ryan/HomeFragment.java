@@ -149,6 +149,11 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
+//    @Override
+//    public void onStop(){
+//        super.onStop();
+//        lm.
+//    }
 
     // sets a text view with a given score based on index
     protected void postScore(Scores s, int index) {
@@ -182,7 +187,9 @@ public class HomeFragment extends Fragment {
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
-                            new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+                            // TODO: uncomment out weather
+                            // new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
