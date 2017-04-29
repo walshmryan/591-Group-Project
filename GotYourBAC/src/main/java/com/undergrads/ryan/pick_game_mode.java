@@ -19,6 +19,7 @@ public class pick_game_mode extends Fragment {
     Button signOut;
     Button checkGames;
     Button quickGame;
+    Button help;
 
     public pick_game_mode() {
         // Required empty public constructor
@@ -29,6 +30,7 @@ public class pick_game_mode extends Fragment {
         public void onCheckGamesClicked();
         public void signOutOfGoogle();
         public void loadSinglePlayerGame();
+        public void startHelpButton();
     }
     gameModeListener listener;
     @Override
@@ -41,6 +43,7 @@ public class pick_game_mode extends Fragment {
         startGame = (Button) v.findViewById(R.id.startMatchButton);
         checkGames = (Button)v.findViewById(R.id.checkGamesButton);
         quickGame = (Button)v.findViewById(R.id.quickMatchButon);
+        help = (Button)v.findViewById(R.id.helpButton);
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +57,12 @@ public class pick_game_mode extends Fragment {
                 listener.onCheckGamesClicked();
             }
         });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.startHelpButton();
+            }
+        });
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +73,6 @@ public class pick_game_mode extends Fragment {
         quickGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 listener.loadSinglePlayerGame();
             }
         });

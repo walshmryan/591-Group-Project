@@ -128,6 +128,7 @@ public class HomeFragment extends Fragment {
                         int count = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
+                            // only post this score if the userId matches
                             if (score.getUserId().equals(uId)) {
                                 postScore(score, count);
                                 count++;
