@@ -150,7 +150,7 @@ public class MenuActivity extends AppCompatActivity
 
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
 
-//        lowBattery = new EmergencyText();
+        lowBattery = new EmergencyText();
 //        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
 //        Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
 //        FragmentICE.sendTextOnLow();
