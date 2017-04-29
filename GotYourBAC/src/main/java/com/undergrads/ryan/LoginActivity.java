@@ -71,7 +71,6 @@ public class LoginActivity extends Fragment {
 
 //                String username = "sarahpmedeiros@gmail.com";
 //                String password = "password123";
-//// TODO: 4/27/17 put back when testing is done
                 String username = txtEmail.getText().toString();
                 String password = edtPassword.getText().toString();
 
