@@ -36,7 +36,7 @@ public class StroopTurn {
 
     public String data = "";
     public int turnCounter;
-    public int score=0;
+    public double score = 0;
 
     public StroopTurn() {
     }
@@ -98,6 +98,6 @@ public class StroopTurn {
 
         return retVal;
     }
-    public void setScore(int s){this.score =s;};
-    public int getScore(){return score;}
+    public void setScore(double s){this.score =s;};
+    public double getScore(){return score;}
 }

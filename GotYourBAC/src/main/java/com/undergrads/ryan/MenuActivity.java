@@ -1,9 +1,5 @@
 package com.undergrads.ryan;
 
-/**
- * Created by sarahmedeiros on 4/24/17.
- */
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -84,7 +80,7 @@ public class MenuActivity extends AppCompatActivity
     final static int RC_LOOK_AT_MATCHES = 10001;
 
     public EmergencyText lowBattery;
-    private int stroopScore;
+    private double stroopScore;
     // Has the user clicked the sign-in button?
     private boolean mSignInClicked = false;
 
@@ -159,48 +155,7 @@ public class MenuActivity extends AppCompatActivity
 //        Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
 //        FragmentICE.sendTextOnLow();
     }
-//
-//    public void sendSMStxt()
-//    {
-////        http://stackoverflow.com/questions/4967448/send-sms-in-android
-//        String number="7749295480";
-//        String message ="hi";
-////        if (canAccessLocation()) {
-//////      // TODO: 4/29/17  set location
-////
-////            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
-////                    " battery is low. Their last location is ";
-////        }
-////        else{
-////            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
-////                    " battery is low.";
-////        }
-////      this code opens a message in the message app
-////        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
-////        intent.putExtra(name, message);
-////        startActivity(intent);
-//
-////      this code sends the message without asking
-//        try {
-//            SmsManager smsManager = SmsManager.getDefault();
-//            smsManager.sendTextMessage(number, null, message, null, null);
-//            Toast.makeText(getApplicationContext(), "SMS Sent!",
-//                    Toast.LENGTH_LONG).show();
-//        } catch (Exception e) {
-//            Toast.makeText(getApplicationContext(),
-//                    "SMS faild, please enable SMS in App Permissions.",
-//                    Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    public void sendTextOnLow() {
-//        Intent intent = new Intent(Intent.ACTION_BATTERY_LOW);
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//            sendSMStxt();
-//        }
-//    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -567,9 +522,6 @@ public class MenuActivity extends AppCompatActivity
                             processResult(result);
                         }
                     });
-            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-            String eventID = mMatch.getMatchId() + playerId;
-            Games.Events.increment(mGoogleApiClient, eventID, getScore());
         }else {
             if (mTurnData.getScore() > getScore()){
                 //current player lost
@@ -583,12 +535,6 @@ public class MenuActivity extends AppCompatActivity
                             processResult(result);
                         }
                     });
-
-
-
-            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-            String eventID = mMatch.getMatchId() + playerId;
-            Games.Events.increment(mGoogleApiClient, eventID, getScore());
         }
 
 
@@ -899,11 +845,16 @@ public class MenuActivity extends AppCompatActivity
 
 
     @Override
-    public void gameDone(int total) {
-        stroopScore = total;
+    public void gameDone(double time, String gameType) {
+
+        // post score to DB
+        FirebaseCall fb = new FirebaseCall();
+        fb.postScore(time, gameType);
+        stroopScore = time;
+
         onDoneClicked();
 
-//        String result = mTurnData.data;
+        // String result = mTurnData.data;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
@@ -911,8 +862,7 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, gameDone)
                 .commit();
     }
-    public void gameAborted(int score){
-        stroopScore = score;
+    public void gameAborted() {
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
@@ -923,7 +873,7 @@ public class MenuActivity extends AppCompatActivity
 
 
     public void onFinishClicked() {
-//        showSpinner();
+        // showSpinner();
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                     @Override
@@ -933,10 +883,10 @@ public class MenuActivity extends AppCompatActivity
                 });
 
         isDoingTurn = false;
-//        setViewVisibility();
+        // setViewVisibility();
     }
     @Override
-    public int getScore() {
+    public double getScore() {
         return stroopScore;
     }
 
@@ -977,7 +927,6 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
-
     public void signOutOfGoogle(){
         mSignInClicked = false;
         Games.signOut(mGoogleApiClient);
@@ -1001,6 +950,4 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, stroopGame)
                 .commit();
     }
-
-
 }

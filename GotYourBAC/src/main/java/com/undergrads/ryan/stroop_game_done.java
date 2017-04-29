@@ -18,7 +18,7 @@ public class stroop_game_done extends Fragment {
 
     public interface stroopGameListener {
         // TODO: Update argument type and name
-        public int getScore();
+        public double getScore();
         public void goToMainGameScreen();
     }
 
