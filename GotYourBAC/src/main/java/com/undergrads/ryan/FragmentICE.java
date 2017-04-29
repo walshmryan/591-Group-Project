@@ -1,9 +1,18 @@
 package com.undergrads.ryan;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +20,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 //import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.undergrads.ryan.HomeFragment.MYTAG;
 //import com.undergrads.ryan.R;
 
 /**
@@ -35,12 +48,14 @@ public class FragmentICE extends Fragment {
     EditText edtPhone;
     ViewSwitcher viewswitcherName;
     ViewSwitcher viewswitcherPhone;
-    String name;
+    String iceName;
     String number;
-
+    String contactName;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private LocationManager lm;
+    private LocationListener ll;
     public FragmentICE() {
         // Required empty public constructor
     }
@@ -62,8 +77,24 @@ public class FragmentICE extends Fragment {
         viewswitcherPhone = (ViewSwitcher) v.findViewById(R.id.viewswitcherPhone);
         final ViewSwitcher viewSwitcherSave = (ViewSwitcher) v.findViewById(R.id.viewSwitcherSave);
 
-
         String uId = getUid(); //get user id
+        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user information
+//                        Users user = dataSnapshot.getValue(Users.class);
+                        Users user = dataSnapshot.getValue(Users.class);
+                        //get current values from the database
+                        contactName = user.getFirstName();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("error","bad");
+                    }
+                });
         FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("contact-info")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -73,14 +104,14 @@ public class FragmentICE extends Fragment {
                         ContactInfo ice = dataSnapshot.getValue(ContactInfo.class);
                         //get current values from the database
                         if (ice != null) {
-                            name = ice.getName();
+                            iceName = ice.getName();
                             number = ice.getNumber();
 //
 ////                      set the text view and edit view values from the stored
 ////                       database values
-                            txtName.setText(name);
+                            txtName.setText(iceName);
                             txtPhone.setText(number);
-                            edtName.setText(name);
+                            edtName.setText(iceName);
                             edtPhone.setText(number);
                         }
                     }
@@ -91,7 +122,7 @@ public class FragmentICE extends Fragment {
                     }
                 });
 //        name =
-        txtName.setText(name);
+        txtName.setText(iceName);
         txtPhone.setText(number);
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -118,14 +149,14 @@ public class FragmentICE extends Fragment {
             @Override
             public void onClick(View v) {
 //                save values to database
-                name = edtName.getText().toString();
+                iceName = edtName.getText().toString();
                 number = edtPhone.getText().toString();
                 FirebaseCall fb = new FirebaseCall();
-                fb.updateICEContactInfo(name, number);
+                fb.updateICEContactInfo(iceName, number);
 
 
                 //set text views
-                txtName.setText(name);
+                txtName.setText(iceName);
                 txtPhone.setText(number);
 
                 //switch views back to non edit mode
@@ -144,22 +175,48 @@ public class FragmentICE extends Fragment {
     {
 //        http://stackoverflow.com/questions/4967448/send-sms-in-android
 //        String phoneNumber="7749295480";
-        String message="This is a test";
+        String message;
+        if (canAccessLocation()) {
+//      // TODO: 4/29/17  set location
 
+            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
+                    " battery is low. Their last location is ";
+        }
+        else{
+            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
+                    " battery is low.";
+        }
 //      this code opens a message in the message app
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
-        intent.putExtra(name, message);
-        startActivity(intent);
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
+//        intent.putExtra(name, message);
+//        startActivity(intent);
 
 //      this code sends the message without asking
-//        SmsManager sms = SmsManager.getDefault();
-//        sms.sendTextMessage(phoneNumber, null, message, null, null);
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number, null, message, null, null);
+            Toast.makeText(getActivity().getApplicationContext(), "SMS Sent!",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity().getApplicationContext(),
+                    "SMS faild, please enable SMS in App Permissions.",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 
     //    get user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    private boolean canAccessLocation() {
+        return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean hasPermission(String perm) {
+        return(PackageManager.PERMISSION_GRANTED== ContextCompat.checkSelfPermission(getActivity(), perm));
     }
 
 }

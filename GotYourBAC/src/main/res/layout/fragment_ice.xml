@@ -33,10 +33,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:paddingLeft="10dp"
+            android:text="@string/iceDescription"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
         <ViewSwitcher
 
             android:id="@+id/viewswitcherName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             app:layout_constraintHorizontal_bias="0.354"

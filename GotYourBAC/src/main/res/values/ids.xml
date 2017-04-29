@@ -1,4 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Insert your app id from the Developer Consoles -->
     <string name="app_id">479703936056</string>
+
+    <string name="package_name">com.undergrads.ryan</string>
+    <string name="event_games_won">CgkIuNjUhPsNEAIQAg</string>
+    <string name="event_games_lost">CgkIuNjUhPsNEAIQAw</string>
+
 </resources>

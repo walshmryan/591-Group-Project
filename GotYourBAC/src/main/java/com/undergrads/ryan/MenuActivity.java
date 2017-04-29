@@ -9,30 +9,40 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
+import android.view.inputmethod.InputMethodSession;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesStatusCodes;
+import com.google.android.gms.games.event.Event;
+import com.google.android.gms.games.event.EventBuffer;
+import com.google.android.gms.games.event.Events;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
@@ -73,7 +83,8 @@ public class MenuActivity extends AppCompatActivity
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
 
-    private double stroopScore;
+    public EmergencyText lowBattery;
+    private int stroopScore;
     // Has the user clicked the sign-in button?
     private boolean mSignInClicked = false;
 
@@ -137,12 +148,59 @@ public class MenuActivity extends AppCompatActivity
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this,/* FragmentActivity */ this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .setViewForPopups(findViewById(android.R.id.content))
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
 
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
-    }
 
+//        lowBattery = new EmergencyText();
+//        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
+//        Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
+//        FragmentICE.sendTextOnLow();
+    }
+//
+//    public void sendSMStxt()
+//    {
+////        http://stackoverflow.com/questions/4967448/send-sms-in-android
+//        String number="7749295480";
+//        String message ="hi";
+////        if (canAccessLocation()) {
+//////      // TODO: 4/29/17  set location
+////
+////            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
+////                    " battery is low. Their last location is ";
+////        }
+////        else{
+////            message = "Hi " + iceName + ", " + contactName + " just wanted to let you know that their phone" +
+////                    " battery is low.";
+////        }
+////      this code opens a message in the message app
+////        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
+////        intent.putExtra(name, message);
+////        startActivity(intent);
+//
+////      this code sends the message without asking
+//        try {
+//            SmsManager smsManager = SmsManager.getDefault();
+//            smsManager.sendTextMessage(number, null, message, null, null);
+//            Toast.makeText(getApplicationContext(), "SMS Sent!",
+//                    Toast.LENGTH_LONG).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(),
+//                    "SMS faild, please enable SMS in App Permissions.",
+//                    Toast.LENGTH_LONG).show();
+//            e.printStackTrace();
+//        }
+//
+//    }
+//
+//    public void sendTextOnLow() {
+//        Intent intent = new Intent(Intent.ACTION_BATTERY_LOW);
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            sendSMStxt();
+//        }
+//    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -399,8 +457,22 @@ public class MenuActivity extends AppCompatActivity
         startMatch(match);
     }
 
+    private void processResult(TurnBasedMultiplayer.LoadMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+//        dismissSpinner();
 
+        if (!checkStatusCode(match, result.getStatus().getStatusCode())) {
+            return;
+        }
 
+        if (match.getData() != null) {
+            // This is a game that has already started, so I'll just start
+            updateMatch(match);
+            return;
+        }
+
+        startMatch(match);
+    }
     private void processResult(TurnBasedMultiplayer.LeaveMatchResult result) {
         TurnBasedMatch match = result.getMatch();
 //        dismissSpinner();
@@ -457,6 +529,24 @@ public class MenuActivity extends AppCompatActivity
                     }
                 });
 
+        PendingResult<Events.LoadEventsResult> results = Games.Events.load(mGoogleApiClient, true);
+        results.setResultCallback(
+                new ResultCallback<Events.LoadEventsResult>() {
+            @Override
+            public void onResult(Events.LoadEventsResult result)
+            {
+                Events.LoadEventsResult r = (Events.LoadEventsResult)result;
+                EventBuffer eb = r.getEvents();
+                for (int i=0; i < eb.getCount(); i++) {
+                    Event event = eb.get(i);
+                    // do something, like cache the results for later
+//                    YourGameState.eventStats.put(event.getName(), (int)event.getValue());
+                }
+                eb.close();
+//                listener.onResult();
+            }
+        });
+
     }
     // Upload your new gamestate, then take a turn, and pass it on to the next
     // player.
@@ -464,6 +554,7 @@ public class MenuActivity extends AppCompatActivity
 
         if (mTurnData.turnCounter < 1) {
             mTurnData.data = getScore() + "";
+            mTurnData.setScore(getScore());
             String nextParticipantId = getNextParticipantId();
             // Create the next turn
             mTurnData.turnCounter += 1;
@@ -476,7 +567,15 @@ public class MenuActivity extends AppCompatActivity
                             processResult(result);
                         }
                     });
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            String eventID = mMatch.getMatchId() + playerId;
+            Games.Events.increment(mGoogleApiClient, eventID, getScore());
         }else {
+            if (mTurnData.getScore() > getScore()){
+                //current player lost
+            }else{
+                //current player won
+            }
             Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
                     .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                         @Override
@@ -484,11 +583,15 @@ public class MenuActivity extends AppCompatActivity
                             processResult(result);
                         }
                     });
+
+
+
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            String eventID = mMatch.getMatchId() + playerId;
+            Games.Events.increment(mGoogleApiClient, eventID, getScore());
         }
 
 
-
-        
         mTurnData = null;
     }
     // If you choose to rematch, then call it and wait for a response.
@@ -649,7 +752,6 @@ public class MenuActivity extends AppCompatActivity
                 .commit();
 
     }
-
     @Override
     public void onCheckGamesClicked() {
         Intent intent = Games.TurnBasedMultiplayer.getInboxIntent(mGoogleApiClient);
@@ -716,9 +818,15 @@ public class MenuActivity extends AppCompatActivity
     public void onConnectionSuspended(int i) {
         Log.d(TAG, "onConnectionSuspended():  Trying to reconnect.");
         mGoogleApiClient.connect();
+
 //        setViewVisibility();
 
-
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        Games.TurnBasedMultiplayer.unregisterMatchUpdateListener(mGoogleApiClient);
+        Games.Invitations.unregisterInvitationListener(mGoogleApiClient);
     }
     // Returns false if something went wrong, probably. This should handle
     // more cases, and probably report more accurate results.
@@ -729,10 +837,10 @@ public class MenuActivity extends AppCompatActivity
             case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_DEFERRED:
                 // This is OK; the action is stored by Google Play Services and will
                 // be dealt with later.
-                Toast.makeText(
-                        this,
-                        "Stored action for later.  (Please remove this toast before release.)",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(
+//                        this,
+//                        "Stored action for later.  (Please remove this toast before release.)",
+//                        Toast.LENGTH_SHORT).show();
                 // NOTE: This toast is for informative reasons only; please remove
                 // it from your final application.
                 return true;
@@ -780,11 +888,11 @@ public class MenuActivity extends AppCompatActivity
 
 
     @Override
-    public void gameDone(double total) {
+    public void gameDone(int total) {
         stroopScore = total;
         onDoneClicked();
 
-        String result = mTurnData.data;
+//        String result = mTurnData.data;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
@@ -792,7 +900,7 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, gameDone)
                 .commit();
     }
-    public void gameAborted(double score){
+    public void gameAborted(int score){
         stroopScore = score;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
@@ -817,7 +925,7 @@ public class MenuActivity extends AppCompatActivity
 //        setViewVisibility();
     }
     @Override
-    public double getScore() {
+    public int getScore() {
         return stroopScore;
     }
 
@@ -882,5 +990,6 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, stroopGame)
                 .commit();
     }
+
 
 }

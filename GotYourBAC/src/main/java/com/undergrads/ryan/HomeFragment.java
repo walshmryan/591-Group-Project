@@ -138,6 +138,11 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
+//    @Override
+//    public void onStop(){
+//        super.onStop();
+//        lm.
+//    }
 
     protected void postScore(Scores s, int index) {
         String score = s.getGameType() + ": " + s.getScore();
@@ -169,7 +174,7 @@ public class HomeFragment extends Fragment {
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
                         if(state != null) {
-                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+//                            new Weather(temperature, weatherIcon).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
