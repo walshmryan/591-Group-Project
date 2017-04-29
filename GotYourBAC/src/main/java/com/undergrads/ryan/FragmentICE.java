@@ -88,7 +88,7 @@ public class FragmentICE extends Fragment {
                         //get current values from the database
                         if (ice != null) {
                             iceName = ice.getName();
-                            number = ice.getNumber();
+                            number = formatPhone(ice.getNumber());
 //
 ////                      set the text view and edit view values from the stored
 ////                       database values
@@ -137,6 +137,7 @@ public class FragmentICE extends Fragment {
                 number = edtPhone.getText().toString();
                 FirebaseCall fb = new FirebaseCall();
                 fb.updateICEContactInfo(iceName, number);
+                number = formatPhone(number);
 
 
                 //set text views
@@ -162,5 +163,12 @@ public class FragmentICE extends Fragment {
     }
 
 
+    public String formatPhone(String number){
+        int phoneNumLen = 10;
+        if (number.length() == phoneNumLen){
+            return (String.format("%s-%s-%s",number.substring(0,3),number.substring(3,6),number.substring(6,10)));
+        }
+        return number; //just return the string because they didn't input enough numbers
+    }
 }
 

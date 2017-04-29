@@ -787,8 +787,9 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onStop(){
         super.onStop();
-        Games.TurnBasedMultiplayer.unregisterMatchUpdateListener(mGoogleApiClient);
-        Games.Invitations.unregisterInvitationListener(mGoogleApiClient);
+//        caused program to crash
+//        Games.TurnBasedMultiplayer.unregisterMatchUpdateListener(mGoogleApiClient);
+//        Games.Invitations.unregisterInvitationListener(mGoogleApiClient);
     }
     // Returns false if something went wrong, probably. This should handle
     // more cases, and probably report more accurate results.
