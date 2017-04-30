@@ -982,7 +982,7 @@ public class MenuActivity extends AppCompatActivity
         String type = getGameType();
         if (type.equals("stroop")){
             String tag = "stroop quick";
-            StroopGame fragment = new StroopGame();
+            StroopBaselineFragment fragment = new StroopBaselineFragment();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment, tag)

@@ -110,7 +110,8 @@ public class BacActivity extends Fragment{
 
                                         Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
                                         //check to see if there are any entries, if not go with defaults
-                                        if(drinkInfo != null && !dateExpired(drinkInfo.getTimestamp(), 12)) {
+                                        // only count drink info if within a 12 hour time span
+                                        if(drinkInfo != null && !dateExpired(drinkInfo.getTimestamp(), 1)) {
                                             totalHard = drinkInfo.getTotalHard();
                                             totalWine = drinkInfo.getTotalWine();
                                             totalBeer = drinkInfo.getTotalBeer();
@@ -129,9 +130,6 @@ public class BacActivity extends Fragment{
                                         Log.e("error","could not load drink info");
                                     }
                                 });
-
-
-
                     }
 
                     @Override
@@ -289,12 +287,16 @@ public class BacActivity extends Fragment{
         long additionMilli = 1000 * 60 * 60 * hourThreshold;
         Date expiredDate = new Date(timestamp.getTime() + additionMilli);
 
+        Log.i("DATE", timestamp.toString());
+        Log.i("DATE", expiredDate.toString());
+        Log.i("DATE", new Date().toString());
+
         // if current time is before the expired time
         if (new Date().after(expiredDate)) {
+            Log.i("DATE", "current time is after expired time");
             return true;
         } else {
             return false;
         }
     }
 }
-//Subtract approximately 0.01 every 40 minutes after drinking.

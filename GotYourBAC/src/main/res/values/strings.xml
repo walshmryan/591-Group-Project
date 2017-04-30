@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="sign_out">Sign Out</string>
     <string name="match_instructions">Type in a new word for the data in this game, then hit done.</string>
-    <string name="quick_match">Quick match</string>
+    <string name="baseline">Record Baseline</string>
     <string name="done">Done</string>
     <string name="leave">Leave</string>
     <string name="cancel">Cancel</string>

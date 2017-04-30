@@ -157,7 +157,7 @@ public class FragmentICE extends Fragment {
         return v;
     }
 
-    //    get user id
+    // get user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
