@@ -187,15 +187,9 @@ public class StroopGame extends Fragment {
     }
 
     private void done() {
-
         double finalScore = stopwatch.elapsedTime();
         String tag = getFragmentTag();
-
-        if (tag.equals(quick)){
-            gameListener.gameAborted();
-        } else {
-            gameListener.gameDone(finalScore, "Stroop");
-        }
+        gameListener.gameDone(finalScore, "Stroop");
     }
 
     public void textSet(TextView txtView, int wordNum, int colourNum){
