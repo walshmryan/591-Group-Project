@@ -923,7 +923,8 @@ public class MenuActivity extends AppCompatActivity
     }
 
     public void submitScoreToGoogle(double s){
-        long score = (long)s;
+        double temp = 1000*s;
+        long score = (long)temp;
         Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_stroop), score);
 
     }
