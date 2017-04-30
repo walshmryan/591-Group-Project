@@ -54,10 +54,12 @@ public class fragment_tilt extends Fragment {
     private ProgressBar pBarFour;
     private ProgressBar pBarFive;
     private ProgressBar pCurrentBar;
-    private Integer roundCountDown = 3;
+    private Integer rounds = 3
+    private Integer roundCountDown = rounds;
     private Boolean checkGuesses = false;
     private Boolean firstTick = true;
     private Boolean lastGuessCorrect;
+    private Integer totalCorrect  = 0;
     private Integer tick = 1;
     private Integer delay = 2; //+2 for remember the following pattern
     private Integer ready = 3; //+3 for ready?
@@ -241,6 +243,7 @@ public class fragment_tilt extends Fragment {
                             if (roll > 0) {
                                 txtDirection.setText("RIGHTO LEFT - Roll: " + Float.toString(roll));
                                 lastGuessCorrect = true;
+                                totalCorrect += 1;
                             } else {
                                 txtDirection.setText("WRONGO LEFT - Roll: " + Float.toString(roll));
                                 lastGuessCorrect = false;
@@ -250,6 +253,7 @@ public class fragment_tilt extends Fragment {
                             if (roll < 0) {
                                 txtDirection.setText("RIGHTO RIGHT - Roll: " + Float.toString(roll));
                                 lastGuessCorrect = true;
+                                totalCorrect += 1;
                             } else {
                                 txtDirection.setText("WRONGO RIGHT - Roll: " + Float.toString(roll));
                                 lastGuessCorrect = false;
@@ -259,6 +263,7 @@ public class fragment_tilt extends Fragment {
                             if (pitch > 0) {
                                 txtDirection.setText("RIGHTO FORWARD - Pitch: " + Float.toString(pitch));
                                 lastGuessCorrect = true;
+                                totalCorrect += 1;
                             } else {
                                 txtDirection.setText("WRONGO FORWARD - Pitch: " + Float.toString(pitch));
                                 lastGuessCorrect = false;
@@ -268,6 +273,7 @@ public class fragment_tilt extends Fragment {
                             if (pitch < 0) {
                                 txtDirection.setText("RIGHTO BACK - Pitch: " + Float.toString(pitch));
                                 lastGuessCorrect = true;
+                                totalCorrect += 1;
                             } else {
                                 txtDirection.setText("WRONGO BACK - Pitch: " + Float.toString(pitch));
                                 lastGuessCorrect = false;
@@ -330,7 +336,7 @@ public class fragment_tilt extends Fragment {
                     btnNextRound.setVisibility(View.VISIBLE);
                 }else {
                     progressVisible(View.INVISIBLE);
-                    txtDirection.setText("");
+                    txtDirection.setText(totalCorrect.toString() + "/" + (generateSequenceTime*rounds));
                     txtCountdown.setText(String.format("COMPLETED!"));
                 }
 
