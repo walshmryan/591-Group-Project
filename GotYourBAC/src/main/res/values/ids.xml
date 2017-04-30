@@ -7,5 +7,6 @@
     <string name="event_games_won">CgkIuNjUhPsNEAIQAg</string>
     <string name="event_games_lost">CgkIuNjUhPsNEAIQAw</string>
     <string name="leaderboard_stroop">CgkIuNjUhPsNEAIQBA</string>
+    <string name="leaderboard_tilt">CgkIuNjUhPsNEAIQBQ</string>
 
 </resources>
