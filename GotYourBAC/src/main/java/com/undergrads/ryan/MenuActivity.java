@@ -2,26 +2,24 @@ package com.undergrads.ryan;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
-import android.view.inputmethod.InputMethodSession;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +28,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -49,9 +46,10 @@ import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import android.view.Menu;
 import com.google.example.games.basegameutils.BaseGameUtils;
 import java.util.ArrayList;
+
+//import static android.R.attr.fragment;
 
 
 public class MenuActivity extends AppCompatActivity
@@ -59,7 +57,7 @@ public class MenuActivity extends AppCompatActivity
         google_mainmenu.gMainListener, GoogleApiClient.OnConnectionFailedListener,
         game_picker_fragment.gamePickerListener, pick_game_mode.gameModeListener, GoogleApiClient.ConnectionCallbacks,
         StroopGame.PlayGameListener, stroop_game_done.stroopGameListener,OnInvitationReceivedListener,
-        OnTurnBasedMatchUpdateReceivedListener{
+        OnTurnBasedMatchUpdateReceivedListener, fragment_tilt_home.OnTiltHomeListener{
 
     private GoogleApiClient mGoogleApiClient;
     private boolean mResolvingError = false;
@@ -83,7 +81,8 @@ public class MenuActivity extends AppCompatActivity
     private double stroopScore;
     // Has the user clicked the sign-in button?
     private boolean mSignInClicked = false;
-
+    fragment_tilt_home fragmentHome;
+    fragment_tilt fragmentTilt;
     // Automatically start the sign-in flow when the Activity starts
     private boolean mAutoStartSignInFlow = true;
 
@@ -157,6 +156,13 @@ public class MenuActivity extends AppCompatActivity
     }
     @Override
     public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -287,22 +293,23 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
-    public void goToStroop(View view) {
-        String gameMode = "game mode";
+    public void goToGameMode(View view, String tag) {
+        String gameMode = "game mode ";
         pick_game_mode fragment = new pick_game_mode();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment,gameMode)
+                .replace(R.id.frame_layout, fragment,gameMode + tag)
+                .addToBackStack(tag)
                 .commit();
     }
 
     @Override
     public void goToTilt() {
-//        StroopBaselineFragment fragment = new StroopBaselineFragment();
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.frame_layout, fragment)
-//                .commit();
+        fragment_tilt_home fragment = new fragment_tilt_home();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .commit();
     }
 //    @Override
 //    public void signOnClick() {
@@ -589,18 +596,38 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void startHelpButton() {
         String help = "help";
-        HelpFragment fragment = new HelpFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment, help)
-                .addToBackStack(help)
-                .commit();
+        if (getGameType().equals("stroop")){
+            StroopHelpFragment fragment = new StroopHelpFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment, help)
+                    .addToBackStack(help)
+                    .commit();
+        }else {
+            tilt_learn fragment = new tilt_learn();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment, help)
+                    .addToBackStack(help)
+                    .commit();
+        }
+
     }
 
+
+    public String getGameType(){
+        Fragment currentFragment = getFragmentManager().findFragmentById(R.id.frame_layout);
+        if (currentFragment.getTag().equals("game mode stroop")){
+               return "stroop";
+        }
+        else{
+            return "tilt";
+        }
+    }
     @Override
     public void showLeaderboard() {
-        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                getString(R.string.leaderboard_stroop)), RC_UNUSED);
+        String leaderBoard = getLeaderBoardId();
+        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, leaderBoard), RC_UNUSED);
     }
 
 
@@ -705,13 +732,19 @@ public class MenuActivity extends AppCompatActivity
 //        setViewVisibility();
 //        mDataView.setText(mTurnData.data);
 //        mTurnTextView.setText("Turn " + mTurnData.turnCounter);
+        String type = getGameType();
+        if (type.equals("stroop")){
+            String stroopGame = "stroop mp";
+            StroopGame fragment = new StroopGame();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment, stroopGame)
+                    .commit();
 
-        String stroopGame = "stroop mp";
-        StroopGame fragment = new StroopGame();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment, stroopGame)
-                .commit();
+        }
+        else{
+            onPlaySelect(true);
+        }
 
     }
     @Override
@@ -798,14 +831,6 @@ public class MenuActivity extends AppCompatActivity
             case GamesStatusCodes.STATUS_OK:
                 return true;
             case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_DEFERRED:
-                // This is OK; the action is stored by Google Play Services and will
-                // be dealt with later.
-//                Toast.makeText(
-//                        this,
-//                        "Stored action for later.  (Please remove this toast before release.)",
-//                        Toast.LENGTH_SHORT).show();
-                // NOTE: This toast is for informative reasons only; please remove
-                // it from your final application.
                 return true;
             case GamesStatusCodes.STATUS_MULTIPLAYER_ERROR_NOT_TRUSTED_TESTER:
                 showErrorMessage(match, statusCode,
@@ -954,11 +979,63 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void loadSinglePlayerGame() {
-        String stroopGame = "stroop quick";
-        StroopGame fragment = new StroopGame();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment, stroopGame)
-                .commit();
+        String type = getGameType();
+        if (type.equals("stroop")){
+            String tag = "stroop quick";
+            StroopGame fragment = new StroopGame();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment, tag)
+                    .commit();
+        }
+        else{
+            onPlaySelect(true);
+        }
     }
+
+    @Override
+    public void onPlaySelect(boolean selected) {
+        String tilt = "TILT";
+        if (selected) {
+//            they clicked play
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            fragmentTilt = new fragment_tilt();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragmentTilt, "TILT")
+                    .addToBackStack(null)
+                    .commit();
+        }else{
+//            they clicked learn
+            tilt_learn fragment = new tilt_learn();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(tilt+"learn")
+                    .commit();
+        }
+    }
+    public String getLeaderBoardId(){
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment currentFragment = getFragmentManager().findFragmentById(R.id.frame_layout);
+
+        if (currentFragment.getTag().equals("game mode stroop")) {
+            return getString(R.string.leaderboard_stroop);
+        }else{
+            return getString(R.string.leaderboard_tilt);
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
 }

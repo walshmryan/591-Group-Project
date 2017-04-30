@@ -18,13 +18,14 @@ public class game_picker_fragment extends Fragment {
 
     Button btnStroop;
     Button btnTilt;
-
+    String stroopTag = "stroop";
+    String tiltTag = "tilt;";
     public game_picker_fragment() {
         // Required empty public constructor
     }
 
     public interface gamePickerListener{
-        public void goToStroop(View view);
+        public void goToGameMode(View view, String tag);
         public void goToTilt();
     }
     gamePickerListener listener;
@@ -40,13 +41,13 @@ public class game_picker_fragment extends Fragment {
         btnStroop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.goToStroop(getView());
+                listener.goToGameMode(getView(), stroopTag);
             }
         });
         btnTilt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.goToTilt();
+                listener.goToGameMode(getView(),tiltTag);
             }
         });
 
