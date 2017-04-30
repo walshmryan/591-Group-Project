@@ -17,7 +17,8 @@
     <string name="stroop_help_body">
         To play the stroop game, you must begin by pressing Start Game. From there, a timer will begin that tracks the time it takes you
         to complete the game. Words will appear randomly on the screen with a designated color. It is your job to click the correct buttons that
-        correspond to the words color. Get as many right in as little time as possible. \n\nGood luck!
+        correspond to the words color. Get as many right in as little time as possible. Be sure to not press the wrong button, every wrong guess
+        adds two seconds! \n\nGood luck!
     </string>
     <string name="start_match">Start Match</string>
     <string name="turn_counter">Turn counter</string>

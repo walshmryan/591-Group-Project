@@ -52,13 +52,14 @@ public class StroopGame extends Fragment {
     TextView comment;
 
     int totalRight = 0;
+    int totalWrong = 0;
     int guesses = 0;
-    Random rand = new Random();
+    Random rand;
     private Stopwatch stopwatch;
     String[] colours = {"yellow", "green", "red", "blue", "black"};
-    Integer wordNumber = rand.nextInt(6);
-    Integer textNumber = rand.nextInt(6);
-    Integer colourNumber = rand.nextInt(6);
+    Integer wordNumber;
+    Integer textNumber;
+    Integer colourNumber;
     double time;
     String base = "stroop baseline",quick = "stroop quick", mp = "stroop mp";
     private GoogleApiClient googleApiClient;
@@ -88,6 +89,13 @@ public class StroopGame extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
 
+        totalRight = 0;
+        totalWrong = 0;
+        guesses = 0;
+        wordNumber = rand.nextInt(6);
+        textNumber = rand.nextInt(6);
+        colourNumber = rand.nextInt(6);
+        rand = new Random();
 
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
         btnRed = (Button) (v.findViewById(R.id.btnRed));
@@ -187,7 +195,7 @@ public class StroopGame extends Fragment {
     }
 
     private void done() {
-        double finalScore = stopwatch.elapsedTime();
+        double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
         gameListener.gameDone(finalScore, "Stroop");
     }
@@ -272,6 +280,8 @@ public class StroopGame extends Fragment {
             txtWord4.setVisibility(View.INVISIBLE);
             nextWord();
             return true;
+        } else {
+            totalWrong += 1;
         }
 
         return false;
