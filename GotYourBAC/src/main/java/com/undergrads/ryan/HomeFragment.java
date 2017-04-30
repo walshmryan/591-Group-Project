@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,22 +19,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.undergrads.ryan.Manifest;
-import com.undergrads.ryan.R;
-import com.undergrads.ryan.Scores;
-import com.undergrads.ryan.Weather;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,6 +41,7 @@ public class HomeFragment extends Fragment {
     private TextView score2;
     private TextView score3;
     private ProgressBar iconProgress;
+    private ArrayList<Scores> scoreList;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -120,24 +112,28 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final String uId = mAuth.getCurrentUser().getUid();
+        scoreList = new ArrayList<Scores>();
 
-        FirebaseDatabase.getInstance().getReference().child("scores").orderByChild("timestamp")
+        FirebaseDatabase.getInstance().getReference().child("scores").orderByValue()
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int count = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
                             // only post this score if the userId matches
                             if (score.getUserId().equals(uId)) {
-                                postScore(score, count);
-                                count++;
+                                scoreList.add(score);
                             }
                         }
-                        if(count == 0) {
+                        // if no scores found set to be empty
+                        if(scoreList.size() == 0) {
                             score1.setText("No past games played");
                             score2.setText("");
                             score3.setText("");
+                        } else {
+                            // otherwise send scores to UI
+                            postScores();
+
                         }
                     }
 
@@ -155,15 +151,22 @@ public class HomeFragment extends Fragment {
 //        lm.
 //    }
 
-    // sets a text view with a given score based on index
-    protected void postScore(Scores s, int index) {
-        String score = s.getGameType() + ": " + s.getScore();
-        if (index == 0) {
-            score1.setText(score);
-        } else if (index == 1) {
-            score2.setText(score);
-        } else if (index == 2) {
-            score3.setText(score);
+    // sets text views with a given score based on index
+    protected void postScores() {
+
+        // we start at end of list to get most recent scores first
+        for(int i = scoreList.size()-1; i >=0; i--) {
+            Scores currScore = scoreList.get(i);
+            String score = currScore.getGameType() + ": " + currScore.getScore();
+
+            if (i == scoreList.size()-1) {
+                score1.setText(score);
+            } else if (i == scoreList.size()-2) {
+                score2.setText(score);
+            } else if (i == scoreList.size()-3) {
+                score3.setText(score);
+                break;
+            }
         }
     }
 
@@ -188,7 +191,7 @@ public class HomeFragment extends Fragment {
 
                         if(state != null) {
                             // TODO: uncomment out weather
-                             new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
+//                             new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
 
                         }
 
