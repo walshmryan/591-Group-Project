@@ -177,15 +177,13 @@ public class StroopBaselineFragment extends Fragment {
 
     private void gameDone() {
 
-        // need to work out how we are calculating score
-        double finalScore = (totalRight / 10) * 100;
+        time = stopwatch.elapsedTime();
 
         FirebaseCall fb = new FirebaseCall();
-        fb.updateGameBaseline(finalScore, "Stroop");
+        fb.updateGameBaseline(time, "Stroop");
 
         disableButtons();
-        time = stopwatch.elapsedTime();
-        comment.setText("You scored " + totalRight + "/10 in " + time + " seconds");
+        comment.setText("Your completion time was " + time + " seconds");
         comment.setVisibility(VISIBLE);
         listener.goToMain();
     }
