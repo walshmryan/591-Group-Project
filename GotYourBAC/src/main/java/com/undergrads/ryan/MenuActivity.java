@@ -106,6 +106,8 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
+        navigationView.setCheckedItem(R.id.nav_home);
+
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -161,24 +163,26 @@ public class MenuActivity extends AppCompatActivity
     }
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-
+        Log.i("back stack", getFragmentManager().getBackStackEntryCount()+"");
+//        fix orientation
         if (tiltGame){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
+//        closes the drawer if open
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
+            getFragmentManager().popBackStack();
+        } else if(getFragmentManager().getBackStackEntryCount() >= 0){
+//            do nothing
+        }else{
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -208,11 +212,13 @@ public class MenuActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_games) {
 //          go to games page
+            String games = "games";
 //            SkeletonActivity fragment = new SkeletonActivity();
             google_mainmenu fragment = new google_mainmenu();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(games)
                     .commit();
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();

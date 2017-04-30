@@ -36,7 +36,7 @@ import java.util.Random;
  * Created by Samantha on 4/15/2017.
  */
 
-public class fragment_tilt extends Fragment {
+public class    fragment_tilt extends Fragment {
     private String[] directions = {"FORWARD", "BACK", "LEFT", "RIGHT"};
     private Queue<Integer> sequence = new LinkedList<Integer>();
     private SensorManager mSensorManager=null;
