@@ -92,10 +92,10 @@ public class StroopGame extends Fragment {
         totalRight = 0;
         totalWrong = 0;
         guesses = 0;
+        rand = new Random();
         wordNumber = rand.nextInt(6);
         textNumber = rand.nextInt(6);
         colourNumber = rand.nextInt(6);
-        rand = new Random();
 
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
         btnRed = (Button) (v.findViewById(R.id.btnRed));
