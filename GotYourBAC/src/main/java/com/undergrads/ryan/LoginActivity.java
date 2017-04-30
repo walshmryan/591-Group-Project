@@ -67,7 +67,7 @@ public class LoginActivity extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
+
 //// TODO: 4/29/17 remove before release 
                 String username = "rmwalshy@gmail.com";
                 String password = "password";
