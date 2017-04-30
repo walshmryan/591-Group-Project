@@ -69,8 +69,9 @@ public class StroopGame extends Fragment {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void gameDone(double num, String gameType);
-        public void gameAborted();
+        void gameDone(double num, String gameType);
+        void gameAborted();
+        void goToMainGameScreen();
     }
 
 
@@ -80,7 +81,6 @@ public class StroopGame extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         gameListener = (PlayGameListener) context;
-
     }
 
     @Override
@@ -197,7 +197,13 @@ public class StroopGame extends Fragment {
     private void done() {
         double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
-        gameListener.gameDone(finalScore, "Stroop");
+
+        if(!tag.equals("stroopQuick")) {
+            gameListener.gameDone(finalScore, "Stroop");
+        } else {
+            new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
+            gameListener.goToMainGameScreen();
+        }
     }
 
     public void textSet(TextView txtView, int wordNum, int colourNum){
