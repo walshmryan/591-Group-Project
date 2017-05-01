@@ -218,7 +218,6 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(games)
                     .commit();
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();
