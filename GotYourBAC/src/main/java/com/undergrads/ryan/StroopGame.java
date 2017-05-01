@@ -79,6 +79,7 @@ public class StroopGame extends Fragment {
         void gameDone(double num, String gameType);
         void gameAborted();
         void goToMainGameScreen();
+        void gameDoneBaseline();
     }
 
     public interface StroopBaselineListener{
@@ -230,7 +231,7 @@ public class StroopGame extends Fragment {
 
         if(tag.equals("stroopQuick")) {
             new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
-            gameListener.goToMainGameScreen();
+            gameListener.gameDoneBaseline();
         } else if(tag.equals("stroopBaseline")) {
             new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
             baselineListener.goToStroopDone();

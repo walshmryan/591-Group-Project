@@ -61,8 +61,8 @@ public class stroop_game_done extends Fragment {
                         if(baseline != null) {
                             baselineScore.setText("Baseline: " + baseline.getScore());
 
-                            // if we are not coming from the baseline creation then compare scores
-                            if(!getFragmentTag().equals("stroopDone")) {
+                            // if we are not coming from the baseline create/update then compare scores
+                            if(!getFragmentTag().equals("stroopDone") && !getFragmentTag().equals("stroopDone2")) {
                                 compareScores(baseline.getScore(), listener.getScore());
                             }
                         } else {
@@ -77,8 +77,8 @@ public class stroop_game_done extends Fragment {
                     }
                 });
 
-        // if we are not coming from the baseline creation then get recorded score
-        if(!getFragmentTag().equals("stroopDone")) {
+        // if we are not coming from the baseline create/update then get recorded score
+        if(!getFragmentTag().equals("stroopDone") && !getFragmentTag().equals("stroopDone2")) {
             txtScore.setText("Time: " + listener.getScore());
         }
 
@@ -87,10 +87,11 @@ public class stroop_game_done extends Fragment {
             public void onClick(View v) {
                 String tag = getFragmentTag();
 
-                // if coming from stroop baseline then switch activites
+                // if coming from stroop baseline create then switch activites using goToMain()
                 if(tag.equals("stroopDone")) {
                     doneListener.goToMain();
                 } else {
+                    // otherwise we are in MenuActivity and can use goToMainGameScreen()
                     listener.goToMainGameScreen();
                 }
             }
