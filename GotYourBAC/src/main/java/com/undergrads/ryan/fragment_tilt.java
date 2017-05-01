@@ -353,6 +353,7 @@ public class    fragment_tilt extends Fragment {
                     Log.i("DEBUG", generateSequenceTime + "");
                     Log.i("DEBUG", rounds + "");
 
+                    double score = ((double)totalCorrect/(double)(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
                     txtCountdown.setText(String.format("COMPLETED!"));
 
