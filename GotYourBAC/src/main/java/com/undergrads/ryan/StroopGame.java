@@ -74,13 +74,23 @@ public class StroopGame extends Fragment {
         void goToMainGameScreen();
     }
 
+    public interface StroopBaselineListener{
+        void goToMain();
+    }
 
     PlayGameListener gameListener;
+    StroopBaselineListener baselineListener;
 
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
-        gameListener = (PlayGameListener) context;
+        String tag = getFragmentTag();
+
+        if(tag.equals("stroopBaseline")) {
+            baselineListener = (StroopBaselineListener) context;
+        } else {
+            gameListener = (PlayGameListener) context;
+        }
     }
 
     @Override
@@ -188,10 +198,12 @@ public class StroopGame extends Fragment {
             public void onClick(View v) {
                 String tag = getFragmentTag();
 
-                if(!tag.equals("stroopQuick")) {
-                    gameListener.gameAborted();
-                } else {
+                if(tag.equals("stroopBaseline")) {
+                    baselineListener.goToMain();
+                } else if(tag.equals("stroopQuick")) {
                     gameListener.goToMainGameScreen();
+                } else {
+                    gameListener.gameAborted();
                 }
             }
         });
@@ -204,11 +216,13 @@ public class StroopGame extends Fragment {
         double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
 
-        if(!tag.equals("stroopQuick")) {
-            gameListener.gameDone(finalScore, "Stroop");
-        } else {
+        if(tag.equals("stroopQuick")) {
             new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
             gameListener.goToMainGameScreen();
+        } else if(tag.equals("stroopBaseline")) {
+            baselineListener.goToMain();
+        } else {
+            gameListener.gameDone(finalScore, "Stroop");
         }
     }
 
@@ -256,12 +270,6 @@ public class StroopGame extends Fragment {
         wordNumber = rand.nextInt(5);
         textNumber = rand.nextInt(5);
         colourNumber = rand.nextInt(5);
-
-        // TESTING
-//        wordNumber = 3;
-//        textNumber = 4;
-//        colourNumber = 1;
-        //TESTING
 
         if (textNumber == 0) {
             textSet(txtWord0, wordNumber, colourNumber);
@@ -316,6 +324,10 @@ public class StroopGame extends Fragment {
     public String getFragmentTag(){
         FragmentManager fragment = getFragmentManager();
         Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+
+        if(curFrag == null) {
+            curFrag = fragment.findFragmentById(R.id.main_frame);
+        }
         return (curFrag.getTag().toString());
 
     }
