@@ -7,6 +7,7 @@ package com.undergrads.ryan;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -316,10 +317,13 @@ public class    fragment_tilt extends Fragment {
 
                         //set the prog bar that just finished to green or red depending if they got
                         // it right
-                        if (lastGuessCorrect) {
-                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
-                        } else {
-                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+                        if (isAdded()) {
+                            if (lastGuessCorrect) {
+                                pCurrentBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkgreen)));
+                            } else {
+                                pCurrentBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkred)));
+
+                            }
                         }
                     }
 
