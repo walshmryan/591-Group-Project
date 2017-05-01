@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment {
     private TextView score3;
     private ProgressBar iconProgress;
     private ArrayList<Scores> scoreList;
+    private TextView BACLevel;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -49,6 +51,11 @@ public class HomeFragment extends Fragment {
     private LocationManager lm;
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
+
+    private int weight;
+    private int gender;
+    private double bac = 0.0;
+    DecimalFormat dcmFormatter = new DecimalFormat("0.##");
 
     // list of permissions we want
     private static final String[] LOCATION_PERMS = {
@@ -74,6 +81,7 @@ public class HomeFragment extends Fragment {
         score2 = (TextView) v.findViewById(R.id.score2);
         score3 = (TextView) v.findViewById(R.id.score3);
         iconProgress = (ProgressBar) v.findViewById(R.id.iconProgress);
+        BACLevel = (TextView)v.findViewById(R.id.BACLevel);
 
         // make everything empty till DB returns
         temperature.setText("");
@@ -113,10 +121,65 @@ public class HomeFragment extends Fragment {
          Fetches top scores from DB and display them
          */
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         final String uId = mAuth.getCurrentUser().getUid();
         scoreList = new ArrayList<Scores>();
+        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    // this value won't change so we are just going to listen for a single value event
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user information
+                        Users user = dataSnapshot.getValue(Users.class);
+                        // String currentUser = user.username;
+                        weight = user.getWeight();
+                        String g = user.getGender();
+                        if (g.equals("Male")){
+                            gender = 0;
+                        }else{
+                            gender = 1;
+                        }
 
+
+                        // once we got weight and gender, make another DB call
+                        // get current values from the database in case user already entered info
+                        FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("drink-totals")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
+                                        //check to see if there are any entries, if not go with defaults
+                                        // only count drink info if within a 12 hour time span
+                                        if(drinkInfo != null && !CalculateBAC.dateExpired(drinkInfo.getTimestamp(), 1)) {
+                                            CalculateBAC.totalHard = drinkInfo.getTotalHard();
+                                            CalculateBAC.totalWine = drinkInfo.getTotalWine();
+                                            CalculateBAC.totalBeer = drinkInfo.getTotalBeer();
+                                            CalculateBAC.setTotal();
+                                            bac = CalculateBAC.calculateBAC(weight, gender);
+                                            BACLevel.setText(dcmFormatter.format(bac) + "%");
+                                            //setViews();
+
+
+                                            // set number of drinks here in case we loaded some from DB and set BAC
+                                            Log.i("BAC", weight + "");
+                                            Log.i("BAC", gender + "");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("error","could not load drink info");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("error","could not load user info");
+                    }
+                });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseDatabase.getInstance().getReference().child("scores").orderByValue()
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
