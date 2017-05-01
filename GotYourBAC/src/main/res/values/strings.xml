@@ -111,7 +111,22 @@ Once prompted, tilt your phone according to the sequence.
 Note that there will be the same number of progress bars as directions.
 Once time is up to guess a single direction, the progress bar will turn either green to indicate you remembered
 correctly or red to indicate you remember incorrectly.</string>
+
+    <string name="dir1">Remember the sequence of directions that appear on the screen.</string>
+    <string name="dir2">You will be given a short amount of time to perform each individual direction.</string>
+    <string name="dir3">Once prompted, tilt your phone according to the sequence</string>
+    <string name="dir4">The possible directions are:</string>
+    <string name="right">Right: </string>
+    <string name="left">Left: </string>
+    <string name="forward">Forward: </string>
+    <string name="back">Back: </string>
+    <string name="dir5">Tilt the phone right</string>
+    <string name="dir6">Tilt the phone left</string>
+    <string name="dir7">Tilt the phone toward you</string>
+    <string name="dir8">Tilt the phone away from you</string>
+    <string name="dir9">Once time is up to guess a single direction, the progress bar will turn either green to indicate you remembered correctly or red to indicate you did not.</string>
     <string name="howtoplaytilt">How to Play Tilt</string>
+
     <!--<string name="verificationEmail">Send Verification Email</string>-->
 
 </resources>

@@ -39,14 +39,17 @@
             android:layout_weight="1"
             android:paddingTop="20dp"
             android:text="0"
+
             android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <ImageButton
             android:id="@+id/btnWineMinus"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+
             android:src="@drawable/remove" />
 
         <ImageView
@@ -58,6 +61,7 @@
 
         <ImageButton
             android:id="@+id/btnWinePlus"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -82,6 +86,7 @@
 
         <ImageButton
             android:id="@+id/btnBeerMinus"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

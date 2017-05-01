@@ -164,19 +164,19 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Update User"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewSwitcherWeight"
+            style="@style/Widget.AppCompat.Button.Colored"
             app:layout_constraintVertical_bias="0.16" />
 
         <Button
             android:id="@+id/btnSaveUser"
             android:layout_width="159dp"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            android:text="@string/save"/>
 
     </ViewSwitcher>
 

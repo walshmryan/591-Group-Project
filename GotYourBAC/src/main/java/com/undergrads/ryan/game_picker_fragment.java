@@ -52,6 +52,7 @@ public class game_picker_fragment extends Fragment {
         btnTilt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 listener.goToGameMode(getView(),tiltTag);
             }
         });

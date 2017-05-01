@@ -153,7 +153,8 @@
         app:layout_constraintVertical_bias="0.07"
         tools:layout_constraintRight_creator="1"
         android:layout_marginEnd="15dp"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <TextView
         android:id="@+id/new_user_description"
