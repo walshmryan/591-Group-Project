@@ -125,7 +125,8 @@
                     android:id="@+id/btnSendText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Send Emergency Text" />
+                    android:text="Send Emergency Text"
+                    style="@style/Widget.AppCompat.Button.Colored"/>
 
                 <Button
                     android:id="@+id/btnSave"
@@ -133,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/save"
                     tools:layout_editor_absoluteX="147dp"
-                    tools:layout_editor_absoluteY="501dp" />
+                    tools:layout_editor_absoluteY="501dp"
+                    style="@style/Widget.AppCompat.Button.Colored"/>
 
 
             </ViewSwitcher>
@@ -150,6 +152,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:text="@string/update"
+                style="@style/Widget.AppCompat.Button.Colored"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintLeft_toLeftOf="parent"

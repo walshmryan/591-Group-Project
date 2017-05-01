@@ -49,6 +49,7 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="72dp"
+        style="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView

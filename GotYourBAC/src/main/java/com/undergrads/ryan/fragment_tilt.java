@@ -41,6 +41,7 @@ public class    fragment_tilt extends Fragment {
     private Queue<Integer> sequence = new LinkedList<Integer>();
     private SensorManager mSensorManager=null;
     private Button btnNextRound;
+    private Button btnDone;
     private TextView txtCountdown;
     private TextView txtDirection;
     private ProgressBarAnimation anim1;
@@ -54,7 +55,7 @@ public class    fragment_tilt extends Fragment {
     private ProgressBar pBarFour;
     private ProgressBar pBarFive;
     private ProgressBar pCurrentBar;
-    private Integer rounds = 3;
+    private Integer rounds = 2;
     private Integer roundCountDown = rounds;
     private Boolean checkGuesses = false;
     private Boolean firstTick = true;
@@ -78,12 +79,15 @@ public class    fragment_tilt extends Fragment {
     private static final int SENSOR_DELAY_MICROS = 50 * 1000; // 50ms
     private WindowManager mWindowManager;
     private int mLastAccuracy;
+    public interface tiltGameListener {
+        public void goToMainGameScreen();
+    }
+    tiltGameListener tiltListener;
 
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("fragment_tag","TILT");
     }
-
     ////////////////////////////////////////////////////////////
     /*SET UP THE SENSOR LISTENER*/
     SensorEventListener listener = new SensorEventListener() {
@@ -113,6 +117,7 @@ public class    fragment_tilt extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tilt, container, false);
 
         btnNextRound = (Button) v.findViewById(R.id.btnNextRound);
+        btnDone = (Button) v.findViewById(R.id.btnDone1);
         txtCountdown = (TextView) v.findViewById(R.id.txtCountdown);
         txtDirection = (TextView) v.findViewById(R.id.txtDirection);
 
@@ -162,6 +167,12 @@ public class    fragment_tilt extends Fragment {
         });
 
 
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tiltListener.goToMainGameScreen();
+            }
+        });
         return v;
     }
 
@@ -336,12 +347,13 @@ public class    fragment_tilt extends Fragment {
                     btnNextRound.setVisibility(View.VISIBLE);
                 }else {
                     progressVisible(View.INVISIBLE);
+                    btnDone.setVisibility(View.VISIBLE);
 
                     Log.i("DEBUG", totalCorrect + "");
                     Log.i("DEBUG", generateSequenceTime + "");
                     Log.i("DEBUG", rounds + "");
 
-                    double score = (totalCorrect/(generateSequenceTime*rounds)) * 100;
+                    double score = ((double)totalCorrect/(double)(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
                     txtCountdown.setText(String.format("COMPLETED!"));
 
@@ -402,6 +414,19 @@ public class    fragment_tilt extends Fragment {
         }
 
     }
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            tiltListener = (tiltGameListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////
     /*END*/

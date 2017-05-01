@@ -47,6 +47,11 @@ import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.example.games.basegameutils.BaseGameUtils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 //import static android.R.attr.fragment;
@@ -57,7 +62,7 @@ public class MenuActivity extends AppCompatActivity
         google_mainmenu.gMainListener, GoogleApiClient.OnConnectionFailedListener,
         game_picker_fragment.gamePickerListener, pick_game_mode.gameModeListener, GoogleApiClient.ConnectionCallbacks,
         StroopGame.PlayGameListener, stroop_game_done.stroopGameListener,OnInvitationReceivedListener,
-        OnTurnBasedMatchUpdateReceivedListener, fragment_tilt_home.OnTiltHomeListener{
+        OnTurnBasedMatchUpdateReceivedListener, fragment_tilt_home.OnTiltHomeListener, fragment_tilt.tiltGameListener{
 
     private GoogleApiClient mGoogleApiClient;
     private boolean mResolvingError = false;
@@ -108,37 +113,39 @@ public class MenuActivity extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
         navigationView.setCheckedItem(R.id.nav_home);
 
+        final TextView nav_user_email = (TextView)hView.findViewById(R.id.txtEmail);
+        final TextView nav_user = (TextView)hView.findViewById(R.id.txtName);
+
+        final String uId = getUid(); //get current user id
+        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    // this value won't change so we are just going to listen for a single value event
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user information
+                        Users user = dataSnapshot.getValue(Users.class);
+                        String name = user.getFirstName() +" "+ user.getLastName();
+                        String email = user.getUsername();
+                        nav_user.setText(name);
+                        nav_user_email.setText(email);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("error","could not load drink info");
+                    }
+                });
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
-//            TextView nav_user = (TextView)hView.findViewById(R.id.txtName);
-            TextView nav_user_email = (TextView)hView.findViewById(R.id.txtEmail);
-//            nav_user.setText(name);
-            nav_user_email.setText(email);
-        }
+//        }
 
         if (savedInstanceState == null) {
-
-
             HomeFragment fragment = new HomeFragment();
             String homeFrag = "Home Screen";
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment, homeFrag)
-                    .addToBackStack(homeFrag)
+//                    .addToBackStack(homeFrag)
                     .commit();
         }
 
@@ -157,9 +164,6 @@ public class MenuActivity extends AppCompatActivity
         Toast.makeText(MenuActivity.this, R.string.welcome, Toast.LENGTH_LONG).show();
 
         lowBattery = new EmergencyText(this);
-//        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
-//        Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
-//        FragmentICE.sendTextOnLow();
     }
     @Override
     public void onBackPressed() {
@@ -175,14 +179,19 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
+
+        if (getFragmentManager().getBackStackEntryCount() >= 1) {
             getFragmentManager().popBackStack();
-        } else if(getFragmentManager().getBackStackEntryCount() >= 0){
+
+        } else if(getFragmentManager().getBackStackEntryCount() == 0){
 //            do nothing
         }else{
             super.onBackPressed();
         }
 
+    }
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -199,7 +208,6 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(bac)
                     .commit();
         }else if(id == R.id.nav_home){
             HomeFragment fragment = new HomeFragment();
@@ -207,26 +215,26 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(homeFrag)
                     .commit();
 
         }else if (id == R.id.nav_games) {
 //          go to games page
             String games = "games";
-//            SkeletonActivity fragment = new SkeletonActivity();
             google_mainmenu fragment = new google_mainmenu();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(games)
+                    //                    .addToBackStack(editUser)
+
                     .commit();
+
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();
             String editUser = "ice";
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(editUser)
+//                    .addToBackStack(editUser)
                     .commit();
         } else if (id == R.id.nav_manage) {
             EditUser fragment = new EditUser();
@@ -234,7 +242,7 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(editUser)
+//                    .addToBackStack(editUser)
                     .commit();
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
@@ -262,6 +270,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void goToGamePickerFrag() {
         String gamePicker = "pick game";
+
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -317,6 +326,13 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment,gameMode + tag)
                 .addToBackStack(tag)
                 .commit();
+        getFragmentManager().executePendingTransactions();
+
+        fragment = (pick_game_mode)getFragmentManager().findFragmentById(R.id.frame_layout);
+        if (tag.equals("stroop")){
+            fragment.showStroopTxtView(view);
+        }else{
+            fragment.showTiltTxtView(view);        }
     }
 
     @Override
@@ -923,7 +939,8 @@ public class MenuActivity extends AppCompatActivity
     }
 
     public void submitScoreToGoogle(double s){
-        long score = (long)s;
+        double temp = 1000*s;
+        long score = (long)temp;
         Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_stroop), score);
 
     }
@@ -948,8 +965,13 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void goToMainGameScreen() {
+        while (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }
+
         String gamePicker = "pick game";
         tiltGame = false;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         game_picker_fragment fragment = new game_picker_fragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -1027,7 +1049,7 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragmentTilt, "TILT")
-                    .addToBackStack(null)
+                    .addToBackStack(tilt)
                     .commit();
         }else{
             tiltGame = false;
@@ -1062,6 +1084,7 @@ public class MenuActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
     }
+
 
 
 }
