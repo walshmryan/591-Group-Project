@@ -5,11 +5,13 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 //import com.undergrads.ryan.R;
@@ -24,7 +26,11 @@ import com.google.android.gms.games.event.Event;
 import com.google.android.gms.games.event.EventBuffer;
 import com.google.android.gms.games.event.Events;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 import static android.view.View.VISIBLE;
 
@@ -49,6 +55,8 @@ public class StroopGame extends Fragment {
     TextView txtWord3;
     TextView txtWord4;
     TextView comment;
+    TextView txtPenalty;
+    Chronometer chron;
 
     int totalRight = 0;
     int totalWrong = 0;
@@ -104,11 +112,13 @@ public class StroopGame extends Fragment {
         btnBlack = (Button) (v.findViewById(R.id.btnBlack));
         btnSkip = (Button)v.findViewById(R.id.btnSkip);
         btnEnd = (Button)v.findViewById(R.id.btnEnd);
+        chron = (Chronometer) (v.findViewById(R.id.mChronometer));
         txtWord0 = (TextView)(v.findViewById(R.id.txtView0));
         txtWord1 = (TextView)(v.findViewById(R.id.txtView1));
         txtWord2 = (TextView)(v.findViewById(R.id.txtView2));
         txtWord3 = (TextView)(v.findViewById(R.id.txtView3));
         txtWord4 = (TextView)(v.findViewById(R.id.txtView4));
+        txtPenalty = (TextView) (v.findViewById(R.id.txtPenalty));
         stroopDescription = (TextView)(v.findViewById(R.id.stroopDescription));
         comment = (TextView)(v.findViewById(R.id.comment));
 
@@ -200,6 +210,8 @@ public class StroopGame extends Fragment {
     }
 
     private void done() {
+
+        chron.stop();
         double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
 
@@ -256,12 +268,6 @@ public class StroopGame extends Fragment {
         textNumber = rand.nextInt(5);
         colourNumber = rand.nextInt(5);
 
-        // TESTING
-//        wordNumber = 3;
-//        textNumber = 4;
-//        colourNumber = 1;
-        //TESTING
-
         if (textNumber == 0) {
             textSet(txtWord0, wordNumber, colourNumber);
         }
@@ -293,6 +299,7 @@ public class StroopGame extends Fragment {
             return true;
         } else {
             totalWrong += 1;
+            txtPenalty.setText("Penalty: " + Integer.toString(totalWrong));
         }
 
         return false;
@@ -304,6 +311,7 @@ public class StroopGame extends Fragment {
         guesses = 0;
         totalRight = 0;
         stopwatch = new Stopwatch();
+        chron.start();
         comment.setVisibility(View.INVISIBLE);
         txtWord0.setVisibility(View.INVISIBLE);
         txtWord1.setVisibility(View.INVISIBLE);
@@ -318,5 +326,4 @@ public class StroopGame extends Fragment {
         return (curFrag.getTag().toString());
 
     }
-
 }
