@@ -197,6 +197,9 @@ public class MenuActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        while (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         String bac = "BAC";

@@ -163,6 +163,7 @@ public class    fragment_tilt extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses = generateSequenceTime;
+                txtCountdown.setVisibility(View.INVISIBLE);
                 btnNextRound.setVisibility(View.INVISIBLE);
                 myCountDownTimer = new MyCountDownTimer(roundLength*1000, tick*1000);//
                 myCountDownTimer.start();
@@ -191,15 +192,15 @@ public class    fragment_tilt extends Fragment {
 
     public void progressReset() {
         pBarOne.setProgress(0);
-        pBarOne.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarOne.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarTwo.setProgress(0);
-        pBarTwo.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarTwo.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarThree.setProgress(0);
-        pBarThree.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarThree.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarFour.setProgress(0);
-        pBarFour.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarFour.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarFive.setProgress(0);
-        pBarFive.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarFive.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
 
     }
 
@@ -272,41 +273,41 @@ public class    fragment_tilt extends Fragment {
                         Integer currentSequenceElement = sequence.remove();
                         if (directions[currentSequenceElement] == "LEFT") {
                             if (roll > 0) {
-                                txtDirection.setText("RIGHTO LEFT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO LEFT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("WRONG - LEFT");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "RIGHT") {
                             if (roll < 0) {
-                                txtDirection.setText("RIGHTO RIGHT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO RIGHT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("WRONG - RIGHT");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "FORWARD") {
                             if (pitch > 0) {
-                                txtDirection.setText("RIGHTO FORWARD - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO FORWARD - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("WRONG - FORWARD");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "BACK") {
                             if (pitch < 0) {
-                                txtDirection.setText("RIGHTO BACK - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO BACK - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("WRONG - BACK");
                                 lastGuessCorrect = false;
                             }
 
@@ -318,7 +319,7 @@ public class    fragment_tilt extends Fragment {
                         if (lastGuessCorrect) {
                             pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
                         } else {
-                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
                         }
                     }
 
@@ -352,8 +353,6 @@ public class    fragment_tilt extends Fragment {
 
             }
         }
-
-
             @Override
             public void onFinish () {
                 //once the round is done check if there are more to go
@@ -362,7 +361,7 @@ public class    fragment_tilt extends Fragment {
                     progressVisible(View.INVISIBLE);
                     checkGuesses = false;
                     firstTick = true;
-                    txtCountdown.setText(String.format("DONE!"));
+                    txtCountdown.setText(String.format("ROUND OVER"));
                     txtDirection.setText("");
                     btnNextRound.setVisibility(View.VISIBLE);
                 }else {
@@ -375,7 +374,8 @@ public class    fragment_tilt extends Fragment {
 
                     double score = ((double)totalCorrect/(double)(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
-                    txtCountdown.setText(String.format("COMPLETED!"));
+                    txtCountdown.setVisibility(View.VISIBLE);
+                    txtCountdown.setText(String.format("COMPLETE"));
 
                     new FirebaseCall().postScore(score, "Tilt");
                 }
