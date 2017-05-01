@@ -109,7 +109,7 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
 
 
-
+        
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url
@@ -131,8 +131,6 @@ public class MenuActivity extends AppCompatActivity
         }
 
         if (savedInstanceState == null) {
-
-
             HomeFragment fragment = new HomeFragment();
             String homeFrag = "Home Screen";
             FragmentManager fragmentManager = getFragmentManager();
@@ -175,8 +173,10 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
+
         } else if(getFragmentManager().getBackStackEntryCount() >= 0){
 //            do nothing
         }else{
@@ -219,6 +219,7 @@ public class MenuActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
                     .commit();
+
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();
             String editUser = "ice";
