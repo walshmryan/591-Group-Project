@@ -43,18 +43,8 @@ public class BacActivity extends Fragment{
     private TextView beerCounter;
     private TextView hardCounter;
 
-    private int totalHard;
-    private int totalWine;
-    private int totalBeer;
-    private int total;
-    private Stopwatch stopwatch;
-
-
-
     private int gender;
     private int weight;
-    private final int FEMALE = 1;
-    private final int MALE = 0;
     private double bac = 0.0;
     DecimalFormat dcmFormatter = new DecimalFormat("0.##");
 
@@ -80,17 +70,6 @@ public class BacActivity extends Fragment{
         beerCounter = (TextView) v.findViewById(R.id.beerCounter);
         hardCounter = (TextView) v.findViewById(R.id.hardCounter);
 
-        // initialize to zero on creation, check DB after if entries in there
-//        totalHard = 0;
-//        totalWine = 0;
-//        totalBeer = 0;
-//        total = 0;
-
-
-
-//        int[] weightAndGender = CalculateBAC.getWeightAndGender();
-//        weight = weightAndGender[0];
-//        gender = weightAndGender[1];
         final String uId = getUid(); //get current user id
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,7 +87,6 @@ public class BacActivity extends Fragment{
                             gender = 1;
                         }
 
-
                         // once we got weight and gender, make another DB call
                         // get current values from the database in case user already entered info
                         FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("drink-totals")
@@ -117,19 +95,27 @@ public class BacActivity extends Fragment{
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                         Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
+
                                         //check to see if there are any entries, if not go with defaults
                                         // only count drink info if within a 12 hour time span
-                                        if(drinkInfo != null && !CalculateBAC.dateExpired(drinkInfo.getTimestamp(), 1)) {
+                                        if(drinkInfo != null && !CalculateBAC.dateExpired(drinkInfo.getTimestamp(), 12)) {
                                             CalculateBAC.totalHard = drinkInfo.getTotalHard();
                                             CalculateBAC.totalWine = drinkInfo.getTotalWine();
                                             CalculateBAC.totalBeer = drinkInfo.getTotalBeer();
                                             CalculateBAC.setTotal();
                                             setViews();
 
-
                                             // set number of drinks here in case we loaded some from DB and set BAC
                                             Log.i("BAC", weight + "");
                                             Log.i("BAC", gender + "");
+                                            bac = CalculateBAC.calculateBAC(weight, gender);
+                                            setBACtxtColor(bac);
+                                        } else {
+                                            CalculateBAC.totalHard = 0;
+                                            CalculateBAC.totalWine = 0;
+                                            CalculateBAC.totalBeer = 0;
+                                            CalculateBAC.setTotal();
+                                            setViews();
                                             bac = CalculateBAC.calculateBAC(weight, gender);
                                             setBACtxtColor(bac);
                                         }
@@ -147,23 +133,6 @@ public class BacActivity extends Fragment{
                         Log.e("error","could not load user info");
                     }
                 });
-
-//        setViews();
-//        txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
-//
-//
-//        bac = CalculateBAC.calculateBAC(weight, gender);
-//        txtBAC.setText(dcmFormatter.format(bac) + "%");
-//        setBACtxtColor(bac);
-
-
-
-
-
-
-
-
-
 
         // clicking + or - causes BAC and drink totals to be reset
         // if a categeory has 0 drinks pressing - will not do anything
@@ -247,8 +216,6 @@ public class BacActivity extends Fragment{
         return v;
     }
 
-
-
     public void setViews(){
         txtNumDrinks.setText(Integer.toString(CalculateBAC.total));
         wineCounter.setText(Integer.toString(CalculateBAC.totalWine));
@@ -257,10 +224,7 @@ public class BacActivity extends Fragment{
         bac = CalculateBAC.calculateBAC(weight, gender);
         txtBAC.setText(dcmFormatter.format(bac) + "%");
         txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
-
-
     }
-
 
     public void setBACtxtColor(double bac)
     {
@@ -273,6 +237,7 @@ public class BacActivity extends Fragment{
             txtBAC.setTextColor(getResources().getColor(R.color.red));
         }
     }
+
     public void updateDrinkData(){
         FirebaseCall fb = new FirebaseCall();
         fb.updateDrinkTotals(CalculateBAC.totalHard, CalculateBAC.totalWine, CalculateBAC.totalBeer);

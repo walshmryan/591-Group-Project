@@ -11,9 +11,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-/**
- * Created by Fionnan on 01/05/2017.
- */
 
 public class CalculateBAC
 {
@@ -21,74 +18,11 @@ public class CalculateBAC
     public static int totalWine = 0;
     public static int totalBeer = 0;
     public static int total = 0;
-    public static Stopwatch stopwatch;
-
-    public static int gender;
     public static int weight;
     public static final int FEMALE = 1;
     public static final int MALE = 0;
+    public static Stopwatch stopwatch;
 
-//    final static String uId = getUid(); //get current user id
-//
-//    public static int[] getWeightAndGender(){
-//        FirebaseDatabase.getInstance().getReference().child("users").child(uId)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    // this value won't change so we are just going to listen for a single value event
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        // Get user information
-//                        Users user = dataSnapshot.getValue(Users.class);
-//                        // String currentUser = user.username;
-//                        weight = user.getWeight();
-//                        String g = user.getGender();
-//                        if (g.equals("Male")){
-//                            gender = 0;
-//                        }else{
-//                            gender = 1;
-//                        }
-//
-//
-//                        // once we got weight and gender, make another DB call
-//                        // get current values from the database in case user already entered info
-//                        FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("drink-totals")
-//                                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                        Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
-//                                        //check to see if there are any entries, if not go with defaults
-//                                        // only count drink info if within a 12 hour time span
-//                                        if(drinkInfo != null && !dateExpired(drinkInfo.getTimestamp(), 1)) {
-//                                            totalHard = drinkInfo.getTotalHard();
-//                                            totalWine = drinkInfo.getTotalWine();
-//                                            totalBeer = drinkInfo.getTotalBeer();
-//                                            setTotal();
-//
-//                                            // set number of drinks here in case we loaded some from DB and set BAC
-//                                            Log.i("BAC", weight + "");
-//                                            Log.i("BAC", gender + "");
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//                                        Log.e("error","could not load drink info");
-//                                    }
-//                                });
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.e("error","could not load user info");
-//                    }
-//                });
-//        int[] result = {weight, gender};
-//        return result;
-//    }
-
-//    public static String getUid() {
-//        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-//    }
 
     public static boolean dateExpired(Date timestamp, int hourThreshold) {
 

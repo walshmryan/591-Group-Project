@@ -31,7 +31,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements LoginActivity.LoginListener,
-        CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopBaselineFragment.stroopBaselineListener {
+        CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopGame.StroopBaselineListener, stroop_game_done.stroopDoneListener {
 
     private String loginTag = "login screen";
     final String firebaseTag = "firebase";
@@ -193,10 +193,21 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
     @Override
     public void goToStroopBaseline() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        StroopBaselineFragment newFragment = new StroopBaselineFragment();
-        String createNewFrag = "stroop baseline";
-        transaction.replace(R.id.main_frame, newFragment, createNewFrag);
-        transaction.addToBackStack(null);
+        StroopGame newFragment = new StroopGame();
+        String stroopBaseline = "stroopBaseline";
+        transaction.replace(R.id.main_frame, newFragment, stroopBaseline);
+        transaction.addToBackStack(stroopBaseline);
+        transaction.commit();
+    }
+
+    // goes to the stroop score page
+    @Override
+    public void goToStroopDone() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        stroop_game_done newFragment = new stroop_game_done();
+        String stroopDone = "stroopDone";
+        transaction.replace(R.id.main_frame, newFragment, stroopDone);
+        transaction.addToBackStack(stroopDone);
         transaction.commit();
     }
 
