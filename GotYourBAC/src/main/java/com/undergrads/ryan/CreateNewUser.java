@@ -34,20 +34,18 @@ public class CreateNewUser extends Fragment {
     }
 
     public interface newUserListener{
-        public void goToCreateNew(String email,
-              String password,String firstName,
-              String lastName, String weight,String gender);
+        void goToCreateNew(String email, String password, String firstName, String lastName, String weight, String gender);
 
     }
 
     newUserListener userListener;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_create_new_user, container, false);
-//        initialize buttons etc
+
+        // initialize buttons etc
         edtEmail = (EditText) v.findViewById(R.id.edtEmail);
         createUser = (Button)v.findViewById(R.id.btnCreateUser);
         password = (EditText)v.findViewById(R.id.edtPassword);
@@ -56,8 +54,8 @@ public class CreateNewUser extends Fragment {
         weight = (EditText)v.findViewById(R.id.edtWeight);
         gender = (Spinner)v.findViewById(R.id.sexSpinner);
 
-//        on create user add the user to the database
-//        continue registration process
+        // on create user add the user to the database
+        // continue registration process
         createUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,15 +64,15 @@ public class CreateNewUser extends Fragment {
                         weight.getText().toString(),strGender);
             }
         });
+
         return v;
     }
 
+    // This makes sure that the container activity has implemented
+    // the callback interface. If not, it throws an exception
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             userListener = (CreateNewUser.newUserListener) activity;
         } catch (ClassCastException e) {
@@ -82,6 +80,4 @@ public class CreateNewUser extends Fragment {
                     + " must implement OnHeadlineSelectedListener");
         }
     }
-
-
 }

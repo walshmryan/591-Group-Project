@@ -33,8 +33,6 @@ import com.google.android.gms.common.api.Status;
  */
 public class google_mainmenu extends Fragment implements View.OnClickListener{
 
-    Button signIn;
-    LinearLayout login;
     private GoogleApiClient mGoogleApiClient;
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -47,27 +45,26 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
     public interface gMainListener{
         public void goToGamePickerFrag();
     }
+
     gMainListener listener;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_google_mainmenu, container, false);
 
         v.findViewById(R.id.sign_in_button).setOnClickListener(this);
-
         showSpinner(v);
+
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()){
             listener.goToGamePickerFrag();
             dismissSpinner(v);
         }
 
-
         if (v.findViewById(R.id.spinner).getVisibility() != (View.GONE)){
             dismissSpinner(v);
         }
-
 
         return v;
     }
@@ -79,6 +76,7 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
         listener = (gMainListener) context;
         mGoogleApiClient = activity.getGoogleApiClient();
     }
+
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -97,22 +95,17 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
         super.onDetach();
         mGoogleApiClient = null;
     }
-//    @Override
-//    public void onConnectionFailed(ConnectionResult connectionResult) {
-//        Log.d(TAG, "onConnectionFailed:" + connectionResult);
-//
-//    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button:
-//                signIn();
                 listener.goToGamePickerFrag();
-//                // TODO: 4/25/17 switch fragments
+                // TODO: 4/25/17 switch fragments
                 break;
         }
     }
+
     public void showSpinner(View v) {
         v.findViewById(R.id.spinner).setVisibility(View.VISIBLE);
     }

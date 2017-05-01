@@ -1003,11 +1003,12 @@ public class MenuActivity extends AppCompatActivity
         tiltGame = false;
         String type = getGameType();
         if (type.equals("stroop")){
-            String tag = "stroop quick";
+            String tag = "stroopQuick";
             StroopGame fragment = new StroopGame();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment, tag)
+                    .addToBackStack(null)
                     .commit();
         }
         else{
