@@ -57,7 +57,7 @@ public class MenuActivity extends AppCompatActivity
         google_mainmenu.gMainListener, GoogleApiClient.OnConnectionFailedListener,
         game_picker_fragment.gamePickerListener, pick_game_mode.gameModeListener, GoogleApiClient.ConnectionCallbacks,
         StroopGame.PlayGameListener, stroop_game_done.stroopGameListener,OnInvitationReceivedListener,
-        OnTurnBasedMatchUpdateReceivedListener, fragment_tilt_home.OnTiltHomeListener{
+        OnTurnBasedMatchUpdateReceivedListener, fragment_tilt_home.OnTiltHomeListener, fragment_tilt.tiltGameListener{
 
     private GoogleApiClient mGoogleApiClient;
     private boolean mResolvingError = false;
@@ -262,6 +262,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void goToGamePickerFrag() {
         String gamePicker = "pick game";
+
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -951,6 +952,7 @@ public class MenuActivity extends AppCompatActivity
     public void goToMainGameScreen() {
         String gamePicker = "pick game";
         tiltGame = false;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         game_picker_fragment fragment = new game_picker_fragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -1062,6 +1064,7 @@ public class MenuActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
     }
+
 
 
 }
