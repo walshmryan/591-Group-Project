@@ -311,6 +311,7 @@ public class StroopGame extends Fragment {
         guesses = 0;
         totalRight = 0;
         stopwatch = new Stopwatch();
+        chron.setBase(SystemClock.elapsedRealtime());
         chron.start();
         comment.setVisibility(View.INVISIBLE);
         txtWord0.setVisibility(View.INVISIBLE);
