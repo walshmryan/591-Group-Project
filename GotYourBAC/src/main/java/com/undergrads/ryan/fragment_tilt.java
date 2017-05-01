@@ -349,12 +349,10 @@ public class    fragment_tilt extends Fragment {
                     progressVisible(View.INVISIBLE);
                     btnDone.setVisibility(View.VISIBLE);
 
-
                     Log.i("DEBUG", totalCorrect + "");
                     Log.i("DEBUG", generateSequenceTime + "");
                     Log.i("DEBUG", rounds + "");
 
-                    double score = (totalCorrect/(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
                     txtCountdown.setText(String.format("COMPLETED!"));
 
@@ -415,14 +413,6 @@ public class    fragment_tilt extends Fragment {
         }
 
     }
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        tiltListener = (tiltGameListener) context;
-//    }
-
-    ////////////////////////////////////////////////////////////
-    /*END*/
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -435,6 +425,11 @@ public class    fragment_tilt extends Fragment {
                     + " must implement OnHeadlineSelectedListener");
         }
     }
+
+
+    ////////////////////////////////////////////////////////////
+    /*END*/
+
 }
 
 
