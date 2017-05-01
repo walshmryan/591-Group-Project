@@ -42,7 +42,6 @@ public class StroopGame extends Fragment {
     Button btnBlack;
     Button btnSkip;
     Button btnEnd;
-
     TextView stroopDescription;
     TextView txtWord0;
     TextView txtWord1;
