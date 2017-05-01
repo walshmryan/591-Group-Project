@@ -83,6 +83,7 @@ public class StroopGame extends Fragment {
 
     public interface StroopBaselineListener{
         void goToMain();
+        void goToStroopDone();
     }
 
     PlayGameListener gameListener;
@@ -231,7 +232,8 @@ public class StroopGame extends Fragment {
             new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
             gameListener.goToMainGameScreen();
         } else if(tag.equals("stroopBaseline")) {
-            baselineListener.goToMain();
+            new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
+            baselineListener.goToStroopDone();
         } else {
             gameListener.gameDone(finalScore, "Stroop");
         }
@@ -334,6 +336,7 @@ public class StroopGame extends Fragment {
         txtWord4.setVisibility(View.INVISIBLE);
         nextWord();
     }
+
     public String getFragmentTag(){
         FragmentManager fragment = getFragmentManager();
         Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
@@ -342,6 +345,5 @@ public class StroopGame extends Fragment {
             curFrag = fragment.findFragmentById(R.id.main_frame);
         }
         return (curFrag.getTag().toString());
-
     }
 }
