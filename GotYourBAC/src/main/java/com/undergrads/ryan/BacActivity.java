@@ -57,6 +57,7 @@ public class BacActivity extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_bac, container, false);
+
         // initialize values
         btnBeerMinus = (ImageButton) v.findViewById(R.id.btnBeerMinus);
         btnBeerPlus = (ImageButton) v.findViewById(R.id.btnBeerPlus);
@@ -79,7 +80,6 @@ public class BacActivity extends Fragment{
         totalWine = 0;
         totalBeer = 0;
         total = 0;
-
 
         final String uId = getUid(); //get current user id
 
@@ -196,6 +196,7 @@ public class BacActivity extends Fragment{
     }
 
 
+    // returns the constant based on if person is male (0) or female (1)
     public double genderToGenderConstant(int gender){
         double mConstant = 0.73;
         double fConstant = 0.66;
@@ -230,7 +231,6 @@ public class BacActivity extends Fragment{
         double den = weight*genderToGenderConstant(gender);
         double bac = 0;
         double hrsElapsed = (int)getTotalTimeInHrs();
-        // Log.i("stopwatch", "calculateBAC: " + stopwatch.elapsedTime());
 
         if (den != 0){
             bac = (num/den) - (avgAlcoholEliminationRate*hrsElapsed);
@@ -240,6 +240,7 @@ public class BacActivity extends Fragment{
         setBACtxtColor(bac);
 
     }
+
     public int getTotal(){
         return total;
     }
@@ -257,8 +258,8 @@ public class BacActivity extends Fragment{
         // total number of drinks consumed
         total =  totalBeer + totalHard + totalWine;
 
+        // set totals
         txtNumDrinks.setText(Integer.toString(total));
-
         wineCounter.setText(Integer.toString(totalWine));
         beerCounter.setText(Integer.toString(totalBeer));
         hardCounter.setText(Integer.toString(totalHard));
@@ -282,6 +283,7 @@ public class BacActivity extends Fragment{
         }
     }
 
+    // checks to see if the timestamp provided is over the hour thresholed proved
     public boolean dateExpired(Date timestamp, int hourThreshold) {
 
         long additionMilli = 1000 * 60 * 60 * hourThreshold;

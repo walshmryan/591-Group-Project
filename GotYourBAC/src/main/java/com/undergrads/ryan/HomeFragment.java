@@ -63,8 +63,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // inflate frag
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // initialize values
         temperature = (TextView) v.findViewById(R.id.temperature);
         weatherIcon = (ImageView) v.findViewById(R.id.weatherIcon);
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
@@ -79,6 +81,7 @@ public class HomeFragment extends Fragment {
         score2.setText("");
         score3.setText("");
 
+        // make sure to get permissions if not already requested
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         }
@@ -107,7 +110,7 @@ public class HomeFragment extends Fragment {
         }
 
         /*
-         Fetches top scores from DB and displays them
+         Fetches top scores from DB and display them
          */
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -118,6 +121,7 @@ public class HomeFragment extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        // add scores to list if conditions met
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
                             // only post this score if the userId matches
@@ -145,11 +149,12 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
-//    @Override
-//    public void onStop(){
-//        super.onStop();
-//        lm.
-//    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        lm.removeUpdates(ll);
+    }
 
     // sets text views with a given score based on index
     protected void postScores() {
@@ -179,20 +184,23 @@ public class HomeFragment extends Fragment {
             Log.i(MYTAG,  lat + ", " + lon);
 
             try {
+                // initialize geocoder
                 Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
 
+                // get list of addresses from lat/lon
                 List<Address> addresses = gcd.getFromLocation(lat, lon, 1);
                 if (addresses.size() > 0)
                 {
+                    // if we have an address and we can get locality
                     if(addresses.get(0).getLocality() != null) {
                         String city = addresses.get(0).getLocality();
                         String state = addresses.get(0).getAdminArea().replaceAll("\\s+","_");
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
+                        // if we have state then we can make request to Wunderground API
                         if(state != null) {
-                            // TODO: uncomment out weather
-//                             new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
-
+                            // pass in widgets that will be populated with returned results from API
+                            new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
@@ -210,8 +218,8 @@ public class HomeFragment extends Fragment {
                 Log.e(MYTAG, "Error with Geocoder");
 
             }
-
         } else {
+            // if location is not found display error
             Log.i(MYTAG, "Location is null");
             weatherForCity.setText("Can't determine location");
             temperature.setText("Error");
@@ -219,6 +227,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    // checks for permissions
     private boolean canAccessLocation() {
         return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
     }
@@ -227,7 +236,7 @@ public class HomeFragment extends Fragment {
         return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(getActivity(), perm));
     }
 
-
+    // inner class for location listener
     class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {

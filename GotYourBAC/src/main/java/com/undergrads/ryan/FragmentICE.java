@@ -39,33 +39,28 @@ import static com.undergrads.ryan.HomeFragment.MYTAG;
  * Fragment class for emergency contact info
  */
 public class FragmentICE extends Fragment {
-    Button btnUpdate;
-    Button btnSendText;
-    Button btnSave;
-    TextView txtName;
-    EditText edtName;
-    TextView txtPhone;
-    EditText edtPhone;
-    ViewSwitcher viewswitcherName;
-    ViewSwitcher viewswitcherPhone;
-    String iceName;
-    String number;
-    String contactName;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private Button btnUpdate;
+    private Button btnSendText;
+    private Button btnSave;
+    private TextView txtName;
+    private EditText edtName;
+    private TextView txtPhone;
+    private EditText edtPhone;
+    private ViewSwitcher viewswitcherName;
+    private ViewSwitcher viewswitcherPhone;
+    private String iceName;
+    private String number;
 
-    private LocationManager lm;
-    private LocationListener ll;
     public FragmentICE() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ice, container, false);
-//      initialize values
+
+        // initialize values
         btnUpdate = (Button)v.findViewById(R.id.btnUpdate);
         btnSave = (Button)v.findViewById(R.id.btnSave);
         btnSendText = (Button)v.findViewById(R.id.btnSendText);
@@ -82,16 +77,14 @@ public class FragmentICE extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user information
-//                        Users user = dataSnapshot.getValue(Users.class);
+                        // Get user ICE information
                         ContactInfo ice = dataSnapshot.getValue(ContactInfo.class);
-                        //get current values from the database
+
                         if (ice != null) {
                             iceName = ice.getName();
                             number = formatPhone(ice.getNumber());
-//
-////                      set the text view and edit view values from the stored
-////                       database values
+
+                            // set the text view and edit view values from the stored database values
                             txtName.setText(iceName);
                             txtPhone.setText(number);
                             edtName.setText(iceName);
@@ -116,7 +109,7 @@ public class FragmentICE extends Fragment {
                 viewswitcherPhone.showNext();
 
                 viewSwitcherSave.showNext();
-//                hide update button
+                // hide update button
                 btnUpdate.setVisibility(View.INVISIBLE);
             }
         });
@@ -132,7 +125,7 @@ public class FragmentICE extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                save values to database
+                // save values to database
                 iceName = edtName.getText().toString();
                 number = edtPhone.getText().toString();
                 FirebaseCall fb = new FirebaseCall();
@@ -162,7 +155,7 @@ public class FragmentICE extends Fragment {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-
+    // formats the phone number to appropriate format
     public String formatPhone(String number){
         int phoneNumLen = 10;
         if (number.length() == phoneNumLen){

@@ -2,6 +2,9 @@ package com.undergrads.ryan;
 
 import java.util.Date;
 
+/*
+    Class that keeps track of total drink values and the time they were recorded
+ */
 public class Drinks {
 
     private int totalHard = 0;

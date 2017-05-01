@@ -12,46 +12,41 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-//import com.undergrads.ryan.R;
-
-//import com.google.example.tbmpskeleton.R;
-
-
 public class LoginActivity extends Fragment {
-    Button btnSignIn;
-    Button btnRegister;
-    EditText edtPassword;
-    AutoCompleteTextView txtEmail;
-    EditText edtFirstName;
-    TextView txtForgotPassword;
+    private Button btnSignIn;
+    private Button btnRegister;
+    private EditText edtPassword;
+    private AutoCompleteTextView txtEmail;
+    private EditText edtFirstName;
+    private TextView txtForgotPassword;
 
     public LoginActivity() {
         // Required empty public constructor
     }
 
     public interface LoginListener{
-        public void goToNewUserFragment();
-        public void goToLoginFragment(String username, String password);
-        public  void goToRetrievePassword(String email);
+        void goToNewUserFragment();
+        void goToLoginFragment(String username, String password);
+        void goToRetrievePassword(String email);
     }
 
     LoginListener loginlistener;
 
-    //    //onAttach gets called when fragment attaches to Main Activity.  This is the right time to instantiate
-//    //our ControlFragmentListener, why?  Because we know the Main Activity was successfully created and hooked.
+    // onAttach gets called when fragment attaches to Main Activity.  This is the right time to instantiate
+    // our ControlFragmentListener, why?  Because we know the Main Activity was successfully created and hooked.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         loginlistener = (LoginListener) context;  //context is a handle to the main activity, let's bind it to our interface.
-        //set number of stars
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
+        // initialize values
         btnSignIn = (Button) v.findViewById(R.id.btnSignIn);
         btnRegister = (Button) v.findViewById(R.id.btnRegister);
         txtEmail = (AutoCompleteTextView) v.findViewById(R.id.txtEmail);
@@ -68,7 +63,7 @@ public class LoginActivity extends Fragment {
             @Override
             public void onClick(View v) {
 
-//// TODO: 4/29/17 remove before release 
+                // TODO: 4/29/17 remove before release
                 String username = "rmwalshy@gmail.com";
                 String password = "password";
 //                String username = txtEmail.getText().toString();
@@ -99,7 +94,4 @@ public class LoginActivity extends Fragment {
                     + " must implement OnHeadlineSelectedListener");
         }
     }
-
-
-
 }

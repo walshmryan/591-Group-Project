@@ -3,6 +3,9 @@ package com.undergrads.ryan;
 import java.text.DateFormat;
 import java.util.Date;
 
+/*
+Class that stores emergency contact information for a user
+ */
 public class ContactInfo {
     private String name;
     private String number;

@@ -186,7 +186,13 @@ public class StroopGame extends Fragment {
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameListener.gameAborted();
+                String tag = getFragmentTag();
+
+                if(!tag.equals("stroopQuick")) {
+                    gameListener.gameAborted();
+                } else {
+                    gameListener.goToMainGameScreen();
+                }
             }
         });
 
