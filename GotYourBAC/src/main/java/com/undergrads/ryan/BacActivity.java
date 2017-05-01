@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import com.undergrads.ryan.CalculateBAC;
 
 /**
  * Calculate the blood alcohol content
@@ -49,11 +50,13 @@ public class BacActivity extends Fragment{
     private Stopwatch stopwatch;
 
 
-    private double bac=0;
+
     private int gender;
     private int weight;
     private final int FEMALE = 1;
     private final int MALE = 0;
+    private double bac = 0.0;
+    DecimalFormat dcmFormatter = new DecimalFormat("0.##");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,14 +81,17 @@ public class BacActivity extends Fragment{
         hardCounter = (TextView) v.findViewById(R.id.hardCounter);
 
         // initialize to zero on creation, check DB after if entries in there
-        totalHard = 0;
-        totalWine = 0;
-        totalBeer = 0;
-        total = 0;
+//        totalHard = 0;
+//        totalWine = 0;
+//        totalBeer = 0;
+//        total = 0;
 
+
+
+//        int[] weightAndGender = CalculateBAC.getWeightAndGender();
+//        weight = weightAndGender[0];
+//        gender = weightAndGender[1];
         final String uId = getUid(); //get current user id
-
-        // access the database and get the users sex and weight
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     // this value won't change so we are just going to listen for a single value event
@@ -113,17 +119,18 @@ public class BacActivity extends Fragment{
                                         Drinks drinkInfo = dataSnapshot.getValue(Drinks.class);
                                         //check to see if there are any entries, if not go with defaults
                                         // only count drink info if within a 12 hour time span
-                                        if(drinkInfo != null && !dateExpired(drinkInfo.getTimestamp(), 1)) {
-                                            totalHard = drinkInfo.getTotalHard();
-                                            totalWine = drinkInfo.getTotalWine();
-                                            totalBeer = drinkInfo.getTotalBeer();
-                                            setTotal();
+                                        if(drinkInfo != null && !CalculateBAC.dateExpired(drinkInfo.getTimestamp(), 1)) {
+                                            CalculateBAC.totalHard = drinkInfo.getTotalHard();
+                                            CalculateBAC.totalWine = drinkInfo.getTotalWine();
+                                            CalculateBAC.totalBeer = drinkInfo.getTotalBeer();
+                                            CalculateBAC.setTotal();
+                                            setViews();
+
 
                                             // set number of drinks here in case we loaded some from DB and set BAC
-                                            txtNumDrinks.setText(String.valueOf(getTotal()));
                                             Log.i("BAC", weight + "");
                                             Log.i("BAC", gender + "");
-                                            bac = calculateBAC(weight, gender);
+                                            bac = CalculateBAC.calculateBAC(weight, gender);
                                             setBACtxtColor(bac);
                                         }
                                     }
@@ -141,139 +148,119 @@ public class BacActivity extends Fragment{
                     }
                 });
 
+//        setViews();
+//        txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
+//
+//
+//        bac = CalculateBAC.calculateBAC(weight, gender);
+//        txtBAC.setText(dcmFormatter.format(bac) + "%");
+//        setBACtxtColor(bac);
+
+
+
+
+
+
+
+
+
 
         // clicking + or - causes BAC and drink totals to be reset
         // if a categeory has 0 drinks pressing - will not do anything
         btnWineMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalWine - 1  >= 0){
-                    totalWine--;
-                    setTotal();
-                    calculateBAC(weight,gender);
+                if (CalculateBAC.totalWine - 1  >= 0){
+                    CalculateBAC.totalWine--;
+                    updateDrinkData();
+                    CalculateBAC.setTotal();
+                    setViews();
+                    bac = CalculateBAC.calculateBAC(weight,gender);
+                    txtBAC.setText(dcmFormatter.format(bac) + "%");
+                    setBACtxtColor(bac);
                 }
         }});
         btnWinePlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalWine += 1;
-                setTotal();
-                calculateBAC(weight,gender);
+                CalculateBAC.totalWine += 1;
+                updateDrinkData();
+                CalculateBAC.setTotal();
+                setViews();
+                bac = CalculateBAC.calculateBAC(weight,gender);
+                txtBAC.setText(dcmFormatter.format(bac) + "%");
+                setBACtxtColor(bac);
             }});
 
         btnHardAlcoholMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalHard - 1  >= 0){
-                    totalHard--;
-                    setTotal();
-                    calculateBAC(weight,gender);
+                if (CalculateBAC.totalHard - 1  >= 0){
+                    CalculateBAC.totalHard--;
+                    updateDrinkData();
+                    CalculateBAC.setTotal();
+                    setViews();
+                    bac = CalculateBAC.calculateBAC(weight,gender);
+                    txtBAC.setText(dcmFormatter.format(bac) + "%");
+                    setBACtxtColor(bac);
                 }
             }});
         btnHardAlcoholPlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalHard += 1;
-                setTotal();
-                calculateBAC(weight,gender);
+                CalculateBAC.totalHard += 1;
+                updateDrinkData();
+                CalculateBAC.setTotal();
+                setViews();
+                bac = CalculateBAC.calculateBAC(weight,gender);
+                txtBAC.setText(dcmFormatter.format(bac) + "%");
+                setBACtxtColor(bac);
             }});
 
         btnBeerMinus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalBeer - 1  >= 0){
-                    totalBeer--;
-                    setTotal();
-                    calculateBAC(weight,gender);
+                if (CalculateBAC.totalBeer - 1  >= 0){
+                    CalculateBAC.totalBeer--;
+                    updateDrinkData();
+                    CalculateBAC.setTotal();
+                    setViews();
+                    bac = CalculateBAC.calculateBAC(weight,gender);
+                    txtBAC.setText(dcmFormatter.format(bac) + "%");
+                    setBACtxtColor(bac);
                 }
             }});
         btnBeerPlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalBeer+=1;
-                setTotal();
-                calculateBAC(weight,gender);
+                CalculateBAC.totalBeer+=1;
+                updateDrinkData();
+                CalculateBAC.setTotal();
+                setViews();
+                bac = CalculateBAC.calculateBAC(weight,gender);
+                txtBAC.setText(dcmFormatter.format(bac) + "%");
+                setBACtxtColor(bac);
             }});
+        setViews();
+        txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
 
         return v;
     }
 
 
-    // returns the constant based on if person is male (0) or female (1)
-    public double genderToGenderConstant(int gender){
-        double mConstant = 0.73;
-        double fConstant = 0.66;
 
-        if (gender == FEMALE) {
-            return fConstant;
-        } else if (gender == MALE) {
-            return mConstant;
-        }
-        return 0.0;
-    }
-
-    // percentage of alcohol * num ounces * num of glasses
-    public double gOfWineConsumed(){return (5*.125*totalWine);}
-    public double gOfHardAlcoholConsumed() {return (1.5*.4*totalHard);}
-    public double gOfBeerConsumed(){
-        return (12*.06*totalBeer);
-    }
-
-    public double calculateBAC(double weight, int gender){
-
-        // updates drink totals to DB
-        FirebaseCall fb = new FirebaseCall();
-        fb.updateDrinkTotals(totalHard, totalWine, totalBeer);
-
-        // % BAC = (A x 5.14 / W x r) – .015 x H
-        // http://www.teamdui.com/bac-widmarks-formula/
-        double liqWeight = 5.14;
-        double avgAlcoholEliminationRate = .015;
-        DecimalFormat dcmFormatter = new DecimalFormat("0.##");
-        double num = (gOfWineConsumed() + gOfHardAlcoholConsumed() + gOfBeerConsumed())*liqWeight;
-        double den = weight*genderToGenderConstant(gender);
-        double bac = 0;
-        double hrsElapsed = (int)getTotalTimeInHrs();
-
-        if (den != 0){
-            bac = (num/den) - (avgAlcoholEliminationRate*hrsElapsed);
-        }
-
+    public void setViews(){
+        txtNumDrinks.setText(Integer.toString(CalculateBAC.total));
+        wineCounter.setText(Integer.toString(CalculateBAC.totalWine));
+        beerCounter.setText(Integer.toString(CalculateBAC.totalBeer));
+        hardCounter.setText(Integer.toString(CalculateBAC.totalHard));
+        bac = CalculateBAC.calculateBAC(weight, gender);
         txtBAC.setText(dcmFormatter.format(bac) + "%");
-        setBACtxtColor(bac);
-        return (bac);
-
-    }
-
-    public int getTotal(){
-        return total;
-    }
-
-    public double getTotalTimeInHrs(){
-        double time = stopwatch.elapsedTime();
-        return (time/3600);
-    }
-    public void setTotal(){
-        if (total <= 1){
-            // if there is one drink consumed start the stopwatch
-            stopwatch = new Stopwatch();
-        }
-
-        // total number of drinks consumed
-        total =  totalBeer + totalHard + totalWine;
-
-        // set totals
-        txtNumDrinks.setText(Integer.toString(total));
-        wineCounter.setText(Integer.toString(totalWine));
-        beerCounter.setText(Integer.toString(totalBeer));
-        hardCounter.setText(Integer.toString(totalHard));
+        txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
 
 
     }
-    // gets current user id
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
+
 
     public void setBACtxtColor(double bac)
     {
@@ -286,23 +273,12 @@ public class BacActivity extends Fragment{
             txtBAC.setTextColor(getResources().getColor(R.color.red));
         }
     }
+    public void updateDrinkData(){
+        FirebaseCall fb = new FirebaseCall();
+        fb.updateDrinkTotals(CalculateBAC.totalHard, CalculateBAC.totalWine, CalculateBAC.totalBeer);
+    }
 
-    // checks to see if the timestamp provided is over the hour thresholed proved
-    public boolean dateExpired(Date timestamp, int hourThreshold) {
-
-        long additionMilli = 1000 * 60 * 60 * hourThreshold;
-        Date expiredDate = new Date(timestamp.getTime() + additionMilli);
-
-        Log.i("DATE", timestamp.toString());
-        Log.i("DATE", expiredDate.toString());
-        Log.i("DATE", new Date().toString());
-
-        // if current time is before the expired time
-        if (new Date().after(expiredDate)) {
-            Log.i("DATE", "current time is after expired time");
-            return true;
-        } else {
-            return false;
-        }
+    public  String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }
