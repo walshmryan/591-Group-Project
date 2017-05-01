@@ -26,11 +26,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class EmergencyText extends BroadcastReceiver{
-    int status;
-    String iceName;
-    String iceNumber;
-
-    Context activity;
+    private String iceName;
+    private String iceNumber;
+    private Context activity;
     private LocationManager lm;
     private LocationListener ll;
     final static String MYTAG = "LOCATION";
@@ -42,8 +40,9 @@ public class EmergencyText extends BroadcastReceiver{
     String uId = getUid(); //get user id
     @Override
     public void onReceive(Context context, Intent intent) {
-//        https://developer.android.com/training/monitoring-device-state/battery-monitoring.html#CurrentLevel
-        status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        // https://developer.android.com/training/monitoring-device-state/battery-monitoring.html#CurrentLevel
+        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+
         FirebaseDatabase.getInstance().getReference().child("users").child(uId).child("contact-info")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -61,12 +60,12 @@ public class EmergencyText extends BroadcastReceiver{
                         Log.i("error","bad");
                     }
                 });
-
     }
 
-    public void sendSMStxt(String iceName, String number)
+    // sends a text to a given number and finds the location of the user to send with it
+    protected void sendSMStxt(String iceName, String number)
     {
-//        http://stackoverflow.com/questions/4967448/send-sms-in-android
+        // http://stackoverflow.com/questions/4967448/send-sms-in-android
 
         String message = "Hi " + iceName + ",  I just wanted to let you know that my phone battery is low.";
         if(canAccessLocation()) {
@@ -95,6 +94,7 @@ public class EmergencyText extends BroadcastReceiver{
                 }
             }
 
+            // if we have a valid location
             if(lastLocation != null) {
                 message = "Hi " + iceName + ", I just wanted to let you know that my phone battery is" +
                         " low. My last known coordinates are " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
@@ -140,16 +140,16 @@ class TextLocationListener implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-//        Log.i(MYTAG, "Location Provider Status Has Changed. " + provider);
+        Log.i("LOCATION", "Location Provider Status Has Changed. " + provider);
     }
 
     public void onProviderEnabled(String provider) {
-//        Log.i(MYTAG, "Location Provider Has been DISabled. " + provider);
+        Log.i("LOCATION", "Location Provider Has been enabled. " + provider);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-//        Log.i(MYTAG, "Location Provider Has been ENabled. " + provider);
+        Log.i("LOCATION", "Location Provider Has been disabled. " + provider);
     }
 }
 

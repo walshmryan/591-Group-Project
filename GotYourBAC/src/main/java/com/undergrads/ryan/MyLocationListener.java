@@ -21,12 +21,7 @@ public class MyLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location loc) {
-//        editLocation.setText("");
-//        pb.setVisibility(View.INVISIBLE);
-//        Toast.makeText(
-//                getBaseContext(),
-//                "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                        + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+
         String longitude = "Longitude: " + loc.getLongitude();
         Log.v("Location", longitude);
         String latitude = "Latitude: " + loc.getLatitude();
@@ -49,7 +44,6 @@ public class MyLocationListener implements LocationListener {
         }
         String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
                 + cityName;
-//        editLocation.setText(s);
     }
 
     @Override

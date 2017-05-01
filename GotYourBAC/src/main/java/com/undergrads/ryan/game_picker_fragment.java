@@ -16,28 +16,33 @@ import android.widget.Button;
 public class game_picker_fragment extends Fragment {
 
 
-    Button btnStroop;
-    Button btnTilt;
-    String stroopTag = "stroop";
-    String tiltTag = "tilt;";
+    private Button btnStroop;
+    private Button btnTilt;
+    private String stroopTag;
+    private String tiltTag;
+
     public game_picker_fragment() {
         // Required empty public constructor
     }
 
     public interface gamePickerListener{
-        public void goToGameMode(View view, String tag);
-        public void goToTilt();
+        void goToGameMode(View view, String tag);
+        void goToTilt();
     }
     gamePickerListener listener;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game_picker, container, false);
+
         btnStroop = (Button)v.findViewById(R.id.btnStroop);
         btnTilt = (Button)v.findViewById(R.id.btnTilt);
+        stroopTag = "stroop";
+        tiltTag = "tilt;";
+
         btnStroop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

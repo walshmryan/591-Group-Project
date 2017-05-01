@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,22 +19,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.undergrads.ryan.Manifest;
-import com.undergrads.ryan.R;
-import com.undergrads.ryan.Scores;
-import com.undergrads.ryan.Weather;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,6 +41,7 @@ public class HomeFragment extends Fragment {
     private TextView score2;
     private TextView score3;
     private ProgressBar iconProgress;
+    private ArrayList<Scores> scoreList;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -71,8 +63,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // inflate frag
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // initialize values
         temperature = (TextView) v.findViewById(R.id.temperature);
         weatherIcon = (ImageView) v.findViewById(R.id.weatherIcon);
         weatherForCity = (TextView) v.findViewById(R.id.weatherForCity);
@@ -87,6 +81,7 @@ public class HomeFragment extends Fragment {
         score2.setText("");
         score3.setText("");
 
+        // make sure to get permissions if not already requested
         if (!canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         }
@@ -115,29 +110,34 @@ public class HomeFragment extends Fragment {
         }
 
         /*
-         Fetches top scores from DB and displays them
+         Fetches top scores from DB and display them
          */
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final String uId = mAuth.getCurrentUser().getUid();
+        scoreList = new ArrayList<Scores>();
 
-        FirebaseDatabase.getInstance().getReference().child("scores").orderByChild("timestamp")
+        FirebaseDatabase.getInstance().getReference().child("scores").orderByValue()
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int count = 0;
+                        // add scores to list if conditions met
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Scores score = snapshot.getValue(Scores.class);
                             // only post this score if the userId matches
                             if (score.getUserId().equals(uId)) {
-                                postScore(score, count);
-                                count++;
+                                scoreList.add(score);
                             }
                         }
-                        if(count == 0) {
+                        // if no scores found set to be empty
+                        if(scoreList.size() == 0) {
                             score1.setText("No past games played");
                             score2.setText("");
                             score3.setText("");
+                        } else {
+                            // otherwise send scores to UI
+                            postScores();
+
                         }
                     }
 
@@ -149,21 +149,29 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
-//    @Override
-//    public void onStop(){
-//        super.onStop();
-//        lm.
-//    }
 
-    // sets a text view with a given score based on index
-    protected void postScore(Scores s, int index) {
-        String score = s.getGameType() + ": " + s.getScore();
-        if (index == 0) {
-            score1.setText(score);
-        } else if (index == 1) {
-            score2.setText(score);
-        } else if (index == 2) {
-            score3.setText(score);
+    @Override
+    public void onStop(){
+        super.onStop();
+        lm.removeUpdates(ll);
+    }
+
+    // sets text views with a given score based on index
+    protected void postScores() {
+
+        // we start at end of list to get most recent scores first
+        for(int i = scoreList.size()-1; i >=0; i--) {
+            Scores currScore = scoreList.get(i);
+            String score = currScore.getGameType() + ": " + currScore.getScore();
+
+            if (i == scoreList.size()-1) {
+                score1.setText(score);
+            } else if (i == scoreList.size()-2) {
+                score2.setText(score);
+            } else if (i == scoreList.size()-3) {
+                score3.setText(score);
+                break;
+            }
         }
     }
 
@@ -176,20 +184,23 @@ public class HomeFragment extends Fragment {
             Log.i(MYTAG,  lat + ", " + lon);
 
             try {
+                // initialize geocoder
                 Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
 
+                // get list of addresses from lat/lon
                 List<Address> addresses = gcd.getFromLocation(lat, lon, 1);
                 if (addresses.size() > 0)
                 {
+                    // if we have an address and we can get locality
                     if(addresses.get(0).getLocality() != null) {
                         String city = addresses.get(0).getLocality();
                         String state = addresses.get(0).getAdminArea().replaceAll("\\s+","_");
                         Log.i(MYTAG, "Current city is: " + addresses.get(0).getLocality() + ", " + state);
 
+                        // if we have state then we can make request to Wunderground API
                         if(state != null) {
-                            // TODO: uncomment out weather
-                             new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
-
+                            // pass in widgets that will be populated with returned results from API
+                            new Weather(temperature, weatherIcon, iconProgress).execute("http://api.wunderground.com/api/fd527dc2ea48e15c/conditions/q/" + state + "/" + city + ".json");
                         }
 
                         weatherForCity.setText("Here's the current weather for " + city + ":");
@@ -207,8 +218,8 @@ public class HomeFragment extends Fragment {
                 Log.e(MYTAG, "Error with Geocoder");
 
             }
-
         } else {
+            // if location is not found display error
             Log.i(MYTAG, "Location is null");
             weatherForCity.setText("Can't determine location");
             temperature.setText("Error");
@@ -216,6 +227,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    // checks for permissions
     private boolean canAccessLocation() {
         return(hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION));
     }
@@ -224,7 +236,7 @@ public class HomeFragment extends Fragment {
         return(PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(getActivity(), perm));
     }
 
-
+    // inner class for location listener
     class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {

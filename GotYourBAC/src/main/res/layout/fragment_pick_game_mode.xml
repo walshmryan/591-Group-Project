@@ -49,6 +49,12 @@
             android:text="Leaderboard" />
 
         <Button
+            android:id="@+id/quickMatchButon"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/baseline" />
+
+        <Button
             android:id="@+id/helpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,12 +65,6 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_out" />
-
-        <Button
-            android:id="@+id/quickMatchButon"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/quick_match" />
 
     </LinearLayout>
 </RelativeLayout>

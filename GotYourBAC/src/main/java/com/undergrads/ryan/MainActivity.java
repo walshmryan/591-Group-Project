@@ -33,10 +33,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements LoginActivity.LoginListener,
         CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopBaselineFragment.stroopBaselineListener {
 
-    //    Login loginFragment;
-    String loginTag = "login screen";
-    String createNewUser = "create new user";
-
+    private String loginTag = "login screen";
     final String firebaseTag = "firebase";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -48,33 +45,17 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // initialize FB
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // on creation go to login activity fragment to begin login
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoginActivity fragment = new LoginActivity();
         fragmentTransaction.add(R.id.main_frame, fragment, loginTag);
         fragmentTransaction.commit();
 
-//
-//        /* Create the Firebase ref that is used for all authentication with Firebase */
-//        mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
-//
-//
-//        mAuthStateListener = new Firebase.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(AuthData authData) {
-//                mAuthProgressDialog.hide();
-//                setAuthenticatedUser(authData);
-//            }
-//        };
-//        /* Check if the user is authenticated with Firebase already. If this is the case we can set the authenticated
-//         * user and hide hide any login buttons */
-//        mFirebaseRef.addAuthStateListener(mAuthStateListener);
-//
-////
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -106,11 +87,9 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         }
     }
 
+    //  creates an account with all required user info
     private void createAccount(String email, final String password, final String firstName, final String lastName, final int weight, final String gender) {
         Log.d(firebaseTag, "createAccount:" + email);
-//        if (!validateForm()) {
-//            return;
-//        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -118,15 +97,12 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(firebaseTag, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        // if creation is successful
                         if (!task.isSuccessful()) {
-//                            http://stackoverflow.com/questions/43396781/how-to-catch-android-firebase-signupwithemailandpassword-error-code
                             try {
                                 throw task.getException();
                             } catch (FirebaseAuthUserCollisionException e) {
-                                // show error toast ot user ,user already exist
+                                // show error toast to user, user already exist
                                 Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             } catch (FirebaseNetworkException e) {
@@ -141,8 +117,6 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
                                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
-//                            Exception msg = task.getException();
-//                            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         } else {
                             ContactInfo ice = new ContactInfo();
                             writeNewUser(task.getResult().getUser(), firstName, lastName, weight, gender,ice);
@@ -155,9 +129,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
 
     private void signIn(String email, String password) {
         Log.d(firebaseTag, "signIn:" + email);
-//        if (!validateForm()) {
-//            return;
-//        }
+
         try{
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -187,10 +159,9 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         mAuth.signOut();
     }
 
+    // after user creation write data to database as well so we have all user info stored
     private void writeNewUser(FirebaseUser fUser, String firstName, String lastName, int weight, String gender,ContactInfo ice) {
-
         Users user = new Users(fUser.getEmail(), firstName, lastName, weight, gender,ice);
-
         mDatabase.child("users").child(fUser.getUid()).setValue(user);
     }
 
@@ -208,17 +179,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         signIn(username, password);
     }
 
-
-//    @Override
-//    public void switchActivity() {
-//        String base = "stroop baseline";
-//        String tag  =getFragmentTag();
-//        if (tag ==base){
-//            Intent i = new Intent(this, MenuActivity.class);
-//            startActivity(i);
-//        }
-//    }
-
+    // goes to the ICE fragment
     public void goToICE() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         CreateICEFragment newFragment = new CreateICEFragment();
@@ -228,17 +189,18 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         transaction.commit();
     }
 
+    // goes to the stroop baseline fragment
     @Override
     public void goToStroopBaseline() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         StroopBaselineFragment newFragment = new StroopBaselineFragment();
-//        StroopGame newFragment = new StroopGame();
         String createNewFrag = "stroop baseline";
         transaction.replace(R.id.main_frame, newFragment, createNewFrag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    // goes to the new user frag
     @Override
     public void goToCreateNew(String email, String password, String firstName, String lastName, String weight, String gender) {
         try {
@@ -249,6 +211,8 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
             toast.show();
         }
     }
+
+    // goes to password retrieval fragment
     public void goToRetrievePassword(String email){
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         ForgotPassword newFragment = new ForgotPassword();
@@ -262,9 +226,9 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         FragmentManager fragment = getFragmentManager();
         Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
         return (curFrag.getTag().toString());
-
     }
 
+    // goes to menu activity
     @Override
     public void goToMain() {
         Intent i = new Intent(this, MenuActivity.class);
