@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="sign_out">Sign Out</string>
     <string name="match_instructions">Type in a new word for the data in this game, then hit done.</string>
-    <string name="quick_match">Quick match</string>
+    <string name="baseline">Record Baseline</string>
     <string name="done">Done</string>
     <string name="leave">Leave</string>
     <string name="cancel">Cancel</string>
@@ -17,11 +17,18 @@
     <string name="stroop_help_body">
         To play the stroop game, you must begin by pressing Start Game. From there, a timer will begin that tracks the time it takes you
         to complete the game. Words will appear randomly on the screen with a designated color. It is your job to click the correct buttons that
-        correspond to the words color. Get as many right in as little time as possible. Good luck!
+        correspond to the words color. Get as many right in as little time as possible. Be sure to not press the wrong button, every wrong guess
+        adds two seconds! \n\nGood luck!
     </string>
     <string name="start_match">Start Match</string>
     <string name="turn_counter">Turn counter</string>
     <string name="signin_other_error">There was an issue with sign in.  Please try again later.</string>
+
+    <!-- Sobriety levels via games strings-->
+    <string name="sobriety_level_0">Thats weird, you scored better than your baseline. You must be very sober! Might we suggest taking your baseline again?</string>
+    <string name="sobriety_level_1">You scored slighty worse than your baseline, you are most likely mildly intoxicated</string>
+    <string name="sobriety_level_2">You scored significantly worse than your baseline, you are most likely intoxicated, watch out!</string>
+    <string name="sobriety_level_3">You scored MUCH worse than your baseline, you are drunk! Slow down!</string>
 
     <!-- BAC strings -->
     <string name="numDrinks">Total Drinks:</string>
@@ -50,10 +57,10 @@
     <string name="ice_create_option">Please enter your emergency contact information or press skip to configure later.</string>
     <string name="ice_create_description">Your emergency contact information can later be used to quickly send texts in case of an emergency.</string>
     <string name="stroop_create_description">Please record a baseline for the Stroop test. This is designed to get an accurate baseline score to compare to future scores. Or press skip.</string>
+    <string name="create_user_description">Please fill out all the information below. This will help us calculate and keep track of BAC levels and other vital data.</string>
 
     <string name="sex_prompt">Select Your Sex</string>
     <string name="email">Email</string>
-    <string name="birthday">Birthday</string>
     <string-array name="sex_array">
         <item>Male</item>
         <item>Female</item>

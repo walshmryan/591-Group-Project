@@ -52,13 +52,14 @@ public class StroopGame extends Fragment {
     TextView comment;
 
     int totalRight = 0;
+    int totalWrong = 0;
     int guesses = 0;
-    Random rand = new Random();
+    Random rand;
     private Stopwatch stopwatch;
     String[] colours = {"yellow", "green", "red", "blue", "black"};
-    Integer wordNumber = rand.nextInt(6);
-    Integer textNumber = rand.nextInt(6);
-    Integer colourNumber = rand.nextInt(6);
+    Integer wordNumber;
+    Integer textNumber;
+    Integer colourNumber;
     double time;
     String base = "stroop baseline",quick = "stroop quick", mp = "stroop mp";
     private GoogleApiClient googleApiClient;
@@ -68,8 +69,9 @@ public class StroopGame extends Fragment {
         // Required empty public constructor
     }
     public interface PlayGameListener{
-        public void gameDone(double num, String gameType);
-        public void gameAborted();
+        void gameDone(double num, String gameType);
+        void gameAborted();
+        void goToMainGameScreen();
     }
 
 
@@ -79,7 +81,6 @@ public class StroopGame extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         gameListener = (PlayGameListener) context;
-
     }
 
     @Override
@@ -88,6 +89,13 @@ public class StroopGame extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
 
+        totalRight = 0;
+        totalWrong = 0;
+        guesses = 0;
+        rand = new Random();
+        wordNumber = rand.nextInt(6);
+        textNumber = rand.nextInt(6);
+        colourNumber = rand.nextInt(6);
 
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
         btnRed = (Button) (v.findViewById(R.id.btnRed));
@@ -178,7 +186,13 @@ public class StroopGame extends Fragment {
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameListener.gameAborted();
+                String tag = getFragmentTag();
+
+                if(!tag.equals("stroopQuick")) {
+                    gameListener.gameAborted();
+                } else {
+                    gameListener.goToMainGameScreen();
+                }
             }
         });
 
@@ -187,14 +201,14 @@ public class StroopGame extends Fragment {
     }
 
     private void done() {
-
-        double finalScore = stopwatch.elapsedTime();
+        double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
 
-        if (tag.equals(quick)){
-            gameListener.gameAborted();
-        } else {
+        if(!tag.equals("stroopQuick")) {
             gameListener.gameDone(finalScore, "Stroop");
+        } else {
+            new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
+            gameListener.goToMainGameScreen();
         }
     }
 
@@ -278,6 +292,8 @@ public class StroopGame extends Fragment {
             txtWord4.setVisibility(View.INVISIBLE);
             nextWord();
             return true;
+        } else {
+            totalWrong += 1;
         }
 
         return false;

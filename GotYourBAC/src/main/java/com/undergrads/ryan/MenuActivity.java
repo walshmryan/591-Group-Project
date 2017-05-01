@@ -65,6 +65,7 @@ public class MenuActivity extends AppCompatActivity
     private static final String DIALOG_ERROR = "dialog_error";
     public TurnBasedMatch mMatch;
     public StroopTurn mTurnData;
+    private boolean tiltGame=false;
     // Local convenience pointers
     public TextView mDataView;
     public TextView mTurnTextView;
@@ -105,6 +106,9 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
+        navigationView.setCheckedItem(R.id.nav_home);
+
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -126,14 +130,17 @@ public class MenuActivity extends AppCompatActivity
             nav_user_email.setText(email);
         }
 
+        if (savedInstanceState == null) {
 
-        HomeFragment fragment = new HomeFragment();
-        String homeFrag = "Home Screen";
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment,homeFrag)
-                .addToBackStack(homeFrag)
-                .commit();
+
+            HomeFragment fragment = new HomeFragment();
+            String homeFrag = "Home Screen";
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment, homeFrag)
+                    .addToBackStack(homeFrag)
+                    .commit();
+        }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -156,19 +163,26 @@ public class MenuActivity extends AppCompatActivity
     }
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
+        Log.i("back stack", getFragmentManager().getBackStackEntryCount()+"");
+//        fix orientation
+        if (tiltGame){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+//        closes the drawer if open
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
+            getFragmentManager().popBackStack();
+        } else if(getFragmentManager().getBackStackEntryCount() >= 0){
+//            do nothing
+        }else{
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -198,11 +212,13 @@ public class MenuActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_games) {
 //          go to games page
+            String games = "games";
 //            SkeletonActivity fragment = new SkeletonActivity();
             google_mainmenu fragment = new google_mainmenu();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
+                    .addToBackStack(games)
                     .commit();
         } else if (id == R.id.nav_ice) {
             FragmentICE fragment = new FragmentICE();
@@ -305,6 +321,7 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void goToTilt() {
+        tiltGame = false;
         fragment_tilt_home fragment = new fragment_tilt_home();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -596,6 +613,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void startHelpButton() {
         String help = "help";
+        tiltGame = false;
         if (getGameType().equals("stroop")){
             StroopHelpFragment fragment = new StroopHelpFragment();
             FragmentManager fragmentManager = getFragmentManager();
@@ -732,6 +750,7 @@ public class MenuActivity extends AppCompatActivity
 //        setViewVisibility();
 //        mDataView.setText(mTurnData.data);
 //        mTurnTextView.setText("Turn " + mTurnData.turnCounter);
+        tiltGame = false;
         String type = getGameType();
         if (type.equals("stroop")){
             String stroopGame = "stroop mp";
@@ -877,7 +896,7 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void gameDone(double time, String gameType) {
-
+        tiltGame = false;
         // post score to DB
         FirebaseCall fb = new FirebaseCall();
         fb.postScore(time, gameType);
@@ -894,6 +913,7 @@ public class MenuActivity extends AppCompatActivity
                 .commit();
     }
     public void gameAborted() {
+        tiltGame = false;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
@@ -929,7 +949,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void goToMainGameScreen() {
         String gamePicker = "pick game";
-
+        tiltGame = false;
         game_picker_fragment fragment = new game_picker_fragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -964,6 +984,7 @@ public class MenuActivity extends AppCompatActivity
     }
 
     public void signOutOfGoogle(){
+        tiltGame = false;
         mSignInClicked = false;
         Games.signOut(mGoogleApiClient);
         if (mGoogleApiClient.isConnected()) {
@@ -979,13 +1000,15 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void loadSinglePlayerGame() {
+        tiltGame = false;
         String type = getGameType();
         if (type.equals("stroop")){
-            String tag = "stroop quick";
+            String tag = "stroopQuick";
             StroopGame fragment = new StroopGame();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment, tag)
+                    .addToBackStack(null)
                     .commit();
         }
         else{
@@ -998,7 +1021,8 @@ public class MenuActivity extends AppCompatActivity
         String tilt = "TILT";
         if (selected) {
 //            they clicked play
-//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            tiltGame = true;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             fragmentTilt = new fragment_tilt();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
@@ -1006,6 +1030,7 @@ public class MenuActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         }else{
+            tiltGame = false;
 //            they clicked learn
             tilt_learn fragment = new tilt_learn();
             FragmentManager fragmentManager = getFragmentManager();
@@ -1016,6 +1041,7 @@ public class MenuActivity extends AppCompatActivity
         }
     }
     public String getLeaderBoardId(){
+        tiltGame = false;
         FragmentManager fragmentManager = getFragmentManager();
         Fragment currentFragment = getFragmentManager().findFragmentById(R.id.frame_layout);
 
