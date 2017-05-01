@@ -12,14 +12,38 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="8dp">
 
+    <TextView
+        android:id="@+id/txtStroop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stroop"
+        android:textAlignment="center"
+        android:textAppearance="@style/Heading"
+        android:layout_alignBaseline="@+id/txtTilt"
+        android:layout_alignBottom="@+id/txtTilt"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txtTilt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tilt"
+        android:textAlignment="center"
+        android:textAppearance="@style/Heading"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
+
     <LinearLayout
         android:id="@+id/secret_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_marginTop="23dp"
+        android:layout_alignTop="@+id/txtStroop"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/name_field"
@@ -31,40 +55,52 @@
             android:textAppearance="@style/HelpText.Caption" />
 
         <Button
+            android:id="@+id/quickMatchButon"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/baseline" />
+
+        <Button
             android:id="@+id/startMatchButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@string/start_match" />
 
         <Button
             android:id="@+id/checkGamesButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@string/check_games" />
 
         <Button
             android:id="@+id/btnLeaderBoard"
+            style="@style/Widget.AppCompat.Button.Colored"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Leaderboard" />
 
         <Button
-            android:id="@+id/quickMatchButon"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/baseline" />
-
-        <Button
             android:id="@+id/helpButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/help_games" />
 
         <Button
             android:id="@+id/sign_out_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_out" />
 
     </LinearLayout>
+
 </RelativeLayout>

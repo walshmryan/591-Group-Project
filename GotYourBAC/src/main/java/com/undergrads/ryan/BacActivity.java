@@ -48,6 +48,8 @@ public class BacActivity extends Fragment{
     private int total;
     private Stopwatch stopwatch;
 
+
+    private double bac=0;
     private int gender;
     private int weight;
     private final int FEMALE = 1;
@@ -121,7 +123,8 @@ public class BacActivity extends Fragment{
                                             txtNumDrinks.setText(String.valueOf(getTotal()));
                                             Log.i("BAC", weight + "");
                                             Log.i("BAC", gender + "");
-                                            calculateBAC(weight, gender);
+                                            bac = calculateBAC(weight, gender);
+                                            setBACtxtColor(bac);
                                         }
                                     }
 
@@ -216,7 +219,7 @@ public class BacActivity extends Fragment{
         return (12*.06*totalBeer);
     }
 
-    public void calculateBAC(double weight, int gender){
+    public double calculateBAC(double weight, int gender){
 
         // updates drink totals to DB
         FirebaseCall fb = new FirebaseCall();
@@ -238,6 +241,7 @@ public class BacActivity extends Fragment{
 
         txtBAC.setText(dcmFormatter.format(bac) + "%");
         setBACtxtColor(bac);
+        return (bac);
 
     }
 
@@ -274,7 +278,7 @@ public class BacActivity extends Fragment{
     public void setBACtxtColor(double bac)
     {
         // warn users based on their bac how drunk they are
-        if (bac > .02 && bac <= .07){
+        if (bac <= .07){
             txtBAC.setTextColor(getResources().getColor(R.color.green));
         }else if (bac > .07 && bac <= .19){
             txtBAC.setTextColor(getResources().getColor(R.color.yellow));

@@ -77,20 +77,20 @@
 
                 <Button
                     android:id="@+id/btnSignIn"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:text="@string/action_sign_in_short"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnRegister"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_weight="1"
                     android:text="@string/register"
                     android:textStyle="bold" />
