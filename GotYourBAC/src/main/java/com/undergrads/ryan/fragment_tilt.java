@@ -336,8 +336,16 @@ public class    fragment_tilt extends Fragment {
                     btnNextRound.setVisibility(View.VISIBLE);
                 }else {
                     progressVisible(View.INVISIBLE);
-                    txtDirection.setText(totalCorrect.toString() + "/" + (generateSequenceTime*rounds));
+
+                    Log.i("DEBUG", totalCorrect + "");
+                    Log.i("DEBUG", generateSequenceTime + "");
+                    Log.i("DEBUG", rounds + "");
+
+                    double score = (totalCorrect/(generateSequenceTime*rounds)) * 100;
+                    txtDirection.setText(score + "%");
                     txtCountdown.setText(String.format("COMPLETED!"));
+
+                    new FirebaseCall().postScore(score, "Tilt");
                 }
 
             }
