@@ -327,6 +327,13 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment,gameMode + tag)
                 .addToBackStack(tag)
                 .commit();
+        getFragmentManager().executePendingTransactions();
+
+        fragment = (pick_game_mode)getFragmentManager().findFragmentById(R.id.frame_layout);
+        if (tag.equals("stroop")){
+            fragment.showStroopTxtView(view);
+        }else{
+            fragment.showTiltTxtView(view);        }
     }
 
     @Override

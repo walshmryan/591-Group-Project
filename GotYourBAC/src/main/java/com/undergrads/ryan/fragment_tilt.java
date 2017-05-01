@@ -55,7 +55,7 @@ public class    fragment_tilt extends Fragment {
     private ProgressBar pBarFour;
     private ProgressBar pBarFive;
     private ProgressBar pCurrentBar;
-    private Integer rounds = 3;
+    private Integer rounds = 2;
     private Integer roundCountDown = rounds;
     private Boolean checkGuesses = false;
     private Boolean firstTick = true;

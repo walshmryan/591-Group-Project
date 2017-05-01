@@ -39,6 +39,7 @@
         android:layout_below="@+id/txtDirection"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:text="Done"
         android:visibility="invisible" />
 

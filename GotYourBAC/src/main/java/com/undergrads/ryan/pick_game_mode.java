@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -21,6 +22,8 @@ public class pick_game_mode extends Fragment {
     Button quickGame;
     Button help;
     Button leaderboard;
+    TextView txtStroop;
+    TextView txtTilt;
 
     public pick_game_mode() {
         // Required empty public constructor
@@ -47,6 +50,8 @@ public class pick_game_mode extends Fragment {
         quickGame = (Button)v.findViewById(R.id.quickMatchButon);
         help = (Button)v.findViewById(R.id.helpButton);
         leaderboard = (Button)v.findViewById(R.id.btnLeaderBoard);
+        txtStroop = (TextView)v.findViewById(R.id.txtStroop);
+        txtTilt = (TextView) v.findViewById(R.id.txtTilt);
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,5 +102,21 @@ public class pick_game_mode extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
+    }
+    public void showTiltTxtView(View v){
+        TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
+        TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
+
+        txtStroop.setVisibility(View.INVISIBLE);
+        txtTilt.setVisibility(View.VISIBLE);
+    }
+    public void showStroopTxtView(View v){
+//        txtStroop = (TextView)v.findViewById(R.id.txtStroop);
+//        txtTilt = (TextView) v.findViewById(R.id.txtTilt);
+        TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
+        TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
+
+        txtStroop.setVisibility(View.VISIBLE);
+        txtTilt.setVisibility(View.INVISIBLE);
     }
 }
