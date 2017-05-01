@@ -49,6 +49,8 @@ public class BacActivity extends Fragment{
     private int total;
     private Stopwatch stopwatch;
 
+
+
     private int gender;
     private int weight;
     private final int FEMALE = 1;
@@ -128,6 +130,8 @@ public class BacActivity extends Fragment{
                                             // set number of drinks here in case we loaded some from DB and set BAC
                                             Log.i("BAC", weight + "");
                                             Log.i("BAC", gender + "");
+                                            bac = CalculateBAC.calculateBAC(weight, gender);
+                                            setBACtxtColor(bac);
                                         }
                                     }
 
@@ -240,13 +244,9 @@ public class BacActivity extends Fragment{
         setViews();
         txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
 
-
-        bac = CalculateBAC.calculateBAC(weight, gender);
-        txtBAC.setText(dcmFormatter.format(bac) + "%");
-        setBACtxtColor(bac);
-
         return v;
     }
+
 
 
     public void setViews(){
@@ -265,7 +265,7 @@ public class BacActivity extends Fragment{
     public void setBACtxtColor(double bac)
     {
         // warn users based on their bac how drunk they are
-        if (bac > .02 && bac <= .07){
+        if (bac <= .07){
             txtBAC.setTextColor(getResources().getColor(R.color.green));
         }else if (bac > .07 && bac <= .19){
             txtBAC.setTextColor(getResources().getColor(R.color.yellow));

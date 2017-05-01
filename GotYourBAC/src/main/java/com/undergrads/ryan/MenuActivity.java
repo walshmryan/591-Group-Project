@@ -180,10 +180,10 @@ public class MenuActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
 
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
+        if (getFragmentManager().getBackStackEntryCount() >= 1) {
             getFragmentManager().popBackStack();
 
-        } else if(getFragmentManager().getBackStackEntryCount() >= 0){
+        } else if(getFragmentManager().getBackStackEntryCount() == 0){
 //            do nothing
         }else{
             super.onBackPressed();
@@ -208,7 +208,6 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-//                    .addToBackStack(bac)
                     .commit();
         }else if(id == R.id.nav_home){
             HomeFragment fragment = new HomeFragment();
@@ -216,17 +215,17 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
-//                    .addToBackStack(homeFrag)
                     .commit();
 
         }else if (id == R.id.nav_games) {
 //          go to games page
             String games = "games";
-//            SkeletonActivity fragment = new SkeletonActivity();
             google_mainmenu fragment = new google_mainmenu();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
+                    //                    .addToBackStack(editUser)
+
                     .commit();
 
         } else if (id == R.id.nav_ice) {
@@ -327,6 +326,13 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment,gameMode + tag)
                 .addToBackStack(tag)
                 .commit();
+        getFragmentManager().executePendingTransactions();
+
+        fragment = (pick_game_mode)getFragmentManager().findFragmentById(R.id.frame_layout);
+        if (tag.equals("stroop")){
+            fragment.showStroopTxtView(view);
+        }else{
+            fragment.showTiltTxtView(view);        }
     }
 
     @Override
@@ -959,6 +965,10 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void goToMainGameScreen() {
+        while (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }
+
         String gamePicker = "pick game";
         tiltGame = false;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -1039,7 +1049,7 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragmentTilt, "TILT")
-                    .addToBackStack(null)
+                    .addToBackStack(tilt)
                     .commit();
         }else{
             tiltGame = false;

@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,8 @@ public class    fragment_tilt extends Fragment {
     private ProgressBar pBarFour;
     private ProgressBar pBarFive;
     private ProgressBar pCurrentBar;
-    private Integer rounds = 3;
+    private ImageView imgDirection;
+    private Integer rounds = 2;
     private Integer roundCountDown = rounds;
     private Boolean checkGuesses = false;
     private Boolean firstTick = true;
@@ -116,6 +118,7 @@ public class    fragment_tilt extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tilt, container, false);
 
+        imgDirection = (ImageView) v.findViewById(R.id.imgDirection);
         btnNextRound = (Button) v.findViewById(R.id.btnNextRound);
         btnDone = (Button) v.findViewById(R.id.btnDone1);
         txtCountdown = (TextView) v.findViewById(R.id.txtCountdown);
@@ -151,6 +154,7 @@ public class    fragment_tilt extends Fragment {
         //try this shit out
         btnNextRound.setVisibility(View.INVISIBLE);
         progressVisible(View.INVISIBLE);
+        imgDirection.setVisibility(View.INVISIBLE);
 
         myCountDownTimer = new MyCountDownTimer(roundLength*1000, tick*1000);
         myCountDownTimer.start();
@@ -232,9 +236,25 @@ public class    fragment_tilt extends Fragment {
                 txtDirection.setText("");
                 txtDirection.setText(directions[directionIndex]);
                 txtCountdown.setText(String.format(""));
+                imgDirection.setVisibility(View.VISIBLE);
+
+                if (isAdded()) {
+                    if (directions[directionIndex].equals("LEFT")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowleft));
+                    } else if (directions[directionIndex].equals("RIGHT")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowright));
+
+                    } else if (directions[directionIndex].equals("FORWARD")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowforward));
+
+                    } else if (directions[directionIndex].equals("BACK")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowback));
+                    }
+                }
 
             //Give a few second leeway before they have the recollect
             } else if (seconds > (roundLength - delay - generateSequenceTime - ready)) {
+                imgDirection.setVisibility(View.INVISIBLE);
                 txtDirection.setText("Got it?...");
                 progressVisible(View.VISIBLE);
                 progressReset();
@@ -349,12 +369,11 @@ public class    fragment_tilt extends Fragment {
                     progressVisible(View.INVISIBLE);
                     btnDone.setVisibility(View.VISIBLE);
 
-
                     Log.i("DEBUG", totalCorrect + "");
                     Log.i("DEBUG", generateSequenceTime + "");
                     Log.i("DEBUG", rounds + "");
 
-                    double score = (totalCorrect/(generateSequenceTime*rounds)) * 100;
+                    double score = ((double)totalCorrect/(double)(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
                     txtCountdown.setText(String.format("COMPLETED!"));
 
@@ -415,14 +434,6 @@ public class    fragment_tilt extends Fragment {
         }
 
     }
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        tiltListener = (tiltGameListener) context;
-//    }
-
-    ////////////////////////////////////////////////////////////
-    /*END*/
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -435,6 +446,11 @@ public class    fragment_tilt extends Fragment {
                     + " must implement OnHeadlineSelectedListener");
         }
     }
+
+
+    ////////////////////////////////////////////////////////////
+    /*END*/
+
 }
 
 
