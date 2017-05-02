@@ -2,13 +2,21 @@ package com.undergrads.ryan;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -30,12 +38,12 @@ public class pick_game_mode extends Fragment {
     }
 
     public interface gameModeListener{
-        public void startMatchButton();
-        public void onCheckGamesClicked();
-        public void signOutOfGoogle();
-        public void loadSinglePlayerGame();
-        public void startHelpButton();
-        public void showLeaderboard();
+        void startMatchButton();
+        void onCheckGamesClicked();
+        void signOutOfGoogle();
+        void loadSinglePlayerGame();
+        void startHelpButton();
+        void showLeaderboard();
     }
     gameModeListener listener;
     @Override
@@ -52,6 +60,34 @@ public class pick_game_mode extends Fragment {
         leaderboard = (Button)v.findViewById(R.id.btnLeaderBoard);
         txtStroop = (TextView)v.findViewById(R.id.txtStroop);
         txtTilt = (TextView) v.findViewById(R.id.txtTilt);
+
+
+        // gets baseline score from DB and sees if a baseline has been set yet
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("baseline-stroop")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Scores baseline = dataSnapshot.getValue(Scores.class);
+
+                        if(baseline == null) {
+                            startGame.setEnabled(false);
+                            startGame.setTextColor(Color.BLACK);
+                            checkGames.setEnabled(false);
+                            checkGames.setTextColor(Color.BLACK);
+                        } else {
+                            startGame.setEnabled(true);
+                            startGame.setTextColor(Color.WHITE);
+                            checkGames.setEnabled(true);
+                            checkGames.setTextColor(Color.WHITE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("error","bad");
+                    }
+                });
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,12 +147,15 @@ public class pick_game_mode extends Fragment {
         txtTilt.setVisibility(View.VISIBLE);
     }
     public void showStroopTxtView(View v){
-//        txtStroop = (TextView)v.findViewById(R.id.txtStroop);
-//        txtTilt = (TextView) v.findViewById(R.id.txtTilt);
         TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
         TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
 
         txtStroop.setVisibility(View.VISIBLE);
         txtTilt.setVisibility(View.INVISIBLE);
+    }
+
+    //    get user id
+    protected String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }

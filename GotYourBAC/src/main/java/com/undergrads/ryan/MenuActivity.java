@@ -124,7 +124,7 @@ public class MenuActivity extends AppCompatActivity
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
                         Users user = dataSnapshot.getValue(Users.class);
-                        String name = user.getFirstName() +" "+ user.getLastName();
+                        String name = user.getFirstName() + " " + user.getLastName();
                         String email = user.getUsername();
                         nav_user.setText(name);
                         nav_user_email.setText(email);
@@ -136,8 +136,6 @@ public class MenuActivity extends AppCompatActivity
                     }
                 });
 
-
-//        }
 
         if (savedInstanceState == null) {
             HomeFragment fragment = new HomeFragment();

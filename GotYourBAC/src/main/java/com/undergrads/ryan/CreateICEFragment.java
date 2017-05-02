@@ -21,7 +21,8 @@ public class CreateICEFragment extends Fragment{
     private Button skip;
 
     public interface iceCreateListener{
-        public void goToStroopBaseline();
+        void goToStroopBaseline();
+        void goToMain();
 
     }
 
@@ -46,7 +47,7 @@ public class CreateICEFragment extends Fragment{
                 FirebaseCall fRef = new FirebaseCall();
                 fRef.updateICEContactInfo(name, number);
 
-                listener.goToStroopBaseline();
+                listener.goToMain();
 
             }
         });
@@ -54,7 +55,7 @@ public class CreateICEFragment extends Fragment{
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.goToStroopBaseline();
+                listener.goToMain();
 
             }
         });
