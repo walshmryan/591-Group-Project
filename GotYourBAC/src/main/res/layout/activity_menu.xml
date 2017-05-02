@@ -8,7 +8,8 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:theme="@style/NoActionBar"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
     <include
         layout="@layout/app_bar_main"

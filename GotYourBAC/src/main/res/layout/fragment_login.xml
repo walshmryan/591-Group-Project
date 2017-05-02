@@ -7,7 +7,8 @@
     android:paddingRight="40dp"
     android:paddingTop="120dp"
     tools:context="com.undergrads.ryan.LoginActivity"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
     <!-- Login progress -->
 

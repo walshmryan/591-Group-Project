@@ -323,16 +323,18 @@ public class MenuActivity extends AppCompatActivity
         pick_game_mode fragment = new pick_game_mode();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment,gameMode + tag)
+                .replace(R.id.frame_layout,fragment, gameMode + tag)
                 .addToBackStack(tag)
                 .commit();
+
         getFragmentManager().executePendingTransactions();
 
         fragment = (pick_game_mode)getFragmentManager().findFragmentById(R.id.frame_layout);
-        if (tag.equals("stroop")){
+        if (tag.equals("stroop")) {
             fragment.showStroopTxtView(view);
-        }else{
-            fragment.showTiltTxtView(view);        }
+        } else {
+            fragment.showTiltTxtView(view);
+        }
     }
 
     @Override
@@ -1064,8 +1066,7 @@ public class MenuActivity extends AppCompatActivity
                     .replace(R.id.frame_layout, fragment, tag)
                     .addToBackStack(null)
                     .commit();
-        }
-        else{
+        } else {
             onPlaySelect(true);
         }
     }

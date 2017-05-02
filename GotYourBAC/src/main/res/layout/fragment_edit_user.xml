@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:weightSum="1"
     tools:context="com.undergrads.ryan.EditUser"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
 
     <ScrollView

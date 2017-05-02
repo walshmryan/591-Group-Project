@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.undergrads.ryan.MenuActivity"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -9,7 +9,8 @@
     android:paddingTop="10dp"
     android:weightSum="1"
     tools:context="com.undergrads.ryan.CreateNewUser"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
     <!-- TODO: Update blank fragment layout -->
 

@@ -10,7 +10,8 @@
     tools:context="com.undergrads.ryan.pick_game_mode"
     android:screenOrientation="portrait"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="8dp">
+    tools:layout_editor_absoluteY="8dp"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/txtStroop"

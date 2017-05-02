@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:id="@+id/ice_create"
     android:padding="20dp"
-    android:screenOrientation="portrait">
+    android:screenOrientation="portrait"
+    android:background="@android:color/white">
 
 
     <EditText

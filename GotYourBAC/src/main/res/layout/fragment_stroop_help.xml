@@ -9,7 +9,8 @@
     android:orientation="vertical"
     android:screenOrientation="portrait"
     tools:layout_editor_absoluteY="25dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:background="@android:color/white">
 
 
     <Button
