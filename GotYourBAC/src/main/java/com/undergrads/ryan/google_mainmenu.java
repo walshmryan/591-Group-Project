@@ -28,9 +28,11 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+/*
+
+Main menu for the Google Games API, handles signing into a valid google account in order to play mini-games
+
+*/
 public class google_mainmenu extends Fragment implements View.OnClickListener{
 
     private GoogleApiClient mGoogleApiClient;
@@ -43,7 +45,7 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
     }
 
     public interface gMainListener{
-        public void goToGamePickerFrag();
+        void goToGamePickerFrag();
     }
 
     gMainListener listener;
@@ -106,9 +108,12 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
         }
     }
 
+    // shows the spinner for loading
     public void showSpinner(View v) {
         v.findViewById(R.id.spinner).setVisibility(View.VISIBLE);
     }
+
+    // removes spinning after loading done
     public void dismissSpinner(View v) {
         v.findViewById(R.id.spinner).setVisibility(View.GONE);
     }

@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/*
+
+Fragment that handles user login
+
+*/
 public class LoginActivity extends Fragment {
     private Button btnSignIn;
     private Button btnRegister;
     private EditText edtPassword;
     private AutoCompleteTextView txtEmail;
-    private EditText edtFirstName;
     private TextView txtForgotPassword;
 
     public LoginActivity() {
@@ -63,9 +67,6 @@ public class LoginActivity extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // TODO: 4/29/17 remove before release
-//                String username = "rmwalshy@gmail.com";
-//                String password = "password";
                 String username = txtEmail.getText().toString();
                 String password = edtPassword.getText().toString();
 

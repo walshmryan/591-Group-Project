@@ -17,7 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
 
+Fragment for when stroop game is done, that shows score and baseline comparisons
+
+*/
 public class stroop_game_done extends Fragment {
 
     private stroopGameListener listener;
@@ -28,7 +32,6 @@ public class stroop_game_done extends Fragment {
     private Button btnDone;
 
     public interface stroopGameListener {
-        // TODO: Update argument type and name
         double getScore();
         void goToMainGameScreen();
     }
@@ -82,6 +85,7 @@ public class stroop_game_done extends Fragment {
             txtScore.setText("Time: " + listener.getScore());
         }
 
+        // when the user is done looking at baseline comparison go to next screen
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +133,7 @@ public class stroop_game_done extends Fragment {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    // compares baseline score and current score and updates UI accordingly
     protected void compareScores(double baselineScore, double currentScore) {
         //compare their scores to their baseline to show them how they did 
         String message = "";

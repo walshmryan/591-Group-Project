@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+/*
+
+Fragment that handles picking which game the user wants to play
+
+*/
 public class game_picker_fragment extends Fragment {
 
 

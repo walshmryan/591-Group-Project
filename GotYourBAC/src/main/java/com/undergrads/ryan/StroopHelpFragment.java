@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//import com.google.example.tbmpskeleton.R;
-//import com.undergrads.ryan.R;
+/*
 
-/**
- * Calculate the blood alcohol content
- *  level of a user based on their weight and
- *  gender
- */
+Fragment for the stroop help screen
+
+*/
 public class StroopHelpFragment extends Fragment{
 
 

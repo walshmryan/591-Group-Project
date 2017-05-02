@@ -11,13 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-//import com.google.example.tbmpskeleton.R;
+/*
 
-//import com.undergrads.ryan.R;
+Fragment to create a new user
 
-/**
- * Fragment class to create a new user
- */
+*/
 public class CreateNewUser extends Fragment {
 
     EditText edtEmail;

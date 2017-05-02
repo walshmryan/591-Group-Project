@@ -1,13 +1,8 @@
 package com.undergrads.ryan;
 
-/**
- * Created by Samantha on 4/23/2017.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,10 +11,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -29,16 +22,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-/*
- * Created by Samantha on 4/15/2017.
- */
 
-public class    fragment_tilt extends Fragment {
+/*
+
+Fragment for the tilt game that handles all logic and score calculation
+
+*/
+public class fragment_tilt extends Fragment {
     private String[] directions = {"FORWARD", "BACK", "LEFT", "RIGHT"};
     private Queue<Integer> sequence = new LinkedList<Integer>();
     private SensorManager mSensorManager=null;

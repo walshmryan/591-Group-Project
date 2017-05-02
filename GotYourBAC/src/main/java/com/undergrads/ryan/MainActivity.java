@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.math.DoubleMath;
-import com.google.firebase.FirebaseApp;
-
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,18 +15,15 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-//import com.undergrads.ryan.R;
-
-//import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v4.app.FragmentManager;
-//import android.support.v4.app.FragmentTransaction;
-//import android.support.v4.app.Fragment;
-//import android.app.F
 import android.util.Log;
 import android.widget.Toast;
 
+/*
+
+First of two activities in app, this one begins on opening of the app and handles user login/creation
+
+*/
 public class MainActivity extends Activity implements LoginActivity.LoginListener,
         CreateNewUser.newUserListener, CreateICEFragment.iceCreateListener, StroopGame.StroopBaselineListener, stroop_game_done.stroopDoneListener {
 
@@ -165,6 +159,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         mDatabase.child("users").child(fUser.getUid()).setValue(user);
     }
 
+    // goes to the user creation fragment
     @Override
     public void goToNewUserFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -175,6 +170,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         transaction.commit();
     }
 
+    // signs a user in given a username and password
     public void goToLoginFragment(String username, String password) {
         signIn(username, password);
     }
@@ -233,6 +229,7 @@ public class MainActivity extends Activity implements LoginActivity.LoginListene
         transaction.commit();
     }
 
+    // gets the tag of the fragment that was loaded
     public String getFragmentTag(){
         FragmentManager fragment = getFragmentManager();
         Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);

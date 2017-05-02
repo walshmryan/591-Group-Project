@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-//import com.google.example.tbmpskeleton.R;
-//import com.undergrads.ryan.R;
-
-
 public class CreateICEFragment extends Fragment{
 
     private EditText nameTxt;

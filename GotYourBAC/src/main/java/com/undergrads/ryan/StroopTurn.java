@@ -18,12 +18,15 @@ package com.undergrads.ryan;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.util.Log;
 
+/*
+
+A "turn" class that handles when a user sends a turn to another player for the stroop test
+
+*/
 public class StroopTurn {
 
     public static final String TAG = "EBTurn";
@@ -92,6 +95,8 @@ public class StroopTurn {
 
         return retVal;
     }
+
     public void setScore(double s){this.score =s;};
+
     public double getScore(){return score;}
 }

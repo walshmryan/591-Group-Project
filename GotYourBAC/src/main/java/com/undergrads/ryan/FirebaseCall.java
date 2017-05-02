@@ -6,6 +6,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+
+Class that handles all Firebase updates to DB, like scores, contact info, drink totals
+
+*/
 public class FirebaseCall {
 
     private FirebaseAuth mAuth;

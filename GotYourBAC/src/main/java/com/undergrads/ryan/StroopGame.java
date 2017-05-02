@@ -35,9 +35,11 @@ import java.util.TimeZone;
 import static android.view.View.VISIBLE;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+/*
+
+Fragment for the stroop game, which handles all click events and score calculation
+
+*/
 public class StroopGame extends Fragment {
 
     Button btnStart;
@@ -48,6 +50,7 @@ public class StroopGame extends Fragment {
     Button btnBlack;
     Button btnSkip;
     Button btnEnd;
+
     TextView stroopDescription;
     TextView txtWord0;
     TextView txtWord1;
@@ -87,6 +90,7 @@ public class StroopGame extends Fragment {
         void goToStroopDone();
     }
 
+    // listeners to communicate with activity
     PlayGameListener gameListener;
     StroopBaselineListener baselineListener;
 
@@ -108,6 +112,7 @@ public class StroopGame extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
 
+        // initilize all values
         totalRight = 0;
         totalWrong = 0;
         guesses = 0;
@@ -138,6 +143,7 @@ public class StroopGame extends Fragment {
         stroopDescription.setVisibility(View.INVISIBLE);
         btnEnd.setVisibility(View.VISIBLE);
 
+        // start of the game
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,12 +229,14 @@ public class StroopGame extends Fragment {
         return v;
     }
 
+    // when game is done calculate score and determine what UI should be loaded next
     private void done() {
 
         chron.stop();
         double finalScore = stopwatch.elapsedTime() + (totalWrong * 2);
         String tag = getFragmentTag();
 
+        // depending on where user is coming
         if(tag.equals("stroopQuick")) {
             new FirebaseCall().updateGameBaseline(finalScore, "Stroop");
             gameListener.gameDoneBaseline();
@@ -240,6 +248,7 @@ public class StroopGame extends Fragment {
         }
     }
 
+    // sets the text color depending on state of game
     public void textSet(TextView txtView, int wordNum, int colourNum){
         txtView.setText(colours[wordNumber]);
         if (colourNum == 0) {
@@ -264,6 +273,7 @@ public class StroopGame extends Fragment {
         }
     }
 
+    // disables all buttons
     public void disableButtons(){
         btnYellow.setEnabled(false);
         btnGreen.setEnabled(false);
@@ -272,6 +282,7 @@ public class StroopGame extends Fragment {
         btnRed.setEnabled(false);
     }
 
+    // enables all buttons
     public void enableButtons(){
         btnYellow.setEnabled(true);
         btnGreen.setEnabled(true);
@@ -280,6 +291,7 @@ public class StroopGame extends Fragment {
         btnRed.setEnabled(true);
     }
 
+    // gets the next random word in set
     public void nextWord() {
         wordNumber = rand.nextInt(5);
         textNumber = rand.nextInt(5);
@@ -302,10 +314,9 @@ public class StroopGame extends Fragment {
         }
     }
 
+    // checks if the button hit is the correct one and updates score
     public boolean checkCorrect(int c) {
         if (colourNumber == c) {
-            //txtView0.setText("TEST");
-            //txtView0.setVisibility(VISIBLE);
             totalRight += 1;
             txtWord0.setVisibility(View.INVISIBLE);
             txtWord1.setVisibility(View.INVISIBLE);
@@ -322,6 +333,8 @@ public class StroopGame extends Fragment {
         return false;
 
     }
+
+    // starts the game and sets all necessary values to initial states
     public void start(){
         enableButtons();
         started = true;
@@ -339,6 +352,7 @@ public class StroopGame extends Fragment {
         nextWord();
     }
 
+    // gets the fragment that was loaded
     public String getFragmentTag(){
         FragmentManager fragment = getFragmentManager();
         Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);

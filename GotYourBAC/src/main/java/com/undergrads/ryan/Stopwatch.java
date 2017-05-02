@@ -1,8 +1,10 @@
 package com.undergrads.ryan;
 
-/**
- * Created by Fionnan on 01/04/2017.
- */
+/*
+
+Simple stopwatch class for recording time
+
+*/
 
 public class Stopwatch {
 

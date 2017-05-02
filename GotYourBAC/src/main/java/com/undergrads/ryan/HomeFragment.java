@@ -32,6 +32,11 @@ import java.util.List;
 import java.util.Locale;
 
 
+/*
+
+Fragment for the home screen which displays weather, recent scores, and current BAC level
+
+*/
 public class HomeFragment extends Fragment {
 
     private TextView temperature;

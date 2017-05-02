@@ -19,9 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+/*
+
+Game mode fragment picker, prompts user to pick which game they want to play
+
+*/
 public class pick_game_mode extends Fragment {
 
     Button startGame;
@@ -52,6 +54,7 @@ public class pick_game_mode extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_pick_game_mode, container, false);
 
+        // initialize values
         signOut = (Button)v.findViewById(R.id.sign_out_button);
         startGame = (Button) v.findViewById(R.id.startMatchButton);
         checkGames = (Button)v.findViewById(R.id.checkGamesButton);
@@ -69,6 +72,7 @@ public class pick_game_mode extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Scores baseline = dataSnapshot.getValue(Scores.class);
 
+                        // if there is no baseline then don't allow certain buttons to be hit
                         if(baseline == null) {
                             startGame.setEnabled(false);
                             startGame.setTextColor(Color.BLACK);
@@ -125,6 +129,7 @@ public class pick_game_mode extends Fragment {
                 listener.loadSinglePlayerGame();
             }
         });
+
         return v;
     }
     public void onAttach(Activity activity) {
@@ -139,6 +144,7 @@ public class pick_game_mode extends Fragment {
                     + " must implement OnHeadlineSelectedListener");
         }
     }
+
     public void showTiltTxtView(View v){
         TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
         TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
@@ -146,6 +152,7 @@ public class pick_game_mode extends Fragment {
         txtStroop.setVisibility(View.INVISIBLE);
         txtTilt.setVisibility(View.VISIBLE);
     }
+
     public void showStroopTxtView(View v){
         TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
         TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
@@ -154,7 +161,7 @@ public class pick_game_mode extends Fragment {
         txtTilt.setVisibility(View.INVISIBLE);
     }
 
-    //    get user id
+    // get user id
     protected String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }

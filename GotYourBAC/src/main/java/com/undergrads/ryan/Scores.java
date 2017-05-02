@@ -3,6 +3,12 @@ package com.undergrads.ryan;
 import java.text.DateFormat;
 import java.util.Date;
 
+/*
+
+Class for Scores in the app, records the game type and the score value
+
+*/
+
 public class Scores {
     private String userId;
     private double score;

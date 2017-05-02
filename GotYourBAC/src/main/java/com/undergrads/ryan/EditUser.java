@@ -11,19 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
-
-//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-//import com.undergrads.ryan.R;
 
+/*
 
-/**
- * Fragment to edit existing user
- */
+Fragment to edit existing user
+
+*/
 public class EditUser extends Fragment {
 
     TextView txtFirstName;
@@ -55,11 +53,12 @@ public class EditUser extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_edit_user, container, false);
-//    initialize variables
+
+        // initialize variables
         txtFirstName = (TextView)v.findViewById(R.id.txtFirstName);
         txtLastName = (TextView)v.findViewById(R.id.txtLastName);
         txtWeight = (TextView)v.findViewById(R.id.txtWeight);
@@ -77,6 +76,8 @@ public class EditUser extends Fragment {
         viewSwitcherWeight = (ViewSwitcher)v.findViewById(R.id.viewSwitcherWeight);
 
         String uId = getUid(); //get user id
+
+        // gets the current user from DB and updates with and changed data
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -92,8 +93,7 @@ public class EditUser extends Fragment {
                         email = user.getUsername();
                         int userWeight = user.getWeight();
 
-//                      set the text view and edit view values from the stored
-//                       database values
+                        // set the text view and edit view values from the stored database values
                         txtFirstName.setText(first);
                         txtLastName.setText(last);
                         txtEmail.setText(email);
@@ -125,24 +125,23 @@ public class EditUser extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                save values to database
-//                get the weight from the edit box -string
-//                udate the database - int
-//                change txtweight
+                // save values to database
+                // get the weight from the edit box -string
+                // update the database
+                // change txtweight
                 String w = edtWeight.getText().toString();
                 int intW = Integer.parseInt(w);
 
-
-
                 writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
 
-//                update text views
+                // update text views
 
                 txtFirstName.setText(edtFirstName.getText().toString());
                 txtLastName.setText(edtLastName.getText().toString());
                 txtEmail.setText(edtEmail.getText().toString());
                 txtWeight.setText(w+"");
-//              now that you saved the values switch back to text views
+
+                // now that you saved the values switch back to text views
                 viewSwitcherFirst.showNext();
                 viewSwitcherLast.showNext();
                 viewSwitcherEmail.showNext();
@@ -150,13 +149,16 @@ public class EditUser extends Fragment {
                 viewSwitcherWeight.showNext();
             }
         });
-//
+
         return v;
     }
-//    get user id
+
+    // get user id
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+    // writes new data to DB
     public void writeNewData(String username, String first, String last, int weight, String gender) {
         Users user = new Users(username,first,last,weight,gender);
         String uId = getUid();

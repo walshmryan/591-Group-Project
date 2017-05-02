@@ -1,5 +1,11 @@
 package com.undergrads.ryan;
 
+/*
+
+Class for Users in the app, with important attributes like weight and gender
+
+*/
+
 public class Users {
     private String username;
     private String firstName;

@@ -12,10 +12,11 @@ import android.widget.Button;
 
 import java.io.Serializable;
 
-/**
- * Created by Samantha on 4/23/2017.
- */
+/*
 
+Fragment for the home screen of the tilt game
+
+*/
 public class fragment_tilt_home extends Fragment{
     Button btnPlay;
     Button btnLearn;

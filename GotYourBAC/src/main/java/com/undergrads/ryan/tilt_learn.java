@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+/*
+
+Fragment for the tilt help screen
+
+*/
 public class tilt_learn extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

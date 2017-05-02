@@ -1,18 +1,8 @@
 package com.undergrads.ryan;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,25 +10,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
-//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.undergrads.ryan.HomeFragment.MYTAG;
-//import com.undergrads.ryan.R;
+/*
 
-/**
- * Fragment class for emergency contact info
- */
+Fragment for emergency contact info updating and sending of emergency texts
+
+*/
 public class FragmentICE extends Fragment {
+
     private Button btnUpdate;
     private Button btnSendText;
     private Button btnSave;
