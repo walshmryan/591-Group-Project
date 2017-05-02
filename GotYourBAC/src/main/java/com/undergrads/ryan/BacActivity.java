@@ -9,25 +9,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-//import com.google.example.tbmpskeleton.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-//import com.undergrads.ryan.R;
-
 import java.text.DecimalFormat;
-import java.util.Date;
-import com.undergrads.ryan.CalculateBAC;
 
-/**
- * Calculate the blood alcohol content
- *  level of a user based on their weight and
- *  gender
- */
+/*
+
+Calculate the blood alcohol content level of a user based on their weight and gender
+
+*/
 public class BacActivity extends Fragment{
     private ImageButton btnBeerMinus;
     private ImageButton btnHardAlcoholMinus;
@@ -71,6 +64,8 @@ public class BacActivity extends Fragment{
         hardCounter = (TextView) v.findViewById(R.id.hardCounter);
 
         final String uId = getUid(); //get current user id
+
+        // gets the weight and gender of the current user from the DB
         FirebaseDatabase.getInstance().getReference().child("users").child(uId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     // this value won't change so we are just going to listen for a single value event
@@ -216,6 +211,7 @@ public class BacActivity extends Fragment{
         return v;
     }
 
+    // sets the views based on the totals calculated
     public void setViews(){
         txtNumDrinks.setText(Integer.toString(CalculateBAC.total));
         wineCounter.setText(Integer.toString(CalculateBAC.totalWine));
@@ -226,6 +222,7 @@ public class BacActivity extends Fragment{
         txtNumDrinks.setText(String.valueOf(CalculateBAC.getTotal()));
     }
 
+    // sets the BAC text color based on BAC level that was calculated
     public void setBACtxtColor(double bac)
     {
         // warn users based on their bac how drunk they are
@@ -238,12 +235,14 @@ public class BacActivity extends Fragment{
         }
     }
 
+    // updates the drink data by calling firebase utility class
     public void updateDrinkData(){
         FirebaseCall fb = new FirebaseCall();
         fb.updateDrinkTotals(CalculateBAC.totalHard, CalculateBAC.totalWine, CalculateBAC.totalBeer);
     }
 
-    public  String getUid() {
+    // gets the current user id
+    public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }
