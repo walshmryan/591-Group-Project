@@ -1,6 +1,7 @@
 package com.undergrads.ryan;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -374,7 +375,13 @@ public class fragment_tilt extends Fragment {
                     txtCountdown.setVisibility(View.VISIBLE);
                     txtCountdown.setText(String.format("COMPLETE"));
 
-                    new FirebaseCall().postScore(score, "Tilt");
+                    String tag = getFragmentTag();
+
+                    if(tag.equals("TILTBaseline")) {
+                        new FirebaseCall().updateGameBaseline(score, "Tilt");
+                    } else {
+                        new FirebaseCall().postScore(score, "Tilt");
+                    }
                 }
 
             }
@@ -442,6 +449,16 @@ public class fragment_tilt extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
+    }
+
+    public String getFragmentTag(){
+        FragmentManager fragment = getFragmentManager();
+        Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+
+        if(curFrag == null) {
+            curFrag = fragment.findFragmentById(R.id.main_frame);
+        }
+        return (curFrag.getTag().toString());
     }
 
 

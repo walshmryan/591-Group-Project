@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +20,6 @@ import android.view.View;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -45,16 +41,12 @@ import com.google.android.gms.games.multiplayer.turnbased.OnTurnBasedMatchUpdate
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-
-//import static android.R.attr.fragment;
 
 
 public class MenuActivity extends AppCompatActivity
@@ -1055,15 +1047,17 @@ public class MenuActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else {
-            onPlaySelect(true);
+            onPlaySelect(false);
         }
     }
 
     @Override
     public void onPlaySelect(boolean selected) {
         String tilt = "TILT";
+
+        // if true then it is multiplayer
         if (selected) {
-//            they clicked play
+            // they clicked play
             tiltGame = true;
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             fragmentTilt = new fragment_tilt();
@@ -1072,14 +1066,15 @@ public class MenuActivity extends AppCompatActivity
                     .replace(R.id.frame_layout, fragmentTilt, "TILT")
                     .addToBackStack(tilt)
                     .commit();
-        }else{
-            tiltGame = false;
-//            they clicked learn
-            tilt_learn fragment = new tilt_learn();
+        } else {
+            // otherwise game is baseline
+            tiltGame = true;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            fragmentTilt = new fragment_tilt();
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(tilt+"learn")
+                    .replace(R.id.frame_layout, fragmentTilt, "TILTBaseline")
+                    .addToBackStack(tilt)
                     .commit();
         }
     }

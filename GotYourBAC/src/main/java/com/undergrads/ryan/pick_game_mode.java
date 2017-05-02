@@ -63,35 +63,6 @@ public class pick_game_mode extends Fragment {
         txtStroop = (TextView)v.findViewById(R.id.txtStroop);
         txtTilt = (TextView) v.findViewById(R.id.txtTilt);
 
-
-        // gets baseline score from DB and sees if a baseline has been set yet
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("baseline-stroop")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Scores baseline = dataSnapshot.getValue(Scores.class);
-
-                        // if there is no baseline then don't allow certain buttons to be hit
-                        if(baseline == null) {
-                            startGame.setEnabled(false);
-                            startGame.setTextColor(Color.BLACK);
-                            checkGames.setEnabled(false);
-                            checkGames.setTextColor(Color.BLACK);
-                        } else {
-                            startGame.setEnabled(true);
-                            startGame.setTextColor(Color.WHITE);
-                            checkGames.setEnabled(true);
-                            checkGames.setTextColor(Color.WHITE);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.i("error","bad");
-                    }
-                });
-
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +102,7 @@ public class pick_game_mode extends Fragment {
 
         return v;
     }
+
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -145,6 +117,35 @@ public class pick_game_mode extends Fragment {
     }
 
     public void showTiltTxtView(View v){
+
+        // gets baseline score from DB and sees if a baseline has been set yet
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("baseline-tilt")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Scores baseline = dataSnapshot.getValue(Scores.class);
+
+                        // if there is no baseline then don't allow certain buttons to be hit
+                        if(baseline == null) {
+                            startGame.setEnabled(false);
+                            startGame.setTextColor(Color.BLACK);
+                            checkGames.setEnabled(false);
+                            checkGames.setTextColor(Color.BLACK);
+                        } else {
+                            startGame.setEnabled(true);
+                            startGame.setTextColor(Color.WHITE);
+                            checkGames.setEnabled(true);
+                            checkGames.setTextColor(Color.WHITE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("error","bad");
+                    }
+                });
+
         TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
         TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
 
@@ -153,6 +154,35 @@ public class pick_game_mode extends Fragment {
     }
 
     public void showStroopTxtView(View v){
+
+        // gets baseline score from DB and sees if a baseline has been set yet
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("baseline-stroop")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Scores baseline = dataSnapshot.getValue(Scores.class);
+
+                        // if there is no baseline then don't allow certain buttons to be hit
+                        if(baseline == null) {
+                            startGame.setEnabled(false);
+                            startGame.setTextColor(Color.BLACK);
+                            checkGames.setEnabled(false);
+                            checkGames.setTextColor(Color.BLACK);
+                        } else {
+                            startGame.setEnabled(true);
+                            startGame.setTextColor(Color.WHITE);
+                            checkGames.setEnabled(true);
+                            checkGames.setTextColor(Color.WHITE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("error","bad");
+                    }
+                });
+
         TextView txtStroop=(TextView) getView().findViewById(R.id.txtStroop);
         TextView txtTilt=(TextView) getView().findViewById(R.id.txtTilt);
 

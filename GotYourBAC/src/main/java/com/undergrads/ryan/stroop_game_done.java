@@ -164,5 +164,4 @@ public class stroop_game_done extends Fragment {
         }
         return (curFrag.getTag().toString());
     }
-
 }
