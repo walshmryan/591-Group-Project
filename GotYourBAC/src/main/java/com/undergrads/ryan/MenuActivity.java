@@ -355,6 +355,17 @@ public class MenuActivity extends AppCompatActivity
                 mGoogleApiClient.connect();
             } else {
                 BaseGameUtils.showActivityResultError(this, request, response, R.string.signin_other_error);
+                Log.i("FAIL", "failed to login");
+
+                Bundle args = new Bundle();
+                args.putBoolean("signInFailed", true);
+                String games = "games";
+                google_mainmenu fragment = new google_mainmenu();
+                fragment.setArguments(args);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                                .replace(R.id.frame_layout, fragment)
+                                .commit();
             }
         } else if (request == RC_LOOK_AT_MATCHES) {
             // Returning from the 'Select Match' dialog
