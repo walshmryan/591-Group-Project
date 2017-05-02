@@ -152,7 +152,6 @@ public class MenuActivity extends AppCompatActivity
                 .requestServerAuthCode("479703936056-ev6vmikc6n4r89qs1vgeihpkv4t3rn8a.apps.googleusercontent.com")
                 .build();
 
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this,/* FragmentActivity */ this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -226,6 +225,8 @@ public class MenuActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout, fragment)
+                    //                    .addToBackStack(editUser)
+
                     .commit();
 
         } else if (id == R.id.nav_ice) {
@@ -362,19 +363,6 @@ public class MenuActivity extends AppCompatActivity
                 mGoogleApiClient.connect();
             } else {
                 BaseGameUtils.showActivityResultError(this, request, response, R.string.signin_other_error);
-                //TODO -- show
-
-                Bundle args = new Bundle();
-                args.putBoolean("signInFailed", true);
-
-                String games = "games";
-                google_mainmenu fragment = new google_mainmenu();
-                fragment.setArguments(args);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_layout, fragment)
-                        .commit();
-
             }
         } else if (request == RC_LOOK_AT_MATCHES) {
             // Returning from the 'Select Match' dialog

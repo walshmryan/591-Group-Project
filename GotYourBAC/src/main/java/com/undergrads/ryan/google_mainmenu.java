@@ -52,11 +52,6 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        boolean signInFailed = false;
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            signInFailed = bundle.getBoolean("signInFailed");
-        }
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_google_mainmenu, container, false);
@@ -64,19 +59,14 @@ public class google_mainmenu extends Fragment implements View.OnClickListener{
         v.findViewById(R.id.sign_in_button).setOnClickListener(this);
         showSpinner(v);
 
-        Log.i("MENU", "create menu");
-        if (!signInFailed){
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()){
             listener.goToGamePickerFrag();
             dismissSpinner(v);
         }
 
-
         if (v.findViewById(R.id.spinner).getVisibility() != (View.GONE)){
             dismissSpinner(v);
         }
-
-        Log.i("MENU", "create menu done");
-
 
         return v;
     }
