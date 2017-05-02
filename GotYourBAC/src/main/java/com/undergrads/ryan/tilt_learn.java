@@ -15,8 +15,6 @@ public class tilt_learn extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tilt_learn, container, false);
-
-
         return v;
     }
 }

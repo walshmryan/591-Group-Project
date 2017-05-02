@@ -19,7 +19,7 @@ public class StroopHelpFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        //inflate stroop help fragment
         View v = inflater.inflate(R.layout.fragment_stroop_help, container, false);
 
         return v;

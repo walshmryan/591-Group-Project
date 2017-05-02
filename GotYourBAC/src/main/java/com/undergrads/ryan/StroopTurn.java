@@ -24,12 +24,6 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-/**
- * Basic turn data. It's just a blank data string and a turn number counter.
- * 
- * @author wolff
- * 
- */
 public class StroopTurn {
 
     public static final String TAG = "EBTurn";

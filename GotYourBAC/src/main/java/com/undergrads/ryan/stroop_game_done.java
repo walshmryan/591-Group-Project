@@ -107,7 +107,7 @@ public class stroop_game_done extends Fragment {
     }
 
     protected void compareScores(double baselineScore, double currentScore) {
-
+        //compare their scores to their baseline to show them how they did 
         String message = "";
 
         if(baselineScore > currentScore) {

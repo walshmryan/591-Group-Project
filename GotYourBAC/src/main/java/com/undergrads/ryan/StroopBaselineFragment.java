@@ -67,9 +67,9 @@ public class StroopBaselineFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        //inflate the view
         View v = inflater.inflate(R.layout.fragment_stroop_game, container, false);
-
+        //initalize the buttons
         btnGreen = (Button) (v.findViewById(R.id.btnGreen));
         btnRed = (Button) (v.findViewById(R.id.btnRed));
         btnBlue = (Button) (v.findViewById(R.id.btnBlue));
@@ -88,6 +88,7 @@ public class StroopBaselineFragment extends Fragment {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //get the game ready
                 enableButtons();
                 started = true;
                 guesses = 0;
@@ -107,10 +108,12 @@ public class StroopBaselineFragment extends Fragment {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //end the game
                 listener.goToMain();
             }
         });
 
+        //check the button clicks to see if the user chose correctly
         btnYellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,6 +181,7 @@ public class StroopBaselineFragment extends Fragment {
 
         time = stopwatch.elapsedTime();
 
+        //send the score to firebase
         FirebaseCall fb = new FirebaseCall();
         fb.updateGameBaseline(time, "Stroop");
 
@@ -199,6 +203,7 @@ public class StroopBaselineFragment extends Fragment {
 
     private void textSet(TextView txtView, int wordNum, int colourNum){
         txtView.setText(colours[wordNumber]);
+        //set the text color and visibility
         if (colourNum == 0) {
             txtView.setTextColor(getResources().getColor(R.color.yellow));
             txtView.setVisibility(VISIBLE);
@@ -222,6 +227,7 @@ public class StroopBaselineFragment extends Fragment {
     }
 
     private void disableButtons(){
+        //disable buttons
         btnYellow.setEnabled(false);
         btnGreen.setEnabled(false);
         btnBlack.setEnabled(false);
@@ -230,6 +236,7 @@ public class StroopBaselineFragment extends Fragment {
     }
 
     private void enableButtons(){
+        //enable buttons
         btnYellow.setEnabled(true);
         btnGreen.setEnabled(true);
         btnBlack.setEnabled(true);
@@ -238,10 +245,13 @@ public class StroopBaselineFragment extends Fragment {
     }
 
     private void nextWord() {
+        //pick a random color for the text color
+        //pick a random color for the word
         wordNumber = rand.nextInt(5);
         textNumber = rand.nextInt(5);
         colourNumber = rand.nextInt(5);
 
+        //set the corresponding text view
         if (textNumber == 0) {
             textSet(txtView0, wordNumber, colourNumber);
         }
@@ -260,13 +270,16 @@ public class StroopBaselineFragment extends Fragment {
     }
 
     private boolean checkCorrect(int c) {
+        //check how many they have clicked correctly
         if (colourNumber == c) {
-            totalRight += 1;
+            //if the color they clicked is = to the text color
+            totalRight += 1; //increase num right
             txtView0.setVisibility(View.INVISIBLE);
             txtView1.setVisibility(View.INVISIBLE);
             txtView2.setVisibility(View.INVISIBLE);
             txtView3.setVisibility(View.INVISIBLE);
             txtView4.setVisibility(View.INVISIBLE);
+            //reset txtViews to invisible
             nextWord();
             return true;
         }
