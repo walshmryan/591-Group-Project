@@ -663,8 +663,13 @@ public class MenuActivity extends AppCompatActivity
     }
     @Override
     public void showLeaderboard() {
+        String error = "Failed Google sign in";
         String leaderBoard = getLeaderBoardId();
-        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, leaderBoard), RC_UNUSED);
+        if (mGoogleApiClient.isConnected() && mGoogleApiClient.hasConnectedApi(Games.API)){
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, leaderBoard), RC_UNUSED);
+        }else{
+            Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -1021,9 +1026,13 @@ public class MenuActivity extends AppCompatActivity
     public void signOutOfGoogle(){
         tiltGame = false;
         mSignInClicked = false;
-        Games.signOut(mGoogleApiClient);
-        if (mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected() && mGoogleApiClient!=null) {
             mGoogleApiClient.disconnect();
+            try{
+                Games.signOut(mGoogleApiClient);
+            }catch (Exception e) {
+                Log.i("google","google issues");
+            }
         }
         String googleMain = "google main menu";
         google_mainmenu fragment = new google_mainmenu();

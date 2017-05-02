@@ -134,9 +134,7 @@ public class EditUser extends Fragment {
 
 
 
-//                writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
-
-
+                writeNewData(edtEmail.getText().toString(),edtFirstName.getText().toString(),edtLastName.getText().toString(),intW,gender);
 
 //                update text views
 
@@ -159,10 +157,10 @@ public class EditUser extends Fragment {
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-//    public void writeNewData(String username, String first, String last, int weight, String gender) {
-//        Users user = new Users(username,first,last,weight,gender);
-//        String uId = getUid();
-//        FirebaseDatabase.getInstance().getReference().child("users").child(uId).setValue(user);
-//    }
+    public void writeNewData(String username, String first, String last, int weight, String gender) {
+        Users user = new Users(username,first,last,weight,gender);
+        String uId = getUid();
+        FirebaseDatabase.getInstance().getReference().child("users").child(uId).setValue(user);
+    }
 
 }

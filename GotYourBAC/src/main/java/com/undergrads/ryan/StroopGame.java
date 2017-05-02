@@ -95,7 +95,7 @@ public class StroopGame extends Fragment {
         super.onAttach(context);
         String tag = getFragmentTag();
 
-        if(tag.equals("stroopBaseline")) {
+        if(tag.equals("create new user")) {
             baselineListener = (StroopBaselineListener) context;
         } else {
             gameListener = (PlayGameListener) context;
