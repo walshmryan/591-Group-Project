@@ -39,6 +39,7 @@
                 android:text="GotYourBAC"
                 android:textAlignment="center"
                 android:textAppearance="@style/Heading"
+                android:textColor="?android:attr/statusBarColor"
                 android:textSize="36sp" />
 
             <android.support.design.widget.TextInputLayout
