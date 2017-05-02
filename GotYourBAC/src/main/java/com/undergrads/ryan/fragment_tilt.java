@@ -170,6 +170,8 @@ public class fragment_tilt extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 tiltListener.goToMainGameScreen();
             }
         });

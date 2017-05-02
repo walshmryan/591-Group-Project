@@ -955,6 +955,12 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+    public void submitTiltScoreToGoogle(double s){
+        long score = (long)s;
+        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_tilt), score);
+
+    }
+
     public void onFinishClicked() {
         // showSpinner();
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
@@ -978,7 +984,7 @@ public class MenuActivity extends AppCompatActivity
         while (getFragmentManager().getBackStackEntryCount() > 0){
             getFragmentManager().popBackStackImmediate();
         }
-
+//        submitTiltScoreToGoogle(tiltSc)
         String gamePicker = "pick game";
         tiltGame = false;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
