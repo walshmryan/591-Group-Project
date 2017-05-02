@@ -164,10 +164,11 @@ public class HomeFragment extends Fragment {
                                             BACLevel.setText(dcmFormatter.format(bac) + "%");
                                             //setViews();
 
-
                                             // set number of drinks here in case we loaded some from DB and set BAC
                                             Log.i("BAC", weight + "");
                                             Log.i("BAC", gender + "");
+                                        } else {
+                                            BACLevel.setText("0.00%");
                                         }
                                     }
 
@@ -317,12 +318,12 @@ public class HomeFragment extends Fragment {
         }
 
         public void onProviderEnabled(String provider) {
-            Log.i(MYTAG, "Location Provider Has been DISabled. " + provider);
+            Log.i(MYTAG, "Location Provider Has been Enabled. " + provider);
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            Log.i(MYTAG, "Location Provider Has been ENabled. " + provider);
+            Log.i(MYTAG, "Location Provider Has been Disabled. " + provider);
         }
     }
 
