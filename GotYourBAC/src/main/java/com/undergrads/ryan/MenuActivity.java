@@ -197,6 +197,9 @@ public class MenuActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        while (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         String bac = "BAC";
@@ -920,7 +923,6 @@ public class MenuActivity extends AppCompatActivity
         submitScoreToGoogle(stroopScore);
         onDoneClicked();
 
-        // String result = mTurnData.data;
         String gameDone = "game finished";
         stroop_game_done fragment = new stroop_game_done();
         FragmentManager fragmentManager = getFragmentManager();
@@ -928,6 +930,17 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, gameDone)
                 .commit();
     }
+
+    @Override
+    public void gameDoneBaseline() {
+        String gameDone = "stroopDone2";
+        stroop_game_done fragment = new stroop_game_done();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment, gameDone)
+                .commit();
+    }
+
     public void gameAborted() {
         tiltGame = false;
         String gameDone = "game finished";

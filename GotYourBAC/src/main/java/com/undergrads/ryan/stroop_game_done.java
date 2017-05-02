@@ -1,5 +1,6 @@
 package com.undergrads.ryan;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class stroop_game_done extends Fragment {
 
     private stroopGameListener listener;
+    private stroopDoneListener doneListener;
     private TextView txtScore;
     private TextView baselineScore;
     private TextView baselineComparison;
@@ -29,6 +31,10 @@ public class stroop_game_done extends Fragment {
         // TODO: Update argument type and name
         double getScore();
         void goToMainGameScreen();
+    }
+
+    public interface stroopDoneListener {
+        void goToMain();
     }
 
     public stroop_game_done() {
@@ -54,7 +60,11 @@ public class stroop_game_done extends Fragment {
 
                         if(baseline != null) {
                             baselineScore.setText("Baseline: " + baseline.getScore());
-                            compareScores(baseline.getScore(), listener.getScore());
+
+                            // if we are not coming from the baseline create/update then compare scores
+                            if(!getFragmentTag().equals("stroopDone") && !getFragmentTag().equals("stroopDone2")) {
+                                compareScores(baseline.getScore(), listener.getScore());
+                            }
                         } else {
                             baselineComparison.setText("");
                         }
@@ -67,12 +77,23 @@ public class stroop_game_done extends Fragment {
                     }
                 });
 
-        txtScore.setText("Time: " + listener.getScore());
+        // if we are not coming from the baseline create/update then get recorded score
+        if(!getFragmentTag().equals("stroopDone") && !getFragmentTag().equals("stroopDone2")) {
+            txtScore.setText("Time: " + listener.getScore());
+        }
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.goToMainGameScreen();
+                String tag = getFragmentTag();
+
+                // if coming from stroop baseline create then switch activites using goToMain()
+                if(tag.equals("stroopDone")) {
+                    doneListener.goToMain();
+                } else {
+                    // otherwise we are in MenuActivity and can use goToMainGameScreen()
+                    listener.goToMainGameScreen();
+                }
             }
         });
         return v;
@@ -89,6 +110,8 @@ public class stroop_game_done extends Fragment {
         super.onAttach(context);
         if (context instanceof stroopGameListener) {
             listener = (stroopGameListener) context;
+        } else if (context instanceof stroopDoneListener) {
+            doneListener = (stroopDoneListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -125,7 +148,16 @@ public class stroop_game_done extends Fragment {
         }
 
         baselineComparison.setText(message);
+    }
 
+    public String getFragmentTag(){
+        FragmentManager fragment = getFragmentManager();
+        Fragment curFrag = fragment.findFragmentById(R.id.frame_layout);
+
+        if(curFrag == null) {
+            curFrag = fragment.findFragmentById(R.id.main_frame);
+        }
+        return (curFrag.getTag().toString());
     }
 
 }

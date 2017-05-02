@@ -64,10 +64,10 @@ public class LoginActivity extends Fragment {
             public void onClick(View v) {
 
                 // TODO: 4/29/17 remove before release
-                String username = "rmwalshy@gmail.com";
-                String password = "password";
-//                String username = txtEmail.getText().toString();
-//                String password = edtPassword.getText().toString();
+//                String username = "rmwalshy@gmail.com";
+//                String password = "password";
+                String username = txtEmail.getText().toString();
+                String password = edtPassword.getText().toString();
 
                 loginlistener.goToLoginFragment(username, password);
             }

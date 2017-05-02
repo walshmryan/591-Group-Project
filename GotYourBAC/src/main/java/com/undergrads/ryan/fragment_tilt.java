@@ -7,6 +7,7 @@ package com.undergrads.ryan;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -25,6 +26,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +57,7 @@ public class    fragment_tilt extends Fragment {
     private ProgressBar pBarFour;
     private ProgressBar pBarFive;
     private ProgressBar pCurrentBar;
+    private ImageView imgDirection;
     private Integer rounds = 2;
     private Integer roundCountDown = rounds;
     private Boolean checkGuesses = false;
@@ -116,6 +119,7 @@ public class    fragment_tilt extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tilt, container, false);
 
+        imgDirection = (ImageView) v.findViewById(R.id.imgDirection);
         btnNextRound = (Button) v.findViewById(R.id.btnNextRound);
         btnDone = (Button) v.findViewById(R.id.btnDone1);
         txtCountdown = (TextView) v.findViewById(R.id.txtCountdown);
@@ -151,6 +155,7 @@ public class    fragment_tilt extends Fragment {
         //try this shit out
         btnNextRound.setVisibility(View.INVISIBLE);
         progressVisible(View.INVISIBLE);
+        imgDirection.setVisibility(View.INVISIBLE);
 
         myCountDownTimer = new MyCountDownTimer(roundLength*1000, tick*1000);
         myCountDownTimer.start();
@@ -159,6 +164,7 @@ public class    fragment_tilt extends Fragment {
             @Override
             public void onClick(View v) {
                 guesses = generateSequenceTime;
+                txtCountdown.setVisibility(View.INVISIBLE);
                 btnNextRound.setVisibility(View.INVISIBLE);
                 myCountDownTimer = new MyCountDownTimer(roundLength*1000, tick*1000);//
                 myCountDownTimer.start();
@@ -187,15 +193,15 @@ public class    fragment_tilt extends Fragment {
 
     public void progressReset() {
         pBarOne.setProgress(0);
-        pBarOne.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarOne.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarTwo.setProgress(0);
-        pBarTwo.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarTwo.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarThree.setProgress(0);
-        pBarThree.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarThree.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarFour.setProgress(0);
-        pBarFour.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarFour.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
         pBarFive.setProgress(0);
-        pBarFive.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        pBarFive.setProgressTintList(ColorStateList.valueOf(Color.DKGRAY));
 
     }
 
@@ -232,9 +238,25 @@ public class    fragment_tilt extends Fragment {
                 txtDirection.setText("");
                 txtDirection.setText(directions[directionIndex]);
                 txtCountdown.setText(String.format(""));
+                imgDirection.setVisibility(View.VISIBLE);
+
+                if (isAdded()) {
+                    if (directions[directionIndex].equals("LEFT")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowleft));
+                    } else if (directions[directionIndex].equals("RIGHT")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowright));
+
+                    } else if (directions[directionIndex].equals("FORWARD")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowforward));
+
+                    } else if (directions[directionIndex].equals("BACK")) {
+                        imgDirection.setImageDrawable(getResources().getDrawable(R.drawable.arrowback));
+                    }
+                }
 
             //Give a few second leeway before they have the recollect
             } else if (seconds > (roundLength - delay - generateSequenceTime - ready)) {
+                imgDirection.setVisibility(View.INVISIBLE);
                 txtDirection.setText("Got it?...");
                 progressVisible(View.VISIBLE);
                 progressReset();
@@ -252,41 +274,41 @@ public class    fragment_tilt extends Fragment {
                         Integer currentSequenceElement = sequence.remove();
                         if (directions[currentSequenceElement] == "LEFT") {
                             if (roll > 0) {
-                                txtDirection.setText("RIGHTO LEFT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO LEFT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("WRONG - LEFT");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "RIGHT") {
                             if (roll < 0) {
-                                txtDirection.setText("RIGHTO RIGHT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO RIGHT - Roll: " + Float.toString(roll));
+                                txtDirection.setText("WRONG - RIGHT");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "FORWARD") {
                             if (pitch > 0) {
-                                txtDirection.setText("RIGHTO FORWARD - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO FORWARD - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("WRONG - FORWARD");
                                 lastGuessCorrect = false;
                             }
 
                         } else if (directions[currentSequenceElement] == "BACK") {
                             if (pitch < 0) {
-                                txtDirection.setText("RIGHTO BACK - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("CORRECT");
                                 lastGuessCorrect = true;
                                 totalCorrect += 1;
                             } else {
-                                txtDirection.setText("WRONGO BACK - Pitch: " + Float.toString(pitch));
+                                txtDirection.setText("WRONG - BACK");
                                 lastGuessCorrect = false;
                             }
 
@@ -295,10 +317,13 @@ public class    fragment_tilt extends Fragment {
 
                         //set the prog bar that just finished to green or red depending if they got
                         // it right
-                        if (lastGuessCorrect) {
-                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
-                        } else {
-                            pCurrentBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+                        if (isAdded()) {
+                            if (lastGuessCorrect) {
+                                pCurrentBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkgreen)));
+                            } else {
+                                pCurrentBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkred)));
+
+                            }
                         }
                     }
 
@@ -332,8 +357,6 @@ public class    fragment_tilt extends Fragment {
 
             }
         }
-
-
             @Override
             public void onFinish () {
                 //once the round is done check if there are more to go
@@ -342,7 +365,7 @@ public class    fragment_tilt extends Fragment {
                     progressVisible(View.INVISIBLE);
                     checkGuesses = false;
                     firstTick = true;
-                    txtCountdown.setText(String.format("DONE!"));
+                    txtCountdown.setText(String.format("ROUND OVER"));
                     txtDirection.setText("");
                     btnNextRound.setVisibility(View.VISIBLE);
                 }else {
@@ -355,7 +378,8 @@ public class    fragment_tilt extends Fragment {
 
                     double score = ((double)totalCorrect/(double)(generateSequenceTime*rounds)) * 100;
                     txtDirection.setText(score + "%");
-                    txtCountdown.setText(String.format("COMPLETED!"));
+                    txtCountdown.setVisibility(View.VISIBLE);
+                    txtCountdown.setText(String.format("COMPLETE"));
 
                     new FirebaseCall().postScore(score, "Tilt");
                 }

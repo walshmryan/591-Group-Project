@@ -13,11 +13,12 @@
         android:id="@+id/weatherForCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="26dp"
         android:text="TextView"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/temperature"
@@ -49,7 +50,8 @@
         android:layout_below="@+id/weatherIcon"
         android:layout_marginTop="28dp"
         android:text="Here are your last 3 scores:"
-        android:textSize="18sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/score1"
@@ -89,4 +91,24 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/weatherIcon"
         android:layout_alignTop="@+id/weatherIcon" />
+
+    <TextView
+        android:id="@+id/BACNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="84dp"
+        android:text="Your current BAC: "
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/BACLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/score3"
+        android:layout_alignTop="@+id/BACNote"
+        android:layout_marginTop="37dp"
+        android:textSize="18sp" />
 </RelativeLayout>
