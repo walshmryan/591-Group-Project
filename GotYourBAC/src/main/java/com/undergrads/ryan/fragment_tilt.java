@@ -78,6 +78,7 @@ public class fragment_tilt extends Fragment {
     private int mLastAccuracy;
     public interface tiltGameListener {
         public void goToMainGameScreen();
+        public void submitTiltScoretoLeaderboard(double s);
     }
     tiltGameListener tiltListener;
 
@@ -170,8 +171,7 @@ public class fragment_tilt extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+//
                 tiltListener.goToMainGameScreen();
             }
         });
@@ -378,11 +378,11 @@ public class fragment_tilt extends Fragment {
                     txtCountdown.setText(String.format("COMPLETE"));
 
                     String tag = getFragmentTag();
-
                     if(tag.equals("TILTBaseline")) {
                         new FirebaseCall().updateGameBaseline(score, "Tilt");
                     } else {
                         new FirebaseCall().postScore(score, "Tilt");
+                        tiltListener.submitTiltScoretoLeaderboard(score);
                     }
                 }
 

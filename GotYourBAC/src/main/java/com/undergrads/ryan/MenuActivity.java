@@ -966,7 +966,7 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
-    public void submitTiltScoreToGoogle(double s){
+    public void submitTiltScoretoLeaderboard(double s){
         long score = (long)s;
         Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_tilt), score);
 
@@ -1005,6 +1005,7 @@ public class MenuActivity extends AppCompatActivity
                 .replace(R.id.frame_layout, fragment, gamePicker)
                 .commit();
     }
+
 
     // Handle notification events.
     @Override
