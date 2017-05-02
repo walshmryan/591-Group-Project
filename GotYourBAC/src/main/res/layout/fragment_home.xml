@@ -111,5 +111,6 @@
         android:layout_alignStart="@+id/score3"
         android:layout_alignTop="@+id/BACNote"
         android:layout_marginTop="37dp"
+        android:text="0.00%"
         android:textSize="18sp" />
 </RelativeLayout>
