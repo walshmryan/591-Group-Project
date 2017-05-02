@@ -8,5 +8,10 @@
     <string name="event_games_lost">CgkIuNjUhPsNEAIQAw</string>
     <string name="leaderboard_stroop">CgkIuNjUhPsNEAIQBA</string>
     <string name="leaderboard_tilt">CgkIuNjUhPsNEAIQBQ</string>
+    <string name="achievement_sober_sally">CgkIuNjUhPsNEAIQBg</string>
+    <string name="achievement_tipsy_tolan">CgkIuNjUhPsNEAIQBw</string>
+    <string name="achievement_stumbling_sarah">CgkIuNjUhPsNEAIQCg</string>
+    <string name="achievement_rowdy_ryan">CgkIuNjUhPsNEAIQCQ</string>
+    <string name="achievement_smashed_sam">CgkIuNjUhPsNEAIQCA</string>
 
 </resources>
